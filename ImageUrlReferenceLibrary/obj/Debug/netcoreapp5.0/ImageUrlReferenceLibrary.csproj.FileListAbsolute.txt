@@ -1,0 +1,11 @@
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\ImageUrlReferenceLibrary\bin\Debug\netcoreapp5.0\ImageUrlReferenceLibrary.deps.json
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\ImageUrlReferenceLibrary\bin\Debug\netcoreapp5.0\ImageUrlReferenceLibrary.dll
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\ImageUrlReferenceLibrary\bin\Debug\netcoreapp5.0\ImageUrlReferenceLibrary.pdb
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\ImageUrlReferenceLibrary\obj\Debug\netcoreapp5.0\ImageUrlReferenceLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\ImageUrlReferenceLibrary\obj\Debug\netcoreapp5.0\ImageUrlReferenceLibrary.AssemblyInfoInputs.cache
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\ImageUrlReferenceLibrary\obj\Debug\netcoreapp5.0\ImageUrlReferenceLibrary.AssemblyInfo.cs
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\ImageUrlReferenceLibrary\obj\Debug\netcoreapp5.0\ImageUrlReferenceLibrary.csproj.CoreCompileInputs.cache
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\ImageUrlReferenceLibrary\obj\Debug\netcoreapp5.0\ImageUrlReferenceLibrary.dll
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\ImageUrlReferenceLibrary\obj\Debug\netcoreapp5.0\refint\ImageUrlReferenceLibrary.dll
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\ImageUrlReferenceLibrary\obj\Debug\netcoreapp5.0\ImageUrlReferenceLibrary.pdb
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\ImageUrlReferenceLibrary\obj\Debug\netcoreapp5.0\ref\ImageUrlReferenceLibrary.dll
