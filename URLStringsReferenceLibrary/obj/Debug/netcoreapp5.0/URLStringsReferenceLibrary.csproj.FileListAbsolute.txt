@@ -1,0 +1,11 @@
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\URLStringsReferenceLibrary\bin\Debug\netcoreapp5.0\URLStringsReferenceLibrary.deps.json
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\URLStringsReferenceLibrary\bin\Debug\netcoreapp5.0\URLStringsReferenceLibrary.dll
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\URLStringsReferenceLibrary\bin\Debug\netcoreapp5.0\URLStringsReferenceLibrary.pdb
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\URLStringsReferenceLibrary\obj\Debug\netcoreapp5.0\URLStringsReferenceLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\URLStringsReferenceLibrary\obj\Debug\netcoreapp5.0\URLStringsReferenceLibrary.AssemblyInfoInputs.cache
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\URLStringsReferenceLibrary\obj\Debug\netcoreapp5.0\URLStringsReferenceLibrary.AssemblyInfo.cs
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\URLStringsReferenceLibrary\obj\Debug\netcoreapp5.0\URLStringsReferenceLibrary.csproj.CoreCompileInputs.cache
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\URLStringsReferenceLibrary\obj\Debug\netcoreapp5.0\URLStringsReferenceLibrary.dll
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\URLStringsReferenceLibrary\obj\Debug\netcoreapp5.0\refint\URLStringsReferenceLibrary.dll
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\URLStringsReferenceLibrary\obj\Debug\netcoreapp5.0\URLStringsReferenceLibrary.pdb
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\URLStringsReferenceLibrary\obj\Debug\netcoreapp5.0\ref\URLStringsReferenceLibrary.dll
