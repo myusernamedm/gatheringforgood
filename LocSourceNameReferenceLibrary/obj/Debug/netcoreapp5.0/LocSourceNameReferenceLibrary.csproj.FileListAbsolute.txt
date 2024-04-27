@@ -1,0 +1,11 @@
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\LocSourceNameReferenceLibrary\bin\Debug\netcoreapp5.0\LocSourceNameReferenceLibrary.deps.json
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\LocSourceNameReferenceLibrary\bin\Debug\netcoreapp5.0\LocSourceNameReferenceLibrary.dll
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\LocSourceNameReferenceLibrary\bin\Debug\netcoreapp5.0\LocSourceNameReferenceLibrary.pdb
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\LocSourceNameReferenceLibrary\obj\Debug\netcoreapp5.0\LocSourceNameReferenceLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\LocSourceNameReferenceLibrary\obj\Debug\netcoreapp5.0\LocSourceNameReferenceLibrary.AssemblyInfoInputs.cache
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\LocSourceNameReferenceLibrary\obj\Debug\netcoreapp5.0\LocSourceNameReferenceLibrary.AssemblyInfo.cs
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\LocSourceNameReferenceLibrary\obj\Debug\netcoreapp5.0\LocSourceNameReferenceLibrary.csproj.CoreCompileInputs.cache
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\LocSourceNameReferenceLibrary\obj\Debug\netcoreapp5.0\LocSourceNameReferenceLibrary.dll
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\LocSourceNameReferenceLibrary\obj\Debug\netcoreapp5.0\refint\LocSourceNameReferenceLibrary.dll
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\LocSourceNameReferenceLibrary\obj\Debug\netcoreapp5.0\LocSourceNameReferenceLibrary.pdb
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\LocSourceNameReferenceLibrary\obj\Debug\netcoreapp5.0\ref\LocSourceNameReferenceLibrary.dll
