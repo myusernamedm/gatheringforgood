@@ -9,7 +9,7 @@
 The Back end of the application is based on C# Asp.Net Core.\
 The main application database is in Azure, and is using Entity Framework in the app for db through code.\
 While the majority of the app is .Net Core MVC, there are a number of Razor pages used for default scaffolded pages where required for the default Asp.Net Core Authenication and Authorization. These have been scaffolded for a custom appearance.\
-The front end of the application also uses ReactJS with Babel to autogenerate .js pages in wwwroot/dist, from wwwroot/js pages created using .jsx.\
+The front end of the application uses Babel to autogenerate .js pages in wwwroot/dist, from wwwroot/js pages created using .jsx.\
 Run **npx babel --watch wwwroot/js --out-dir wwwroot/dist --presets react-app/prod** when starting development.\
 There are a number of nuget and npm packages used in the app.
 
