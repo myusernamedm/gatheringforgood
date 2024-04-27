@@ -1,3 +1,6 @@
+# NOTE: PROJECT NO LONGER IN PRODUCTION (Previously Azure App Service)
+
+
 # GatheringForGood Readme
 
 ##General Info
