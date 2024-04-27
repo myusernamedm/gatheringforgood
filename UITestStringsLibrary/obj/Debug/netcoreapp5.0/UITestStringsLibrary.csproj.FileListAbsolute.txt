@@ -1,0 +1,12 @@
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\UITestStringsLibrary\bin\Debug\netcoreapp5.0\UITestStringsLibrary.deps.json
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\UITestStringsLibrary\bin\Debug\netcoreapp5.0\UITestStringsLibrary.dll
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\UITestStringsLibrary\bin\Debug\netcoreapp5.0\UITestStringsLibrary.pdb
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\UITestStringsLibrary\obj\Debug\netcoreapp5.0\UITestStringsLibrary.csproj.AssemblyReference.cache
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\UITestStringsLibrary\obj\Debug\netcoreapp5.0\UITestStringsLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\UITestStringsLibrary\obj\Debug\netcoreapp5.0\UITestStringsLibrary.AssemblyInfoInputs.cache
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\UITestStringsLibrary\obj\Debug\netcoreapp5.0\UITestStringsLibrary.AssemblyInfo.cs
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\UITestStringsLibrary\obj\Debug\netcoreapp5.0\UITestStringsLibrary.csproj.CoreCompileInputs.cache
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\UITestStringsLibrary\obj\Debug\netcoreapp5.0\UITestStringsLibrary.dll
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\UITestStringsLibrary\obj\Debug\netcoreapp5.0\refint\UITestStringsLibrary.dll
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\UITestStringsLibrary\obj\Debug\netcoreapp5.0\UITestStringsLibrary.pdb
+C:\Users\diarm\Source\Repos\GatheringForGood_Main\UITestStringsLibrary\obj\Debug\netcoreapp5.0\ref\UITestStringsLibrary.dll
