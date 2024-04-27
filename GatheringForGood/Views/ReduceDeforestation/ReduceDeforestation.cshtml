@@ -1,0 +1,539 @@
+﻿@model ReduceDeforestationViewModel
+@using Microsoft.AspNetCore.Identity
+@using GatheringForGood.Data
+@using System.Globalization
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = _loc[Model.PageTabTitle];
+}
+@section meta_head_tags{
+    <meta name='description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change. Learn what you can do to reduce deforestation today!" />
+    <meta property='og:locale' content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property='og:title' content="GatheringForGood - The place where ideas and expertise come together to solve the world's problems. Learn what you can do to reduce deforestation today!" />
+    <meta property='og:description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change. Learn what you can do to reduce deforestation today!" />
+    <meta property='og:url' content="https://gatheringforgood.com/en/ReduceDeforestation/ReduceDeforestation" />
+    <meta property='og:site_name' content="gatheringforgood" />
+    <meta property='og:image' content="http://www.gatheringforgood.com/images/shareimagerdf.jpg" />
+    <meta property='og:image:width' content="1200" />
+    <meta property='og:image:height' content="600" />
+    <meta property='og:image:alt' content="gatheringforgood sharing image" />
+    <meta property="og:author" content="gatheringforgood">
+    <link rel="preload" as="image" href="@Model.GetEarthHandsReducedImageUrl" imagesrcset="@Model.GetEarthHandsReduced400ImageUrl 2.5x, @Model.GetEarthHandsReduced800ImageUrl 2x, @Model.GetEarthHandsReduced1200ImageUrl 1x, @Model.GetEarthHandsReduced1600ImageUrl 0.5x" sizes="100vw">
+}
+@section header_image{
+    <div class="bg-img-non-home" id="ReduceDeforestationPageBanner">
+        <nav class="navbar navbar-expand-lg navbar-light" id="main-navbar-rdf-page">
+            <div class="container">
+                <a class="navbar-brand mt-20" onclick="changeactive('Home'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-GoToHomeLogo'});" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/circle_logo.webp" id="_rdfPageLogoImg" width="40" height="40" style="margin:0px 20px;" alt="Logo Image">
+                </a>
+                <button class="navbar-toggler" type="button" id="_rdfPageNavBarToggler" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item" onclick="changeactive('Home')">
+                            <a class="nav-link" id="_rdfPageHomeNavLink" asp-area="" asp-controller="Home" asp-action="Index" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-NavLink-Home'});">@_loc[Model.NavBarHome]</a>
+                        </li>
+                        <li class="nav-item" onclick="changeactive('Articles')">
+                            <a class="nav-link" id="_rdfPageArticlesNavLink" asp-area="" asp-controller="Articles" asp-action="Articles" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-NavLink-Articles'});"><p id="RDF-Articles-NavLink-Para" onclick="DisableLinks('RDF-Articles-NavLink-Para', true, 'RDF');">@_loc[Model.Articles]</p></a>
+                        </li>
+                        <li class="nav-item" onclick="changeactive('About')">
+                            <a class="nav-link" id="_rdfPageAboutNavLink" asp-area="" asp-controller="About" asp-action="About" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-NavLink-About'});">@_loc[Model.NavBarAbout]</a>
+                        </li>
+                        <li class="nav-item" onclick="changeactive('Help')">
+                            <a class="nav-link" id="_rdfPageHelpNavLink" asp-area="" asp-controller="Help" asp-action="Help" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-NavLink-Help'});">@_loc[Model.NavBarHelpCenter]</a>
+                        </li>
+                        <partial name="_LoginPartial" />
+                    </ul>
+                </div>
+            </div>
+        </nav>
+}
+@section header_content{
+    <div class="container-title">
+        <div class="block-title">
+            <br>
+            @if (!SignInManager.IsSignedIn(User))
+            {
+                <a button type="button" class="btn btn-success button-title" id="ReduceDeforestationPageMakeDiffBtn" asp-area="Identity" asp-page="/Account/Register" asp-route-culture="@CultureInfo.CurrentCulture.Name">@_loc[Model.ButtonText]</a>
+            }
+            <h1 class="block-subtitle-text" id="rdfPageSubtitle">@_loc[Model.Subtitle]</h1>
+            <h2 class="block-title-text-non-home" id="rdfPageTitle">@_loc[Model.Title]</h2>
+        </div>
+    </div>
+}
+</div>
+<body class="body-bg-img">
+    <div class="modal fade" id="rdfPageComingSoonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content comingsoon-bg-img">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="ComingSoonModalTitle">Modal Error!1</h3>
+                    <button type="button" id="ComingSoonModalHeaderCloseButton" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="col justify-content-center align-items-center">
+                    <h4 class="modal-body" id="rdfPageLearnMoreModalPara">Modal Error!2</h4>
+                </div>
+                <br />
+                <div class="form-group thumb-block">
+                    <form action="@Url.Action("SaveUserEntry","ReduceDeforestation")" method="post">
+                        <label class="modal-body1 col-form-label" id="rdfPageComingSoonModalFormLabel">Modal Error!3</label>
+                        <br />
+                        <textarea class="form-control" name="newsfeedUserEntry" id="newsfeedUserEntry" type="text"></textarea>
+                        <div class="modal-footer">
+                            <button type="submit" id="ComingSoonModalFooterSubmitButton" class="btn btn-success" data-dismiss="rdfPageComingSoonModal" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-ComingSoonModalSubmit'});">@_loc[Model.Submit]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="rdfPageSocialShareModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog centered" role="document">
+            <div class="modal-content socialshare-bg-img centered">
+                <div class="modal-header">
+                    <h3 class="modal-title1" id="SocialShareModalTitle">Modal Error!1</h3>
+                    <button type="button" id="SocialShareModalHeaderCloseButton" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <hr />
+                <div class="container-body">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col justify-content-center align-items-center">
+                            <h4 class="modal-body font-style-content-head justify-content-center align-items-center" id="rdfPageSocialShareModalPara1">Modal Error!2</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-body">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col justify-content-center align-items-center">
+                            <img src="~/images/socialexampleblur.png" class="socialex-img" id="rdfPageSocialShareModalImage" />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="container-body">
+                    <div class="col justify-content-center align-items-center">
+                        <div class="row justify-content-center align-items-center">
+                            <h4 class="modal-body1 font-style-content" id="rdfPageSocialShareModalPara2">Modal Error!3</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-body">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col justify-content-center align-items-center">
+                            <div id="tweetBtn">
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+                <div class="container-body">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col justify-content-center align-items-center">
+                            <br />
+                            <div data-href="http://www.gatheringforgood.com" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.gatheringforgood.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><img src="@Model.IconFacebook" id="RDFPageFBShareIconImage1" width="30" height="30" style=" margin: 0px 10px 30px 0px;" alt="Facebook Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-SocialShareModalFacebook'});"></a></div>
+                            <div><a href="https://www.linkedin.com/shareArticle?mini=true&url=http://www.gatheringforgood.com/&title=Make A Difference&summary=gatheringforgood.com&source=GatheringForGood" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=400,height=500,toolbar=1,resizable=0'); return false;" class="fb-xfbml-parse-ignore"><img src="@Model.IconLinkedin" id="RDFPageLinkedinShareIconImage1" width="30" height="30" style=" margin: 0px 10px 30px 0px;" alt="Linkedin Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-SocialShareModalLinkedin'});"></a></div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="rdfPageLearnMoreModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="rdflearnMoreModalTitle">Modal Error!1</h3>
+                    <button type="button" id="rdflearnMoreModalHeaderCloseButton" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="col-lg-6 justify-content-center align-items-center">
+                    <h4 class="modal-body" id="rdfPageLearnMoreModalPara">Modal Error!2</h4>
+                </div>
+                <div class="form-group thumb-block">
+                    <label class="modal-body1 col-form-label" id="rdfPageLearnMoreModalFormLabel">Modal Error!3</label>
+                    <textarea class="form-control" id="rdf-Page-Learn-More-Modal-message-text"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="rdflearnMoreModalFooterCloseButton" class="btn btn-success" data-dismiss="modal">@_loc[Model.Close]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col justify-content-center align-items-center">
+                <a href="@_loc[Model.RDFpageShare]" data-size="small"><img src="@Model.IconTwitter" id="RDFPageTwitterShareIconImage" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Twitter Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-TwitterShareIcon'});"></a>
+            </div>
+            <div class="col justify-content-center align-items-center">
+                <div data-href="" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.gatheringforgood.com%2Fen%2FReduceDeforestation%2FReduceDeforestation&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><img src="@Model.IconFacebook" id="RDFPageFBShareIconImage" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Facebook Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-FacebookShareIcon'});"></a></div>
+            </div>
+            <div class="col justify-content-center align-items-center">
+                <div><a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.gatheringforgood.com/en/ReduceDeforestation/ReduceDeforestation&title=Make A Difference&summary=gatheringforgood.com&source=GatheringForGood" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=400,height=500,toolbar=1,resizable=0'); return false;" class="fb-xfbml-parse-ignore"><img src="@Model.IconLinkedin" id="RDFPageLinkedinShareIconImage" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Linkedin Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-LinkedinShareIcon'});"></a></div>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-3 thumb-block" id="RDFPageRAEImpactsIcon">
+                <div class="col justify-content-center align-items-center">
+                    <a id="RDFPage_TrackRAEImpactsIconLink" asp-area="" asp-controller="ReduceAnimalExtinction" asp-action="ReduceAnimalExtinction" asp-route-culture="@CultureInfo.CurrentCulture.Name"><img src="@Model.RAEIconImage" id="RDFPageRAEIconImage" onclick="DisableLinks('RGWPageRAEIconImage', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-TrackRAEImpactsIcon'});" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="My actions to reduce animal extinction rates icon"></a>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <a class="link-style" asp-area="" asp-controller="ReduceAnimalExtinction" asp-action="ReduceAnimalExtinction" asp-route-culture="@CultureInfo.CurrentCulture.Name"><p id="RGWPageRAEIconText" width="100" style=" margin: 0px 0px 40px 0px;" onclick="DisableLinks('RGWPageRAEIconText', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-TrackRAEImpactsText'});">@_loc[Model.RAEIconText]</p></a>
+                </div>
+            </div>
+            <div class="col-lg-3 thumb-block" id="RDFPageRGWImpactsIcon">
+                <div class="col justify-content-center align-items-center">
+                    <a id="RDFPage_TrackRGWImpactsIconLink" asp-area="" asp-controller="ReduceGlobalWarming" asp-action="ReduceGlobalWarming" asp-route-culture="@CultureInfo.CurrentCulture.Name"><img src="@Model.RGWIconImage" id="RDFPageRGWIconImage" onclick="DisableLinks('RDFPageRGWIconImage', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-TrackRGWImpactsIcon'});" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="My actions to reduce global warming icon"></a>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <a class="link-style" asp-area="" asp-controller="ReduceGlobalWarming" asp-action="ReduceGlobalWarming" asp-route-culture="@CultureInfo.CurrentCulture.Name"><p id="RDFPageRGWIconText" width="100" style=" margin: 0px 0px 40px 0px;" onclick="DisableLinks('RDFPageRGWIconText', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-TrackRGWImpactsText'});">@_loc[Model.RGWIconText]</p></a>
+                </div>
+            </div>
+            <div class="col-lg-3 thumb-block" id="RDFPageRDFImpactsIcon">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.RDFIconImage" class="transparent-image" id="RDFPageRDFIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="My actions to reduce deforestation icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-DISABLEDButton-TrackRDFImpactsIcon'});">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p class="link-style-selected" id="RDFPageRDFIconText" width="100" style=" margin: 0px 0px 40px 0px; color: darkseagreen;" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-DISABLEDButton-TrackRDFImpactsIcon'});">@_loc[Model.RDFIconText]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="container-body">
+            <div class="row justify-content-center align-items-center">
+                <div class="col justify-content-center align-items-center">
+                    <h2 class="font-style-content-head" id="rdfDoSomethingTodayTitle">@_loc[Model.DoSomethingTodayTitle]</h2>
+                </div>
+            </div>
+        </div>
+        <div class="container-body">
+            <div class="col-lg-8 justify-content-center align-items-center">
+                <div class="row justify-content-center align-items-center">
+                    <h2 class="thumb-text-block font-style-content" id="rdfDoSomethingTodayPara"><strong>@_loc[Model.DoSomethingTodayPara]</strong></h2>
+                </div>
+                <br />
+                <div class="row justify-content-center align-items-center">
+                    <h2 class="thumb-text-block font-style-content" id="rdfDoSomethingTodayPara"><strong>@_loc[Model.DoSomethingTodayPara2]</strong></h2>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 thumb-block">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.AllUserActionsIcon" id="RDFPageAllUserActionsIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="All User Actions Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-TotalActionsAllUsersImage'});">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p class="centered font-heading" id="RDFPageAllUserActionsIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.SiteImpactTitle]</p>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p class="font-style-content" id="RDFPageAllUserActionsTotalText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.SiteImpactTotal]</p>
+                </div>
+                <div class="row justify-content-center align-items-center">
+                    <a href="@_loc[Model.TotalActionsAllUsersShare]" data-size="small"><img src="@Model.IconTwitter" id="RDFPageTwitterShareIconImage1" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Twitter Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-TotalActionsAllUsersShareTwitter'});"></a>
+                    <br />
+                    <div data-href="" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.gatheringforgood.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><img src="@Model.IconFacebook" id="RDFPageFBShareIconImage2" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Facebook Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-TotalActionsAllUsersShareFacebook'});"></a></div>
+                    <br />
+                    <div><a href="https://www.linkedin.com/shareArticle?mini=true&url=http://www.gatheringforgood.com/&title=Make A Difference&summary=gatheringforgood.com&source=GatheringForGood" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=400,height=500,toolbar=1,resizable=0'); return false;" class="fb-xfbml-parse-ignore"><img src="@Model.IconLinkedin" id="RDFPageLinkedinShareIconImage2" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Linkedin Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-TotalActionsAllUsersShareLinkedin'});"></a></div>
+                    <br />
+                </div>
+            </div>
+            <div class="col-lg-6 thumb-block">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.AllUsersCO2ImpactIcon" id="RDFPageRDFUserActionsIconImage" width="110" height="100" style=" margin: 0px 0px 40px 0px;" alt="All Users CO2 Reduction Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-TotalCO2ReductionAllUsersImage'});">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p class="centered font-heading" id="RDFPageRDFUserActionsIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.AllUsersCO2ImpactTitle]</p>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p class="font-style-content" id="RDFPageRDFUserActionsTotalText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.AllUsersCO2ImpactTotal]</p>
+                </div>
+                <div class="row justify-content-center align-items-center">
+                    <a href="@_loc[Model.AllUsersCO2MyShare]" data-size="small"><img src="@Model.IconTwitter" id="RDFPageTwitterShareIconImage2" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Twitter Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-TotalCO2ReductionAllUsersShareTwitter'});"></a>
+                    <br />
+                    <div data-href="" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.gatheringforgood.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><img src="@Model.IconFacebook" id="RDFPageFBShareIconImage3" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Facebook Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-TotalCO2ReductionAllUsersShareFacebook'});"></a></div>
+                    <br />
+                    <div><a href="https://www.linkedin.com/shareArticle?mini=true&url=http://www.gatheringforgood.com/&title=Make A Difference&summary=gatheringforgood.com&source=GatheringForGood" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=400,height=500,toolbar=1,resizable=0'); return false;" class="fb-xfbml-parse-ignore"><img src="@Model.IconLinkedin" id="RDFPageLinkedinShareIconImage3" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Linkedin Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-TotalCO2ReductionAllUsersShareLinkedin'});"></a></div>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-4 thumb-block">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.AllUserRDFActionsIcon" id="RDFPageRDFUserActionsIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="Deforestation Actions All Users Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-DeforestationActionsAllUsersImage'});">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p class="centered font-heading" id="RDFPageRDFUserActionsIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.RDFImpactTitle]</p>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p class="font-style-content" id="RDFPageRDFUserActionsTotalText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.RDFImpactTotal]</p>
+                </div>
+                <div class="row justify-content-center align-items-center">
+                    <a href="@_loc[Model.GlobalWarmingAllUsersShare]" data-size="small"><img src="@Model.IconTwitter" id="RDFPageTwitterShareIconImage2" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Twitter Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-DeforestationActionsAllUsersShareTwitter'});"></a>
+                    <br />
+                    <div data-href="" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.gatheringforgood.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><img src="@Model.IconFacebook" id="RDFPageFBShareIconImage3" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Facebook Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-DeforestationActionsAllUsersShareFacebook'});"></a></div>
+                    <br />
+                    <div><a href="https://www.linkedin.com/shareArticle?mini=true&url=http://www.gatheringforgood.com/&title=Make A Difference&summary=gatheringforgood.com&source=GatheringForGood" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=400,height=500,toolbar=1,resizable=0'); return false;" class="fb-xfbml-parse-ignore"><img src="@Model.IconLinkedin" id="RDFPageLinkedinShareIconImage3" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Linkedin Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-DeforestationActionsAllUsersShareLinkedin'});"></a></div>
+                    <br />
+                </div>
+            </div>
+            <div class="col-lg-4 thumb-block">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.MyTotalActionsIcon" id="RDFPageMyTotalActionsIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="My Total Actions Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-MyTotalActionsImage'});">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p class="centered font-heading" id="RDFPageMyTotalActionsIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.UserImpactTitle]</p>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p class="font-style-content" id="RDFPageMyTotalActionsTotalText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.UserImpactTotal]</p>
+                </div>
+                <div class="row justify-content-center align-items-center">
+                    <a href="@_loc[Model.TotalActionsMyShare]" data-size="small"><img src="@Model.IconTwitter" id="RDFPageTwitterShareIconImage3" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Twitter Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-MyTotalActionsShareTwitter'});"></a>
+                    <br />
+                    <div data-href="" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.gatheringforgood.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><img src="@Model.IconFacebook" id="RDFPageFBShareIconImage4" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Facebook Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-MyTotalCO2ReductionShareFacebook'});"></a></div>
+                    <br />
+                    <div><a href="https://www.linkedin.com/shareArticle?mini=true&url=http://www.gatheringforgood.com/&title=Make A Difference&summary=gatheringforgood.com&source=GatheringForGood" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=400,height=500,toolbar=1,resizable=0'); return false;" class="fb-xfbml-parse-ignore"><img src="@Model.IconLinkedin" id="RDFPageLinkedinShareIconImage4" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Linkedin Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-MyTotalCO2ReductionShareLinkedin'});"></a></div>
+                    <br />
+                </div>
+            </div>
+            <div class="col-lg-4 thumb-block">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.MyCO2ImpactIcon" id="RDFPageMyCO2ImpactIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="My Total CO2 Reduction Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-MyTotalCO2ReductionImage'});">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p class="centered font-heading" id="RDFPageMyCO2ImpactIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.RDFMyCO2ImpactTitle]</p>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p class="font-style-content" id="RDFPageMyCO2ImpactTotalText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.RDFMyCO2ImpactTotal]</p>
+                </div>
+                <div class="row justify-content-center align-items-center">
+                    <a href="@_loc[Model.CO2ReductionMyShare]" data-size="small"><img src="@Model.IconTwitter" id="RDFPageTwitterShareIconImage4" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Twitter Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-MyTotalCO2ReductionShareTwitter'});"></a>
+                    <br />
+                    <div data-href="" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.gatheringforgood.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><img src="@Model.IconFacebook" id="RDFPageFBShareIconImage5" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Facebook Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-MyTotalCO2ReductionShareFacebook'});"></a></div>
+                    <br />
+                    <div><a href="https://www.linkedin.com/shareArticle?mini=true&url=http://www.gatheringforgood.com/&title=Make A Difference&summary=gatheringforgood.com&source=GatheringForGood" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=400,height=500,toolbar=1,resizable=0'); return false;" class="fb-xfbml-parse-ignore"><img src="@Model.IconLinkedin" id="RDFPageLinkedinShareIconImage5" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Linkedin Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-MyTotalCO2ReductionShareLinkedin'});"></a></div>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <hr />
+    <div class="container-body">
+        <table class="table">
+            <thead class="thead-dark centered">
+                <tr>
+                    <th scope="col" colspan="6" id="RDFSharingOn"><label for="RDFEnableSharingCheckbox">@_loc[Model.EnableSharing] <input type="checkbox" id="RDFEnableSharingCheckbox" name="RDFEnableSharingCheckbox" checked="checked" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Button-SharingCheckboxChanged'});" /></label></th>
+                </tr>
+            </thead>
+            <thead class="thead-dark centered">
+                <tr>
+                    <th scope="col" id="rdfWhatCanIDoTitle">@_loc[Model.WhatCanIDo]</th>
+                    <th scope="col" class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="rdfInformationTitle">@_loc[Model.Information]</th>
+                    <th scope="col" id="rdfImpactTitle">@_loc[Model.Impact]</th>
+                    <th scope="col" id="rdfClickDetailsTitle">@_loc[Model.ClickDetails]</th>
+                    <th scope="col" id="rdfIDidThisTodayTitle">@_loc[Model.IDidThisToday]</th>
+                    <th scope="col" id="rdfMyImpactTitle">@_loc[Model.MyImpact]</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-success">
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="rdfReduceMeatIntakeTitleMobile"><strong>@_loc[Model.ReduceMeatIntakeTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="rdfReduceMeatIntakeTitle"><strong>@_loc[Model.ReduceMeatIntakeTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="rdfReduceMeatIntakePara">@_loc[Model.ReduceMeatIntakePara1] @_loc[Model.ReduceMeatIntakePara2] <!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.ReduceMeatIntakeTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow1">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Treeicon5" id="rdfImpactIconRow1" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-ImpactIconRow1Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="rdfReduceMeatIntakeClickDetails"><strong>@_loc[Model.ReduceMeatClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 1 })"><img src="@Model.MouseClickIconThumbnailUrl" id="rdfMouseClickIconRow1" onclick="DisableEnableLinks('rdfMouseClickIconRow1', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow1Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 1 })"><img src="@Model.HandTapIconThumbnailUrl" id="rdfHandTapIconRow1" onclick="DisableEnableLinks('rdfHandTapIconRow1', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow1Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="rdfMyImpactReduceMeat"><strong>@_loc[Model.MyImpactReduceMeat]</strong></td>
+                </tr>
+                <tr class="table-success">
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="rdfReduceMeatIntakeParaB">@_loc[Model.ReduceMeatIntakePara1] @_loc[Model.ReduceMeatIntakePara2] <!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.ReduceMeatIntakeTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow1b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr>
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="rdfGoVegetarianTitleMobile"><strong>@_loc[Model.GoVegetarianTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="rdfGoVegetarianTitle"><strong>@_loc[Model.GoVegetarianTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="rdfGoVegetarianPara1">@_loc[Model.GoVegetarianPara1] <!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.GoVegetarianTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow2">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Treeicon5" id="rdfImpactIconRow2" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-ImpactIconRow2Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="rdfGoVegetarianClickDetails"><strong>@_loc[Model.GoVegetarianClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 2 })"><img src="@Model.MouseClickIconThumbnailUrl" id="rdfMouseClickIconRow2" onclick="DisableEnableLinks('rdfMouseClickIconRow2', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow2Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 2 })"><img src="@Model.HandTapIconThumbnailUrl" id="rdfHandTapIconRow2" onclick="DisableEnableLinks('rdfHandTapIconRow2', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow2Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="rdfMyImpactGoVegetarian"><strong>@_loc[Model.MyImpactGoVegetarian]</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="rdfGoVegetarianPara1B">@_loc[Model.GoVegetarianPara1] <!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.GoVegetarianTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow2b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr class="table-success">
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="rdfGoVeganTitleMobile"><strong>@_loc[Model.GoVeganTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="rdfGoVeganTitle"><strong>@_loc[Model.GoVeganTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="rdfGoVeganPara1">@_loc[Model.GoVeganPara1] <!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.GoVeganTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow3">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Treeicon5" id="rdfImpactIconRow3" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-ImpactIconRow3Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="rdfGoVeganClickDetails"><strong>@_loc[Model.GoVeganClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 3 })"><img src="@Model.MouseClickIconThumbnailUrl" id="rdfMouseClickIconRow3" onclick="DisableEnableLinks('rdfMouseClickIconRow3', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow3Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 3 })"><img src="@Model.HandTapIconThumbnailUrl" id="rdfHandTapIconRow3" onclick="DisableEnableLinks('rdfHandTapIconRow3', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow3Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="rdfMyImpactGoVegan"><strong>@_loc[Model.MyImpactGoVegan]</strong></td>
+                </tr>
+                <tr class="table-success">
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="rdfGoVeganPara1B">@_loc[Model.GoVeganPara1] <!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.GoVeganTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow3b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr>
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="rdfEatOrganicTitleMobile"><strong>@_loc[Model.EatOrganicTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="rdfEatOrganicTitle"><strong>@_loc[Model.EatOrganicTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="rdfEatOrganicPara1">@_loc[Model.EatOrganicPara1]<!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.EatOrganicTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow4">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Treeicon4" id="rdfImpactIconRow4" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-ImpactIconRow4Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="rdfEatOrganicClickDetails"><strong>@_loc[Model.EatOrganicClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 4 })"><img src="@Model.MouseClickIconThumbnailUrl" id="rdfMouseClickIconRow4" onclick="DisableEnableLinks('rdfMouseClickIconRow4', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow4Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 4 })"><img src="@Model.HandTapIconThumbnailUrl" id="rdfHandTapIconRow4" onclick="DisableEnableLinks('rdfHandTapIconRow4', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow4Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="rdfMyImpactEatOrganic"><strong>@_loc[Model.MyImpactEatOrganic]</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="rdfEatOrganicPara1B">@_loc[Model.EatOrganicPara1]<!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.EatOrganicTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow4b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr class="table-success">
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="rdfSupportHabitatRestorationTitleMobile"><strong>@_loc[Model.SupportHabitatRestorationTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="rdfSupportHabitatRestorationTitle"><strong>@_loc[Model.SupportHabitatRestorationTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="rdfSupportHabitatRestorationPara1">@_loc[Model.SupportHabitatRestorationPara1] @_loc[Model.SupportHabitatRestorationPara2] <!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.SupportHabitatRestorationTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow5">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Treeicon4" id="rdfImpactIconRow5" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-ImpactIconRow5Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="rdfHabitatRestorationClickDetails"><strong>@_loc[Model.NotQuantifiableClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 5 })"><img src="@Model.MouseClickIconThumbnailUrl" id="rdfMouseClickIconRow5" onclick="DisableEnableLinks('rdfMouseClickIconRow5', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow5Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 5 })"><img src="@Model.HandTapIconThumbnailUrl" id="rdfHandTapIconRow5" onclick="DisableEnableLinks('rdfHandTapIconRow5', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow5Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="rdfMyImpactHabitatRestoration"><strong>@_loc[Model.MyImpactHabitatRestoration]</strong></td>
+                </tr>
+                <tr class="table-success">
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="rdfSupportHabitatRestorationPara1B">@_loc[Model.SupportHabitatRestorationPara1] @_loc[Model.SupportHabitatRestorationPara2] <!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.SupportHabitatRestorationTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow5b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr>
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="rdfZeroDeforestationTitleMobile"><strong>@_loc[Model.ZeroDeforestationTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="rdfZeroDeforestationTitle"><strong>@_loc[Model.ZeroDeforestationTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="rdfZeroDeforestationPara1">@_loc[Model.ZeroDeforestationPara1] <!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.ZeroDeforestationTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow6">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Treeicon3" id="rdfImpactIconRow6" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-ImpactIconRow6Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="rdfZeroDeforestationClickDetails"><strong>@_loc[Model.NotQuantifiableClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 6 })"><img src="@Model.MouseClickIconThumbnailUrl" id="rdfMouseClickIconRow6" onclick="DisableEnableLinks('rdfMouseClickIconRow6', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow6Click'});" width="20" height="35" alt="Mouse TClickap Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 6 })"><img src="@Model.HandTapIconThumbnailUrl" id="rdfHandTapIconRow6" onclick="DisableEnableLinks('rdfHandTapIconRow6', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow6Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="rdfMyImpactZeroDeforestation"><strong>@_loc[Model.MyImpactZeroDeforestation]</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="rdfZeroDeforestationPara1B">@_loc[Model.ZeroDeforestationPara1] <!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.ZeroDeforestationTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow6b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr class="table-success">
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="rdfGoPaperlessTitleMobile"><strong>@_loc[Model.GoPaperlessTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="rdfGoPaperlessTitle"><strong>@_loc[Model.GoPaperlessTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="rdfGoPaperlessPara1">@_loc[Model.GoPaperlessPara1] <!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.GoPaperlessTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow7">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Treeicon3" id="rdfImpactIconRow7" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-ImpactIconRow7Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="rdfGoPaperlessClickDetails"><strong>@_loc[Model.NotQuantifiableClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 7 })"><img src="@Model.MouseClickIconThumbnailUrl" id="rdfMouseClickIconRow7" onclick="DisableEnableLinks('rdfMouseClickIconRow7', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow7Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 7 })"><img src="@Model.HandTapIconThumbnailUrl" id="rdfHandTapIconRow7" onclick="DisableEnableLinks('rdfHandTapIconRow7', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow7Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="rdfMyImpactGoPaperless"><strong>@_loc[Model.MyImpactGoPaperless]</strong></td>
+                </tr>
+                <tr class="table-success">
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="rdfGoPaperlessPara1B">@_loc[Model.GoPaperlessPara1] <!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.GoPaperlessTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow7b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr>
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="rdfDonateTitleMobile"><strong>@_loc[Model.DonateTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="rdfDonateTitle"><strong>@_loc[Model.DonateTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="rdfDonatePara">@_loc[Model.DonatePara1] <!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.DonateTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow8">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Treeicon3" id="rdfImpactIconRow8" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-ImpactIconRow8Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="rdfDonateClickDetails"><strong>@_loc[Model.NotQuantifiableClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 8 })"><img src="@Model.MouseClickIconThumbnailUrl" id="rdfMouseClickIconRow8" onclick="DisableEnableLinks('rdfMouseClickIconRow8', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow8Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 8 })"><img src="@Model.HandTapIconThumbnailUrl" id="rdfHandTapIconRow8" onclick="DisableEnableLinks('rdfHandTapIconRow8', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow8Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="rdfMyImpactDonate"><strong>@_loc[Model.MyImpactDonate]</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="rdfDonateParaB">@_loc[Model.DonatePara1] <!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.DonateTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow8b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr class="table-success">
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="rdfPlantSomeTreesTitleMobile"><strong>@_loc[Model.PlantSomeTreesTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="rdfPlantSomeTreesTitle"><strong>@_loc[Model.PlantSomeTreesTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="rdfPlantSomeTreesPara1">@_loc[Model.PlantSomeTreesPara1] @_loc[Model.PlantSomeTreesPara2] <!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.PlantSomeTreesTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow9">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Treeicon2" id="rdfImpactIconRow9" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-ImpactIconRow9Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="rdfPlantSomeTreesClickDetails"><strong>@_loc[Model.PlantSomeTreesClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 9 })"><img src="@Model.MouseClickIconThumbnailUrl" id="rdfMouseClickIconRow9" onclick="DisableEnableLinks('rdfMouseClickIconRow9', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow9Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 9 })"><img src="@Model.HandTapIconThumbnailUrl" id="rdfHandTapIconRow9" onclick="DisableEnableLinks('rdfHandTapIconRow9', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow9Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="rdfMyImpactPlantTrees"><strong>@_loc[Model.MyImpactPlantTrees]</strong></td>
+                </tr>
+                <tr class="table-success">
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="rdfPlantSomeTreesPara1B">@_loc[Model.PlantSomeTreesPara1] @_loc[Model.PlantSomeTreesPara2] <!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.PlantSomeTreesTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow9b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr>
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="rdfBuyRecycledTitleMobile"><strong>@_loc[Model.BuyRecycledTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="rdfBuyRecycledTitle"><strong>@_loc[Model.BuyRecycledTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="rdfBuyRecycledPara1">@_loc[Model.BuyRecycledPara1] <!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.BuyRecycledTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow10">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Treeicon2" id="rdfImpactIconRow10" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-ImpactIconRow10Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="rdfBuyRecycledClickDetails"><strong>@_loc[Model.BuyRecycledClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 10 })"><img src="@Model.MouseClickIconThumbnailUrl" id="rdfMouseClickIconRow10" onclick="DisableEnableLinks('rdfMouseClickIconRow10', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow10Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 10 })"><img src="@Model.HandTapIconThumbnailUrl" id="rdfHandTapIconRow10" onclick="DisableEnableLinks('rdfHandTapIconRow10', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow10Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="rdfMyImpactBuyRecycled"><strong>@_loc[Model.MyImpactBuyRecycled]</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="rdfBuyRecycledPara1B">@_loc[Model.BuyRecycledPara1] <!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.BuyRecycledTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow10b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr class="table-success">
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="rdfStandUpTitleMobile"><strong>@_loc[Model.StandUpTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="rdfStandUpTitle"><strong>@_loc[Model.StandUpTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="rdfStandUpPara1">@_loc[Model.StandUpPara1] <!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.StandUpTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow11">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Treeicon2" id="rdfImpactIconRow11" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-ImpactIconRow11Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="rdfStandUpClickDetails"><strong>@_loc[Model.NotQuantifiableClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 11 })"><img src="@Model.MouseClickIconThumbnailUrl" id="rdfMouseClickIconRow11" onclick="DisableEnableLinks('rdfMouseClickIconRow11', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow11Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 11 })"><img src="@Model.HandTapIconThumbnailUrl" id="rdfHandTapIconRow11" onclick="DisableEnableLinks('rdfHandTapIconRow11', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow11Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="rdfMyImpactStandUp"><strong>@_loc[Model.MyImpactStandUp]</strong></td>
+                </tr>
+                <tr class="table-success">
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="rdfStandUpPara1B">@_loc[Model.StandUpPara1] <!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.StandUpTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow11b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr>
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="rdfSignAPetitionTitleMobile"><strong>@_loc[Model.SignAPetitionTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="rdfSignAPetitionTitle"><strong>@_loc[Model.SignAPetitionTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="rdfSignAPetitionPara1">@_loc[Model.SignAPetitionPara1] <!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.SignAPetitionTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow12">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Treeicon1" id="rdfImpactIconRow12" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-ImpactIconRow12Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="rdfSignAPetitionClickDetails"><strong>@_loc[Model.NotQuantifiableClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 12 })"><img src="@Model.MouseClickIconThumbnailUrl" id="rdfMouseClickIconRow12" onclick="DisableEnableLinks('rdfMouseClickIconRow12', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow12Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 12 })"><img src="@Model.HandTapIconThumbnailUrl" id="rdfHandTapIconRow12" onclick="DisableEnableLinks('rdfHandTapIconRow12', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow12Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="rdfMyImpactSignAPetition"><strong>@_loc[Model.MyImpactSignAPetition]</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="rdfSignAPetitionPara1B">@_loc[Model.SignAPetitionPara1] <!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.SignAPetitionTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow12b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr class="table-success">
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="rdfSocialMediaTitleMobile"><strong>@_loc[Model.SocialMediaTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="rdfSocialMediaTitle"><strong>@_loc[Model.SocialMediaTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="rdfSocialMediaPara1">@_loc[Model.SocialMediaPara1] <!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.SocialMediaTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow13">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Treeicon1" id="rdfImpactIconRow13" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-ImpactIconRow13Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="rdfSocialMediaClickDetails"><strong>@_loc[Model.NotQuantifiableClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 13 })"><img src="@Model.MouseClickIconThumbnailUrl" id="rdfMouseClickIconRow13" onclick="DisableEnableLinks('rdfMouseClickIconRow13', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow13Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RDFInsertNewActionNumber", "ReduceDeforestation", new { actionNumber = 13 })"><img src="@Model.HandTapIconThumbnailUrl" id="rdfHandTapIconRow13" onclick="DisableEnableLinks('rdfHandTapIconRow13', true, 'RDF'); gtag('event','click',{'event_category':'Click','event_label':'RDFPage-Image-IDidThisTodayIconRow13Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="rdfMyImpactSocialMedia"><strong>@_loc[Model.MyImpactSocialMedia]</strong></td>
+                </tr>
+                <tr class="table-success">
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="rdfSocialMediaPara1B">@_loc[Model.SocialMediaPara1] <!--<a href="" data-toggle="modal" data-target="#rdfPageLearnMoreModal" data-title="@_loc[Model.SocialMediaTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="rdfPageLearnMoreRow13b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+@section Scripts{
+    <script src="~/js/rdfPageComingSoonModal.js"></script>
+    <script src="~/js/rdfPageLearnMoreModal.js"></script>
+    <script src="~/js/showSocialShareModalOnPageLoad.js"></script>
+    <script src="~/js/nonmenuactive.js"></script>
+    <script src="~/js/DisableEnableLinks.js"></script>
+    <script src="~/js/HomeDisableEnableLinks.js"></script>
+    <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+}

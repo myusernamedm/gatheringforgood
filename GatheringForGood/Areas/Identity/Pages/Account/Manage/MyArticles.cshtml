@@ -1,0 +1,183 @@
+﻿@page
+@model GatheringForGood.Areas.Identity.Pages.Account.Manage.MyArticlesModel
+@using LazZiya.ExpressLocalization
+@using System.Globalization
+@inject ISharedCultureLocalizer _loc
+@{
+    ViewData["Title"] = _loc[Model.PageTabTitle];
+}
+@section meta_head_tags{
+    <meta name='description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:locale' content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property='og:title' content="GatheringForGood - The place where ideas and expertise come together to solve the world's problems." />
+    <meta property='og:description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:url' content="https://gatheringforgood.com" />
+    <meta property='og:site_name' content="gatheringforgood" />
+    <meta property='og:image' content="http://www.gatheringforgood.com/images/shareimage.jpg" />
+    <meta property='og:image:width' content="1200" />
+    <meta property='og:image:height' content="600" />
+    <meta property='og:image:alt' content="gatheringforgood sharing image" />
+    <meta property="og:author" content="gatheringforgood">
+    <link rel="preload" as="image" href="@Model.GetEarthHandsReducedImageUrl" imagesrcset="@Model.GetEarthHandsReduced400ImageUrl 2.5x, @Model.GetEarthHandsReduced800ImageUrl 2x, @Model.GetEarthHandsReduced1200ImageUrl 1x, @Model.GetEarthHandsReduced1600ImageUrl 0.5x" sizes="100vw">
+}
+@section header_image{
+    <div class="bg-img-non-home" id="MyArticlesPageBanner">
+        <nav class="navbar navbar-expand-lg navbar-light" id="main-navbar-myarticles-page">
+            <div class="container">
+                <a class="navbar-brand mt-20" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/circle_logo.webp" id="_MyArticlesPageLogoImg" width="40" height="40" style="margin:0px 20px;" alt="Logo Image" onclick="gtag('event','click',{'event_category':'Click','event_label':'MyArticlesPage-GoToHomeLogo'});">
+                </a>
+                <button class="navbar-toggler" type="button" id="_MyArticlesPageNavBarToggler" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link normal-item" id="_MyArticlesPageHomeNavLink" asp-area="" asp-controller="Home" asp-action="Index" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'MyArticlesPage-NavLink-Home'});">@_loc[Model.NavBarHome]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link normal-item" id="_MyArticlesPageArticlesNavLink" asp-area="" asp-controller="Articles" asp-action="Articles" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'MyArticlesPage-NavLink-Articles'});"><p id="MyArticles-Articles-NavLink-Para" onclick="DisableLinks('MyArticles-Articles-NavLink-Para', true, 'MyArticles');">@_loc[Model.Articles]</p></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link normal-item" id="_MyArticlesPageAboutNavLink" asp-area="" asp-controller="About" asp-action="About" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'MyArticlesPage-NavLink-About'});">@_loc[Model.NavBarAbout]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link normal-item" id="_MyArticlesPageHelpNavLink" asp-area="" asp-controller="Help" asp-action="Help" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'MyArticlesPage-NavLink-Help'});">@_loc[Model.NavBarHelpCenter]</a>
+                        </li>
+                        <partial name="_LoginPartial" />
+                    </ul>
+                </div>
+            </div>
+        </nav>
+}
+@section header_content{
+    <div class="container-title">
+        <div class="block-title">
+            <br>
+            <h1 class="block-subtitle-text" id="MyArticlesPageSubtitle">@_loc[Model.SubTitle]</h1>
+            <h2 class="block-title-text-non-home" id="MyArticlesPageTitle">@_loc[Model.Title]</h2>
+        </div>
+    </div>
+}
+</div>
+<body class="body-bg-img">
+    <div class="container-body justify-content-center align-items-center">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-12 justify-content-center align-items-center">
+                <table class="table" id="MyArticlesPageTable">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="font-style-content-small" style="text-align: center" id="MyArticlesPageTableImageColumn">@_loc[Model.TableColImage]</th>
+                            <th scope="col" class="font-style-content-small" style="text-align: center" id="MyArticlesPageTableTitleColumn">@_loc[Model.TableColTitle]</th>
+                            <th scope="col" class="font-style-content-small d-none d-sm-none d-md-table-cell d-lg-none d-xl-table-cell" style="text-align: center" id="MyArticlesPageTablePostedDateColumn">@_loc[Model.TableColPosted]</th>
+                            <th scope="col" class="font-style-content-small d-none d-sm-none d-md-table-cell d-lg-table-cell d-xl-table-cell" style="text-align: center" id="MyArticlesPageTableShowColumn">@_loc[Model.TableColShow]</th>
+                            <th scope="col" class="font-style-content-small d-none d-sm-none d-md-table-cell d-lg-table-cell d-xl-table-cell" style="text-align: center" id="MyArticlesPageTableDeleteColumn">@_loc[Model.TableColDelete]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @for (int i = 0; i < Model.ArticlesList.Count(); i++)
+                        {
+                            var item = Model.ArticlesList[i];
+                            var articleAuthorId = item.UserIdRef.ToString();
+                            var loggedInUserId = Model.UserId;
+
+                            @if (item.UserIdRef != "none" && articleAuthorId == loggedInUserId)
+                            {
+                                var formedUrl = "../../../UserArticle/UserArticle/" + item.UniqueRef;
+                                <tr>
+                                    <td class="font-style-content-small-black justify-content-center align-items-center" id="MyArticlesListTitleImage">
+                                        @if (item.TitleImgRef != "none")
+                                        {
+                                            <div class="embed-responsive embed-responsive-16by9">
+                                                <img class="card-img-top embed-responsive-item" id="MyArticlesListImage" src="@Html.DisplayFor(modelItem => item.TitleImgRef)" alt="My Articles Image">
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="embed-responsive embed-responsive-16by9">
+                                                <iframe class="embed-responsive-item" src="@Html.DisplayFor(modelItem => item.TitleVidRef)" id="MyArticlesListVideo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen onclick="gtag('event','click',{'event_category':'Click','event_label':'MyArticlesList-Link-Video'});"></iframe>
+                                            </div>
+                                        }
+                                    </td>
+                                    @if (item.HREFRef == "none")
+                                    {
+                                        <td class="font-style-content-small-black-bold" id="MyArticlesListTitle"><a class="link-style" id="MyArticleDynamicLink" href="@formedUrl" onclick="gtag('event','click',{'event_category':'Click','event_label':'Articles-Link-CardWithRazorLink'});">@item.TitleRef.ToString()</a></td>
+                                    }
+                                    else
+                                    {
+                                        <td class="font-style-content-small-black-bold" id="MyArticlesListTitle"><a class="link-style" id="MyArticleDynamicLink" href="@item.HREFRef" onclick="gtag('event','click',{'event_category':'Click','event_label':'Articles-Link-CardWithRazorLink'});">@item.TitleRef.ToString()</a></td>
+                                    }
+                                    <td class="font-style-content-small d-none d-sm-none d-md-table-cell d-lg-none d-xl-table-cell" style="text-align: center" id="MyArticlesListPostedDate">@item.PostedRef.ToString()</td>
+                                    @if (item.ShowArticleRef == "True")
+                                    {
+                                        <td class="text-center d-none d-sm-none d-md-table-cell d-lg-table-cell d-xl-table-cell">
+                                            <form class="form" method="post" asp-page-handler="ShowArticle" name="ShowArticleForm">
+                                                <input asp-for="Input.ShowArticle" onchange="this.form.submit();" type="checkbox" id="ShowArticleToggle" data-toggle="toggle" data-size="xs" data-onstyle="success" checked>
+                                                <input type="hidden" asp-for="Input.uniqueArticleRef" value="@item.UniqueRef.ToString()" autocomplete="off" class="form-control" id="uniqueArticleRefHiddenInputField" />
+                                            </form>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-center d-none d-sm-none d-md-table-cell d-lg-table-cell d-xl-table-cell">
+                                            <form class="form" method="post" asp-page-handler="ShowArticle" name="ShowArticleForm">
+                                                <input asp-for="Input.ShowArticle" onchange="this.form.submit();" type="checkbox" id="ShowArticleToggle" data-toggle="toggle" data-size="xs" data-onstyle="success">
+                                                <input type="hidden" asp-for="Input.uniqueArticleRef" value="@item.UniqueRef.ToString()" autocomplete="off" class="form-control" id="uniqueArticleRefHiddenInputField" />
+                                            </form>
+                                        </td>
+                                    }
+                                    <td class="font-style-content-small-black table-cell-align d-none d-sm-none d-md-table-cell d-lg-table-cell d-xl-table-cell" id="MyArticlesListDelete">
+                                        <form class="form" method="post" asp-page-handler="DeleteArticle">
+                                            <p>
+                                                <button type="submit" class="btn btn-default" name="uniqueArticleRef" value="@item.UniqueRef.ToString()" aria-label="Left Align" style="margin: 0px 0px 0px 0px; color: white; background-color: red" id="MyArticlesDeleteButton"><i class="fa fa-trash"></i></button>
+                                            </p>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    @if (item.ShowArticleRef == "True")
+                                    {
+                                        <td class="text-center d-table-cell d-sm-table-cell d-md-none d-lg-none d-xl-none" style="text-align: center">
+                                            <form class="form" method="post" asp-page-handler="ShowArticle" name="ShowArticleForm">
+                                                <p class="font-style-content-small-bold" style="text-align: center" id="">@_loc[Model.TableColShow]</p>
+                                                <input asp-for="Input.ShowArticle" onchange="this.form.submit();" type="checkbox" id="ShowArticleToggle" data-toggle="toggle" data-size="xs" data-onstyle="success" checked>
+                                                <input type="hidden" asp-for="Input.uniqueArticleRef" value="@item.UniqueRef.ToString()" autocomplete="off" class="form-control" id="uniqueArticleRefHiddenInputField" />
+                                            </form>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-center d-table-cell d-sm-table-cell d-md-none d-lg-none d-xl-none" style="text-align: center">
+                                            <form class="form" method="post" asp-page-handler="ShowArticle" name="ShowArticleForm">
+                                                <p class="font-style-content-small-bold" style="text-align: center" id="">@_loc[Model.TableColShow]</p>
+                                                <input asp-for="Input.ShowArticle" onchange="this.form.submit();" type="checkbox" id="ShowArticleToggle" data-toggle="toggle" data-size="xs" data-onstyle="success">
+                                                <input type="hidden" asp-for="Input.uniqueArticleRef" value="@item.UniqueRef.ToString()" autocomplete="off" class="form-control" id="uniqueArticleRefHiddenInputField" />
+                                            </form>
+                                        </td>
+                                    }
+                                    <td class="font-style-content-small-black table-cell-align d-table-cell d-sm-table-cell d-md-none d-lg-none d-xl-none" style="text-align: center" id="MyArticlesListDelete">
+                                        <form class="form" method="post" asp-page-handler="DeleteArticle">
+                                            <p class="font-style-content-small-bold" style="text-align: center" id="MyArticlesPageTableDeleteColumn">@_loc[Model.TableColDelete]</p>
+                                            <p class="justify-content-center align-items-center">
+                                                <button type="submit" class="btn btn-default" name="uniqueArticleRef" value="@item.UniqueRef.ToString()" aria-label="Left Align" style="margin: 0px 0px 0px 0px; color: white; background-color: red" id="MyArticlesDeleteButton"><i class="fa fa-trash"></i></button>
+                                            </p>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+@section Scripts {
+    <script src="~/js/HomeDisableEnableLinks.js"></script>
+    <script src="~/js/DisableEnableLinks.js"></script>
+    <script src="~/js/MyArticles_DisableSubMenuButtons.js"></script>
+    <script src="~/js/MyArticles_ToggleButton.js"></script>
+    <script src="~/js/MyArticles_DisableButtons.js"></script>
+}

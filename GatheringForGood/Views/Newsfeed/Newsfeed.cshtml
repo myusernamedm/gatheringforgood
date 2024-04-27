@@ -1,0 +1,102 @@
+﻿@model NewsfeedViewModel
+@using Microsoft.AspNetCore.Identity
+@using GatheringForGood.Data
+@using System.Globalization
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = _loc[Model.PageTabTitle];
+}
+@section meta_head_tags{
+    <meta name='description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:locale' content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property='og:title' content="GatheringForGood - The place where ideas and expertise come together to solve the world's problems." />
+    <meta property='og:description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:url' content="https://gatheringforgood.com" />
+    <meta property='og:site_name' content="gatheringforgood" />
+    <meta property='og:image' content="http://www.gatheringforgood.com/images/shareimage.jpg" />
+    <meta property='og:image:width' content="1200" />
+    <meta property='og:image:height' content="600" />
+    <meta property='og:image:alt' content="gatheringforgood sharing image" />
+    <meta property="og:author" content="gatheringforgood">
+    <link rel="preload" as="image" href="@Model.GetEarthHandsReducedImageUrl" imagesrcset="@Model.GetEarthHandsReduced400ImageUrl 2.5x, @Model.GetEarthHandsReduced800ImageUrl 2x, @Model.GetEarthHandsReduced1200ImageUrl 1x, @Model.GetEarthHandsReduced1600ImageUrl 0.5x" sizes="100vw">
+}
+@section header_image{
+    <div class="bg-img-non-home" id="NewsfeedPageBanner">
+        <nav class="navbar navbar-expand-lg navbar-light" id="main-navbar-newsfeed-page">
+            <div class="container">
+                <a class="navbar-brand mt-20" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/circle_logo.webp" id="_NewsfeedPageLogoImg" width="40" height="40" style="margin:0px 20px;" alt="Logo Image" onclick="gtag('event','click',{'event_category':'Click','event_label':'NewsfeedPage-GoToHomeLogo'});">
+                </a>
+                <button class="navbar-toggler" type="button" id="_NewsfeedPageNavBarToggler" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" data-pname="Home" id="_NewsfeedPageHomeNavLink" asp-area="" asp-controller="Home" asp-action="Index" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'NewsfeedPage-NavLink-Home'});">@_loc[Model.NavBarHome]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-pname="Newsfeed" id="_NewsfeedPageNewsfeedNavLink" data-toggle="modal" data-target="#newsfeedPageComingSoonModal" data-title="@_loc[Model.NavBarNewsfeed]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.LikeToSee]" asp-area="" asp-controller="" asp-action="" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'NewsfeedPage-NavLink-Newsfeed'});"><p id="Newsfeed-Articles-NavLink-Para" onclick="DisableLinks('Newsfeed-Articles-NavLink-Para', true, 'Newsfeed');">@_loc[Model.Articles]</p></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-pname="About" id="_NewsfeedPageAboutNavLink" asp-area="" asp-controller="About" asp-action="About" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'NewsfeedPage-NavLink-About'});">@_loc[Model.NavBarAbout]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-pname="Help" id="_NewsfeedPageHelpNavLink" asp-area="" asp-controller="Help" asp-action="Help" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'NewsfeedPage-NavLink-Help'});">@_loc[Model.NavBarHelpCenter]</a>
+                        </li>
+                        <partial name="_LoginPartial" />
+                    </ul>
+                </div>
+            </div>
+        </nav>
+}
+@section header_content{
+    <div class="container-title">
+        <div class="block-title">
+            <br>
+            @if (!SignInManager.IsSignedIn(User))
+            {
+                <a button type="button" class="btn btn-success button-title" id="NewsfeedPageMakeDiffBtn" asp-area="Identity" asp-page="/Account/Register" asp-route-culture="@CultureInfo.CurrentCulture.Name">@_loc[Model.ButtonText]</a>
+            }
+            <h1 class="block-subtitle-text" id="NewsfeedPageSubtitle">@_loc[Model.Subtitle]</h1>
+            <h2 class="block-title-text-non-home" id="NewsfeedPageTitle">@_loc[Model.Title]</h2>
+        </div>
+    </div>
+}
+</div>
+<body class="body-bg-img">
+    <div class="modal fade" id="newsfeedPageComingSoonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content comingsoon-bg-img">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="ComingSoonModalTitle">Modal Error!1</h3>
+                    <button type="button" id="ComingSoonModalHeaderCloseButton" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="col justify-content-center align-items-center">
+                    <h4 class="modal-body" id="newsfeedPageLearnMoreModalPara">Modal Error!2</h4>
+                </div>
+                <br />
+                <div class="form-group thumb-block">
+                    <form action="@Url.Action("SaveUserEntry","Newsfeed")" method="post">
+                        <label class="modal-body1 col-form-label" id="newsfeedPageComingSoonModalFormLabel">Modal Error!3</label>
+                        <br />
+                        <textarea class="form-control" name="newsfeedUserEntry" id="newsfeedUserEntry" type="text"></textarea>
+                        <div class="modal-footer">
+                            <button type="submit" id="ComingSoonModalFooterSubmitButton" class="btn btn-success" data-dismiss="newsfeedPageComingSoonModal" onclick="gtag('event','click',{'event_category':'Click','event_label':'NewsfeedPage-Button-ComingSoonModalSubmit'});">@_loc[Model.Submit]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+@section Scripts{
+    <script src="~/js/newsfeedPageComingSoonModal.js"></script>
+    <script src="~/js/newsfeedactive.js"></script>
+    <script src="~/js/DisableEnableLinks.js"></script>
+    <script src="~/js/HomeDisableEnableLinks.js"></script>
+}

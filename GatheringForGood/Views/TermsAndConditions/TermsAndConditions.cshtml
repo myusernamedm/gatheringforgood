@@ -1,0 +1,177 @@
+﻿@model TermsAndConditionsViewModel
+@using System.Globalization
+@{
+    ViewData["Title"] = _loc[Model.PageTabTitle];
+}
+@section meta_head_tags{
+    <meta name='description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:locale' content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property='og:title' content="GatheringForGood - The place where ideas and expertise come together to solve the world's problems." />
+    <meta property='og:description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:url' content="https://gatheringforgood.com/en/TermsAndConditions/TermsAndConditions" />
+    <meta property='og:site_name' content="gatheringforgood" />
+    <meta property='og:image' content="http://www.gatheringforgood.com/images/shareimage.jpg" />
+    <meta property='og:image:width' content="1200" />
+    <meta property='og:image:height' content="600" />
+    <meta property='og:image:alt' content="gatheringforgood sharing image" />
+    <meta property="og:author" content="gatheringforgood">
+    <link rel="preload" as="image" href="@Model.GetEarthHandsReducedImageUrl" imagesrcset="@Model.GetEarthHandsReduced400ImageUrl 2.5x, @Model.GetEarthHandsReduced800ImageUrl 2x, @Model.GetEarthHandsReduced1200ImageUrl 1x, @Model.GetEarthHandsReduced1600ImageUrl 0.5x" sizes="100vw">
+}
+@section header_image{
+    <div class="bg-img-non-home" id="TermsAndConditionsPageBanner">
+        <nav class="navbar navbar-expand-lg navbar-light" id="main-navbar-tandc-page">
+            <div class="container">
+                <a class="navbar-brand mt-20" onclick="changeactive('Home')" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/circle_logo.webp" id="_TermsAndConditionsPageLogoImg" width="40" height="40" style="margin:0px 20px;" alt="Logo Image" onclick="gtag('event','click',{'event_category':'Click','event_label':'TandCPage-GoToHomeLogo'});">
+                </a>
+                <button class="navbar-toggler" type="button" id="_tandcPageNavBarToggler" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item" onclick="changeactive('Home')">
+                            <a class="nav-link normal-item" id="_TermsAndConditionsPageHomeNavLink" asp-area="" asp-controller="Home" asp-action="Index" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'TandCPage-NavLink-Home'});">@_loc[Model.NavBarHome]</a>
+                        </li>
+                        <li class="nav-item" onclick="changeactive('Articles')">
+                            <a class="nav-link normal-item" id="_TermsAndConditionsPageArticlesNavLink" asp-area="" asp-controller="Articles" asp-action="Articles" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'TandCPage-NavLink-Articles'});"><p id="TermsAndConditions-Articles-NavLink-Para" onclick="DisableLinks('TermsAndConditions-Articles-NavLink-Para', true, 'TermsAndConditions');">@_loc[Model.Articles]</p></a>
+                        </li>
+                        <li class="nav-item" onclick="changeactive('About')">
+                            <a class="nav-link normal-item" id="_TermsAndConditionsPageAboutNavLink" asp-area="" asp-controller="About" asp-action="About" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'TandCPage-NavLink-About'});">@_loc[Model.NavBarAbout]</a>
+                        </li>
+                        <li class="nav-item" onclick="changeactive('Help')">
+                            <a class="nav-link normal-item" id="_TermsAndConditionsPageHelpNavLink" asp-area="" asp-controller="Help" asp-action="Help" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'TandCPage-NavLink-Help'});">@_loc[Model.NavBarHelpCenter]</a>
+                        </li>
+                        <partial name="_LoginPartial" />
+                    </ul>
+                </div>
+            </div>
+        </nav>
+}
+@section header_content{
+    <div class="container-title">
+        <div class="block-title">
+            <br>
+            <h1 class="block-subtitle-text" id="TermsAndConditionsPageSubtitle" localize-content>@_loc[Model.Subtitle]</h1>
+            <h2 class="block-title-text-non-home" id="TermsAndConditionsPageTitle" localize-content>@_loc[Model.Title]</h2>
+        </div>
+    </div>
+}
+</div>
+<body class="body-bg-img">
+    <div class="modal fade" id="tandcPageComingSoonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content comingsoon-bg-img">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="ComingSoonModalTitle">Modal Error!1</h3>
+                    <button type="button" id="ComingSoonModalHeaderCloseButton" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="col justify-content-center align-items-center">
+                    <h4 class="modal-body" id="tandcPageLearnMoreModalPara">Modal Error!2</h4>
+                </div>
+                <br />
+                <div class="form-group thumb-block">
+                    <form action="@Url.Action("SaveUserEntry","TermsAndConditions")" method="post">
+                        <label class="modal-body1 col-form-label" id="tandcPageComingSoonModalFormLabel">Modal Error!3</label>
+                        <br />
+                        <textarea class="form-control" name="newsfeedUserEntry" id="newsfeedUserEntry" type="text"></textarea>
+                        <div class="modal-footer">
+                            <button type="submit" id="ComingSoonModalFooterSubmitButton" class="btn btn-success" data-dismiss="tandcPageComingSoonModal" onclick="gtag('event','click',{'event_category':'Click','event_label':'TandCPage-Button-ComingSoonModalSubmit'});">@_loc[Model.Submit]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col">
+                <br />
+                <h2 class="font-style-content-head" id="TermsAndConditionsHeading">@_loc[Model.TermsAndConditionsHeading]</h2>
+            </div>
+        </div>
+        <br />
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col">
+                <h2 class="font-style-content-small" id="TandCEffectiveDate">@_loc[Model.TandCEffectiveDate]</h2>
+            </div>
+        </div>
+        <br />
+    </div>
+    <br />
+    <hr />
+    <br />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 col-xl-6">
+                <h2 class="font-style-content-small thumb-text-block" id="_TermsAndConditionsAgreeInFull">@_loc[Model.AgreeInFull]</h2>
+                <br />
+                <h2 class="font-style-content-small thumb-text-block" id="_TermsAndConditionsAppropriateUse">@_loc[Model.AppropriateUse]</h2>
+                <br />
+                <h2 class="font-style-content-small thumb-text-block" id="_TermsAndConditionsAppropriateUseGuide">@_loc[Model.AppropriateUseGuide]</h2>
+                <br />
+                <h2 class="font-style-content-small thumb-text-block" id="_TermsAndConditionsRightofAccountClosure">@_loc[Model.RightofAccountClosure]</h2>
+                <br />
+                <h2 class="font-style-content-small thumb-text-block" id="_TermsAndConditionsRightofArticleRemoval">@_loc[Model.ArticleRemoval]</h2>
+                <br />
+                <h2 class="font-style-content-small thumb-text-block" id="_TermsAndConditionsRightofArticleRetention">@_loc[Model.ArticleRetention]</h2>
+                <br />
+                <h2 class="font-style-content-small thumb-text-block" id="_TermsAndConditionsNaturalWorldClosure">@_loc[Model.NaturalWorldClosure]</h2>
+                <br />
+                <h2 class="font-style-content-small thumb-text-block" id="_TermsAndConditionsSavingData">@_loc[Model.SavingData]</h2>
+                <br />
+                <h2 class="font-style-content-small thumb-text-block" id="_TermsAndConditionsAnalytics">@_loc[Model.Analytics]</h2>
+                <br />
+                <h2 class="font-style-content-small thumb-text-block" id="_TermsAndConditionsObituariesAndViolence">@_loc[Model.ObituariesAndViolence]</h2>
+                <br />
+                <h2 class="font-style-content-small thumb-text-block" id="_TermsAndConditionsDiscrimination">@_loc[Model.Discrimination]</h2>
+                <br />
+                <h2 class="font-style-content-small thumb-text-block" id="_TermsAndConditionsOneAccountPerPerson">@_loc[Model.OneAccountPerPerson]</h2>
+                <br />
+                <hr />
+                <br />
+                <h2 class="font-style-content-small thumb-text-block" id="_TermsAndConditionsTreePlantingPara1">@_loc[Model.TreePlantingPara1] <a class="link-style" id="_TermsAndConditionsPageAboutVisionLink" asp-area="" asp-controller="About" asp-action="About" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'TandCPage-Link-Vision'});">@_loc[Model.TreePlantingVision]</a> <em>@_loc[Model.TreePlantingPara2]</em> @_loc[Model.TreePlantingPara3] <a href="@Model.OneTreePlantedUrl" class="link-style" target="_blank" id="_TermsAndConditionsPageOneTreePlantedLink" onclick="gtag('event','click',{'event_category':'Click','event_label':'TandCPage-Link-OneTreePlanted'});">@_loc[Model.TreePlantingOneTreePlanted]</a> @_loc[Model.TreePlantingPara4]</h2>
+                <br />
+                <div class="row justify-content-center align-items-center">
+                    <img src="@Model.OneTreePlantedLogo" id="_TermsAndConditionsOneTreePlantedLogo" width="160" height="150" alt="One Tree Planted Partner Logo">
+                </div>
+                <br />
+                <h2 class="font-style-content-small thumb-text-block" id="_TermsAndConditionsTreePlantingPara5">@_loc[Model.TreePlantingPara5] <a class="link-style" id="_TermsAndConditionsPageAboutHelpLink" asp-area="" asp-controller="Help" asp-action="Help" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'TandCPage-Link-ContactUs'});">@_loc[Model.TreePlantingContactUs]</a> @_loc[Model.TreePlantingPara6]</h2>
+                <br />
+                <div class="row justify-content-center align-items-center">
+                    <ul class="font-style-content-small thumb-text-block" id="_TermsAndConditionsPlantingLocationsList">
+                        <li>@_loc[Model.TreePlantingNA]</li>
+                        <li>@_loc[Model.TreePlantingLA]</li>
+                        <li>@_loc[Model.TreePlantingEurope]</li>
+                        <li>@_loc[Model.TreePlantingAfrica]</li>
+                        <li>@_loc[Model.TreePlantingAsia]</li>
+                    </ul>
+                </div>
+                <br />
+                <h2 class="font-style-content-small thumb-text-block" id="_TermsAndConditionsTreePlantingPara7">@_loc[Model.TreePlantingPara7]</h2>
+                <br />
+                <div class="row justify-content-center align-items-center">
+                    <img src="@Model.PieChartLogo" id="_TermsAndConditionsPieChartLogo" width="160" height="160" alt="Pie Chart Logo">
+                </div>
+                <br />
+                <hr />
+                <br />
+                <h2 class="font-style-content-small thumb-text-block" id="_TermsAndConditionsNoObituaries">@_loc[Model.NoObituaries]</h2>
+                <br />
+                <h2 class="font-style-content-small thumb-text-block" id="_TermsAndConditionsFontAwesomeLicense">@_loc[Model.FontAwesomeLicense]</h2>
+                <br />
+                <h2 class="font-style-content-small thumb-text-block" id="_TermsAndConditionsTandCUpdates">@_loc[Model.TandCUpdates]</h2>
+                <br />
+            </div>
+        </div>
+    </div>
+</body>
+@section Scripts{
+    <script src="~/js/tandcPageComingSoonModal.js"></script>
+    <script src="~/js/DisableEnableLinks.js"></script>
+    <script src="~/js/HomeDisableEnableLinks.js"></script>
+}

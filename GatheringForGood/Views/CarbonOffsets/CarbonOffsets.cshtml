@@ -1,0 +1,283 @@
+﻿@model CarbonOffsetsViewModel
+@using Microsoft.AspNetCore.Identity
+@using GatheringForGood.Data
+@using System.Globalization
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = _loc[Model.PageTabTitle];
+}
+@section meta_head_tags{
+    <meta name='description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change. Offset your carbon today." />
+    <meta property='og:locale' content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property='og:title' content="GatheringForGood - The place where ideas and expertise come together to solve the world's problems. Offset your carbon today." />
+    <meta property='og:description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change. Offset your carbon today." />
+    <meta property='og:url' content="https://gatheringforgood.com" />
+    <meta property='og:site_name' content="gatheringforgood" />
+    <meta property='og:image' content="http://www.gatheringforgood.com/images/shareimagecarbonoffset.jpg" />
+    <meta property='og:image:width' content="1200" />
+    <meta property='og:image:height' content="600" />
+    <meta property='og:image:alt' content="gatheringforgood sharing image" />
+    <meta property="og:author" content="gatheringforgood">
+    <link rel="preload" as="image" href="@Model.GetEarthHandsReducedImageUrl" imagesrcset="@Model.GetEarthHandsReduced400ImageUrl 2.5x, @Model.GetEarthHandsReduced800ImageUrl 2x, @Model.GetEarthHandsReduced1200ImageUrl 1x, @Model.GetEarthHandsReduced1600ImageUrl 0.5x" sizes="100vw">
+}
+@section header_image{
+    <div class="bg-img-non-home" id="CarbonOffsetsPageBanner">
+        <nav class="navbar navbar-expand-lg navbar-light" id="main-navbar-carbonoffsets-page">
+            <div class="container">
+                <a class="navbar-brand mt-20" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/circle_logo.webp" id="_CarbonOffsetsPageLogoImg" width="40" height="40" style="margin:0px 20px;" alt="Logo Image" onclick="gtag('event','click',{'event_category':'Click','event_label':'CarbonOffsetsPage-GoToHomeLogo'});">
+                </a>
+                <button class="navbar-toggler" type="button" id="_CarbonOffsetsPageNavBarToggler" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" id="_CarbonOffsetsPageHomeNavLink" asp-area="" asp-controller="Home" asp-action="Index" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'CarbonOffsetsPage-NavLink-Home'});">@_loc[Model.NavBarHome]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="_CarbonOffsetsPageArticlesNavLink" asp-area="" asp-controller="Articles" asp-action="Articles" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'CarbonOffsetsPage-NavLink-Articles'});"><p id="CarbonOffsetsPage-Articles-NavLink-Para" onclick="DisableEnableLinks('CarbonOffsetsPage-Articles-NavLink-Para', true, 'CarbonOffsets');">@_loc[Model.Articles]</p></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="_CarbonOffsetsPageAboutNavLink" asp-area="" asp-controller="About" asp-action="About" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'CarbonOffsetsPage-NavLink-About'});">@_loc[Model.NavBarAbout]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="_CarbonOffsetsPageHelpNavLink" asp-area="" asp-controller="Help" asp-action="Help" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'CarbonOffsetsPage-NavLink-Help'});">@_loc[Model.NavBarHelpCenter]</a>
+                        </li>
+                        <partial name="_LoginPartial" />
+                    </ul>
+                </div>
+            </div>
+        </nav>
+}
+@section header_content{
+    <div class="container-title">
+        <div class="block-title block-title1">
+            <br>
+            <h1 class="block-subtitle-text" id="CarbonOffsetsPageSubtitle">@_loc[Model.Subtitle]</h1>
+            <h2 class="block-title-text-non-home" id="CarbonOffsetsPageTitle">@_loc[Model.Title]</h2>
+        </div>
+    </div>
+}
+</div>
+<body class="body-bg-img">
+    <div class="modal fade" id="carbonOffsetsPageComingSoonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content comingsoon-bg-img">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="ComingSoonModalTitle">Modal Error!1</h3>
+                    <button type="button" id="ComingSoonModalHeaderCloseButton" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="col justify-content-center align-items-center">
+                    <h4 class="modal-body" id="carbonOffsetsPageLearnMoreModalPara">Modal Error!2</h4>
+                </div>
+                <br />
+                <div class="form-group thumb-block">
+                    <form action="@Url.Action("SaveUserEntry","CarbonOffsets")" method="post">
+                        <label class="modal-body1 col-form-label" id="carbonOffsetsPageComingSoonModalFormLabel">Modal Error!3</label>
+                        <br />
+                        <textarea class="form-control" name="newsfeedUserEntry" id="newsfeedUserEntry" type="text"></textarea>
+                        <div class="modal-footer">
+                            <button type="submit" id="ComingSoonModalFooterSubmitButton" class="btn btn-success" data-dismiss="carbonOffsetsPageComingSoonModal" onclick="gtag('event','click',{'event_category':'Click','event_label':'CarbonOffsetsPage-Button-ComingSoonModalSubmit'});">@_loc[Model.Submit]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="col">
+        <div class="container-body">
+            <div class="row justify-content-center align-items-center">
+                <div class="col justify-content-center align-items-center">
+                    <h2 class="font-style-content-head" id="CarbonOffsetsPageHeading">@_loc[Model.Subtitle]</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-3 thumb-block" id="OffsetMyCarbonMiniIcon">
+                <div class="col justify-content-center align-items-center">
+                    <a href="javascript:void(0)" id="OffsetMyCarbonMiniIconLink" onclick="carbonOffsetsPageScrollToElement('MyCarbon')"><img src="@Model.OffsetMyCarbonImageUrl" id="OffsetMyCarbonMiniIconImage" width="50" height="35" style=" margin: 0px 0px 20px 0px;" alt="Newsfeed Icon"></a>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <a class="link-style" id="OffsetMyCarbonMiniIconTextLink" href="javascript:void(0)" onclick="carbonOffsetsPageScrollToElement('MyCarbon')"><p id="OffsetMyCarbonMiniIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.OffsetMyCarbonTitle]</p></a>
+                </div>
+            </div>
+            <div class="col-lg-3 thumb-block" id="OffsetAJourneyMiniIcon">
+                <div class="col justify-content-center align-items-center">
+                    <a href="javascript:void(0)" id="OffsetAJourneyMiniIconLink" onclick="carbonOffsetsPageScrollToElement('Journey')"><img src="@Model.OffsetAJourneyImageUrl" id="OffsetAJourneyMiniIconImage" width="50" height="35" style=" margin: 0px 0px 20px 0px;" alt="View Articles Icon"></a>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <a class="link-style" id="OffsetAJourneyMiniIconTextLink" href="javascript:void(0)" onclick="carbonOffsetsPageScrollToElement('Journey')"><p id="OffsetAJourneyMiniIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.OffsetAJourneyTitle]</p></a>
+                </div>
+            </div>
+            <div class="col-lg-3 thumb-block" id="OffsetAJourneyMiniIcon">
+                <div class="col justify-content-center align-items-center">
+                    <a href="javascript:void(0)" id="OffsetByTonneMiniIconLink" onclick="carbonOffsetsPageScrollToElement('Tonne')"><img src="@Model.OffsetByTonneImageUrl" id="OffsetByTonneMiniIconImage" width="50" height="35" style=" margin: 0px 0px 20px 0px;" alt="Offset My Carbon Icon"></a>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <a class="link-style" id="OffsetByTonneMiniIconTextLink" href="javascript:void(0)" onclick="carbonOffsetsPageScrollToElement('Tonne')"><p id="OffsetByTonneMiniIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.OffsetByTonneTitle]</p></a>
+                </div>
+            </div>
+            <div class="col-lg-3 thumb-block" id="OffsetBusinessMiniIcon">
+                <div class="col justify-content-center align-items-center">
+                    <a href="javascript:void(0)" id="OffsetBusinessMiniIconLink" onclick="carbonOffsetsPageScrollToElement('Business')"><img src="@Model.OffsetBusinessCarbonImageUrl" id="OffsetBusinessMiniIconImage" width="50" height="35" style=" margin: 0px 0px 20px 0px;" alt="Track My Impacts Icon"></a>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <a class="link-style" id="OffsetBusinessIconTextLink" href="javascript:void(0)" onclick="carbonOffsetsPageScrollToElement('Business')"><p id="OffsetBusinessIconText" width="150" style=" margin: 0px 0px 40px 0px;">@_loc[Model.OffsetMyBusinessCarbonTitle]</p></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="container-body">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-lg-8 justify-content-center align-items-center">
+                    <h2 class="font-style-content align-content-center" id="CarbonOffsetsPageTitlePara1">@_loc[Model.CarbonOffsetsPageTitlePara1]</h2>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="container-body">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-lg-5 thumb-block">
+                    <div class="col justify-content-center align-items-center">
+                        <img src="@Model.PartnerLogo" id="PartnerLogoImage" width="150" height="140" style=" margin: 0px 0px 20px 0px;" alt="OneTreePlanted logo">
+                    </div>
+                    <div class="col justify-content-center align-items-center font-heading">
+                        <p id="PartnerLogoText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.OurPartnerText]</p>
+                    </div>
+                </div>
+                <div class="col-lg-5 thumb-block">
+                    <div class="col justify-content-center align-items-center">
+                        <img src="@Model.PieChart" id="PieChartImage" width="155" height="145" style=" margin: 0px 0px 20px 0px;" alt="Pie chart image">
+                    </div>
+                    <div class="col justify-content-center align-items-center font-heading">
+                        <p id="PieChartImageText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.YourMoneyText]</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-body">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-lg-8 justify-content-center align-items-center">
+                    <h2 class="font-style-content align-content-center" id="CarbonOffsetsPageTitlePara2">@_loc[Model.CarbonOffsetsPageTitlePara2a] <strong>@_loc[Model.CarbonOffsetsPageOneTreePlanted]</strong>@_loc[Model.CarbonOffsetsPageTitlePara2b]</h2>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col">
+                <br />
+                <a asp-controller="OffsetMyCarbon" asp-action="OffsetMyCarbon" asp-route-culture="@CultureInfo.CurrentCulture.Name"><h3 class="thumb-block" id="OffsetMyCarbonTitle">@_loc[Model.OffsetMyCarbonTitle]</h3></a>
+            </div>
+        </div>
+        <br />
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-4 thumb-block">
+                <a asp-controller="OffsetMyCarbon" asp-action="OffsetMyCarbon" asp-route-culture="@CultureInfo.CurrentCulture.Name">
+                    <div class="font-style-content d-none d-sm-none d-md-none d-lg-block d-xl-block" style="padding-right: 15px" id="OffsetMyCarbonPara">@_loc[Model.OffsetMyCarbonPara]</div>
+                </a>
+                <a asp-controller="OffsetMyCarbon" asp-action="OffsetMyCarbon" asp-route-culture="@CultureInfo.CurrentCulture.Name"><div class="font-style-content d-block d-sm-block d-md-block d-lg-none d-xl-none" id="OffsetMyCarbonParab">@_loc[Model.OffsetMyCarbonPara]</div></a>
+            </div>
+            <br />
+            <div class="col-lg-3 thumb-block">
+                <a button type="button" class="btn btn-outline-success button-large" id="CarbonOffsetsPageOffsetMyCarbonButton" asp-controller="OffsetMyCarbon" asp-action="OffsetMyCarbon" asp-route-culture="@CultureInfo.CurrentCulture.Name">@_loc[Model.OffsetMyCarbonTitle]</a>
+            </div>
+            <br />
+            <div class="col-lg-3 thumb-block">
+                <a asp-controller="OffsetMyCarbon" asp-action="OffsetMyCarbon" asp-route-culture="@CultureInfo.CurrentCulture.Name"><img src="@Model.OffsetMyCarbonImageUrl" id="CarbonOffsetsPageOffsetMyCarbonImage" width="150" height="100" style="margin:0px 0px;" alt="Offset My Carbon Image"></a>
+            </div>
+        </div>
+    </div>
+    <br />
+    <hr />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col">
+                <h3 class="thumb-block" id="OffsetAJourneyTitle">@_loc[Model.OffsetAJourneyTitle]</h3>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-4 thumb-block">
+                <div class="font-style-content d-none d-sm-none d-md-none d-lg-block d-xl-block" style="margin-right: 15px" id="OffsetAJourneyPara">@_loc[Model.OffsetAJourneyPara]</div>
+                <div class="font-style-content d-block d-sm-block d-md-block d-lg-none d-xl-none" id="OffsetAJourneyParab">@_loc[Model.OffsetAJourneyPara]</div>
+            </div>
+            <br />
+            <div class="col-lg-3 thumb-block">
+                <a button type="button" class="btn btn-outline-success button-large" id="CarbonOffsetsPageOffsetAJourneyButton" asp-controller="" asp-action="" asp-route-culture="@CultureInfo.CurrentCulture.Name">@_loc[Model.OffsetAJourneyTitle]</a>
+            </div>
+            <br />
+            <div class="col-lg-3 thumb-block">
+                <img src="@Model.OffsetAJourneyImageUrl" id="CarbonOffsetsPageOffsetAJourneyImage" width="150" height="100" style="margin:0px 0px;" alt="Offset A Journey Image">
+            </div>
+        </div>
+    </div>
+    <br />
+    <hr />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col">
+                <h3 class="thumb-block" id="OffsetByTonneTitle">@_loc[Model.OffsetByTonneTitle]</h3>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-4 thumb-block">
+                <div class="font-style-content d-none d-sm-none d-md-none d-lg-block d-xl-block" style="margin-right: 15px" id="OffsetByTonnePara">@_loc[Model.OffsetByTonnePara]</div>
+                <div class="font-style-content d-block d-sm-block d-md-block d-lg-none d-xl-none" id="OffsetByTonneParab">@_loc[Model.OffsetByTonnePara]</div>
+            </div>
+            <div class="col-lg-3 thumb-block">
+                <a button type="button" class="btn btn-outline-success button-large" id="CarbonOffsetsPageOffsetByTonneButton" asp-controller="" asp-action="" asp-route-culture="@CultureInfo.CurrentCulture.Name">@_loc[Model.OffsetByTonneTitle]</a>
+            </div>
+            <div class="col-lg-3 thumb-block">
+                <img src="@Model.OffsetByTonneImageUrl" id="CarbonOffsetsPageOffsetByTonneImage" width="150" height="100" style="margin:0px 0px;" alt="Offset By Tonne Image">
+            </div>
+        </div>
+    </div>
+    <br />
+    <hr />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col">
+                <h3 class="thumb-block" id="OffsetMyBusinessCarbonTitle">@_loc[Model.OffsetMyBusinessCarbonTitle]</h3>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-4 thumb-block">
+                <div class="font-style-content d-none d-sm-none d-md-none d-lg-block d-xl-block" style="margin-right: 150px" id="OffsetMyBusinessPara">@_loc[Model.ComingSoon]</div>
+                <div class="font-style-content d-block d-sm-block d-md-block d-lg-none d-xl-none" id="OffsetMyBusinessParab">@_loc[Model.ComingSoon]</div>
+            </div>
+            <div class="col-lg-4 thumb-block">
+                <a button type="button" class="btn btn-success button-large disabled" aria-disabled="true" id="CarbonOffsetsPageOffsetMyBusinessCarbonButton" asp-controller="" asp-action="" asp-route-culture="@CultureInfo.CurrentCulture.Name" disable>@_loc[Model.OffsetMyBusinessCarbonTitle]</a>
+            </div>
+            <div class="col-lg-4 thumb-block">
+                <img src="@Model.OffsetBusinessCarbonImageUrl" id="CarbonOffsetsPageOffsetMyBusinessCarbonImage" width="150" height="100" style="margin:0px 0px;" alt="Offset My Business Image">
+            </div>
+        </div>
+    </div>
+    <br />
+    <hr />
+    <br />
+</body>
+@section Scripts{
+    <script src="~/js/carbonOffsetsPageComingSoonModal.js"></script>
+    <script src="~/js/nonmenuactive.js"></script>
+    <script src="~/js/carbonOffsetsPageScrollToElement.js"></script>
+    <script src="~/js/DisableEnableLinks.js"></script>
+}

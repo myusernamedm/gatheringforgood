@@ -1,0 +1,346 @@
+﻿@model HomeViewModel
+@using Microsoft.AspNetCore.Identity
+@using GatheringForGood.Data
+@using System.Globalization
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = _loc[Model.PageTabTitle];
+}
+@section meta_head_tags{
+    <meta name='description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:locale' content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property='og:title' content="GatheringForGood - The place where ideas and expertise come together to solve the world's problems." />
+    <meta property='og:description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:url' content="https://gatheringforgood.com" />
+    <meta property='og:site_name' content="gatheringforgood" />
+    <meta property='og:image' content="http://www.gatheringforgood.com/images/shareimage.jpg" />
+    <meta property='og:image:width' content="1200" />
+    <meta property='og:image:height' content="600" />
+    <meta property='og:image:alt' content="gatheringforgood sharing image" />
+    <meta property="og:author" content="gatheringforgood">
+    <link rel="preload" as="image" href="@Model.GetEarthHandsImageUrl" imagesrcset="@Model.GetEarthHands400ImageUrl 2.5x, @Model.GetEarthHands800ImageUrl 2x, @Model.GetEarthHands1200ImageUrl 1x, @Model.GetEarthHands1600ImageUrl 0.5x" sizes="100vw">
+}
+<div class="text-center">
+    @section header_image{
+        <div class="bg-img" id="HomePageBanner">
+            <nav class="navbar navbar-expand-lg navbar-light" id="main-navbar-home-page">
+                <div class="container">
+                    <a href="@Model.DownloadChromeUrl" target="_blank">
+                        <img src="@Model.ChromeLogoImageUrl" class="logo-image d-none d-sm-none d-md-block d-lg-block d-xl-block" style="margin-top:20px;" id="ChromeLogoImage" alt="Chrome Logo Image" onclick="gtag('event','click',{'event_category':'Click','event_label':'HomePage-WorksBestWithChrome'});">
+                    </a>
+                    <a class="navbar-brand mt-20" asp-area="" asp-controller="Home" asp-action="Index">
+                        <img src="~/images/circle_logo.webp" id="_HomePageLogoImg" width="40" height="40" style="margin:0px 20px;" alt="Logo Image" onclick="gtag('event','click',{'event_category':'Click','event_label':'HomePage-GoToHomeLogo'});">
+                    </a>
+                    <button class="navbar-toggler" type="button" id="_HomePageNavBarToggler" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link" id="_HomePageHomeNavLink" asp-area="" asp-controller="Home" asp-action="Index" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'HomePage-NavLink-Home'});">@_loc[Model.NavBarHome]</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="_HomePageArticlesNavLink" asp-area="" asp-controller="Articles" asp-action="Articles" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'HomePage-NavLink-Articles'});"><p id="HomePage-Articles-NavLink-Para" onclick="DisableLinks('HomePage-Articles-NavLink-Para', true, 'Home');">@_loc[Model.Articles]</p></a>
+                                <!--<a class="nav-link" id="_HomePageNewsfeedNavLink" data-toggle="modal" data-target="#homePageComingSoonModal" data-title="@_loc[Model.NavBarNewsfeed]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.LikeToSee]" asp-area="" asp-controller="" asp-action="" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'HomePage-NavLink-Newsfeed'});">@_loc[Model.NavBarNewsfeed]</a>-->
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="_HomePageAboutNavLink" asp-area="" asp-controller="About" asp-action="About" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'HomePage-NavLink-About'});">@_loc[Model.NavBarAbout]</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="_HomePageHelpNavLink" asp-area="" asp-controller="Help" asp-action="Help" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'HomePage-NavLink-Help'});">@_loc[Model.NavBarHelpCenter]</a>
+                            </li>
+                            <partial name="_LoginPartial" />
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <p class="font-style-content-medium-black justify-content-center thumb-text-block" id="BetaNotice" style="color:firebrick; padding: 0px 10px 0px 10px">@_loc[Model.BetaNoticeText] <a class="link-style" asp-area="" asp-controller="Help" asp-action="Help" asp-route-culture="@CultureInfo.CurrentCulture.Name" id="BetaNoticeLink" onclick="gtag('event','click',{'event_category':'Click','event_label':'HomePage-Link-BetaNotice'});">@_loc[Model.BetaNoticeText1]</a> @_loc[Model.BetaNoticeText2]</p>
+            <br />
+    }
+    @section header_content{
+        <div class="container-title">
+            <div class="block-title title-text-background">
+                <!--<language-nav language-label="NativeName" id="HomePageLanguageSelect" cookie-handler-url="@(Url.Action("OnGetSetCultureCookie", "", new { area= "", cltr="{0}", returnUrl="{1}" }))" onclick="gtag('event','click',{'event_category':'Click','event_label':'HomePage-Button-LanguageSelect'});"></language-nav> Hide localisation dropdown-->
+                <br />
+                @if (!SignInManager.IsSignedIn(User))
+                {
+                    <a button type="button" class="btn btn-success button-makeadifference" id="HomePageMakeDiffBtn" asp-area="Identity" asp-page="/Account/Register" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'HomePage-Button-MakeADifference'});">@_loc[Model.ButtonText]</a>
+                }
+                <h1 class="block-title-text" id="HomePageTitle">@_loc[Model.Title]</h1>
+                <h2 class="block-subtitle-text-home" id="HomePageSubTitle1">@_loc[Model.Subtitle1]</h2>
+                <h2 class="block-subtitle-text-home" id="HomePageSubTitle2">@_loc[Model.Subtitle2]</h2>
+            </div>
+            <div class="block-title d-none d-md-none d-lg-block d-xl-block" id="TitleImage" onclick="gtag('event','click',{'event_category':'Click','event_label':'HomePage-Image-FemaleTitleImage'});"><img src="@Model.BlockTitleImageUrl" class="img-fluid"></div>
+        </div>
+    }
+</div>
+</div>
+
+<body class="body-bg-img">
+    <div class="modal fade" id="homePageComingSoonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content comingsoon-bg-img">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="ComingSoonModalTitle">Modal Error!1</h3>
+                    <button type="button" id="ComingSoonModalHeaderCloseButton" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="col justify-content-center align-items-center">
+                    <h4 class="modal-body" id="homePageLearnMoreModalPara">Modal Error!2</h4>
+                </div>
+                <br />
+                <div class="form-group thumb-block">
+                    <form action="@Url.Action("SaveUserEntry","Home")" method="post">
+                        <label class="modal-body1 col-form-label" id="homePageComingSoonModalFormLabel">Modal Error!3</label>
+                        <br />
+                        <textarea class="form-control" name="newsfeedUserEntry" id="newsfeedUserEntry" type="text"></textarea>
+                        <div class="modal-footer">
+                            <button type="submit" id="ComingSoonModalFooterSubmitButton" class="btn btn-success" data-dismiss="homePageComingSoonModal" onclick="gtag('event','click',{'event_category':'Click','event_label':'HomePage-Button-ComingSoonModalSubmit'});">@_loc[Model.Submit]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col justify-content-center align-items-center">
+                <a href="@_loc[Model.HomepageShare]" data-size="small"><img src="@Model.IconTwitter" id="HomePageTwitterShareIconImage" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Twitter Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'HomePage-Button-TwitterShareIcon'});"></a>
+            </div>
+            <div class="col justify-content-center align-items-center">
+                <div data-href="" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.gatheringforgood.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><img src="@Model.IconFacebook" id="HomePageFBShareIconImage" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Facebook Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'HomePage-Button-FacebookShareIcon'});"></a></div>
+            </div>
+            <div class="col justify-content-center align-items-center">
+                <div><a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.gatheringforgood.com/&title=Make A Difference&summary=gatheringforgood.com&source=GatheringForGood" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=400,height=500,toolbar=1,resizable=0'); return false;" class="fb-xfbml-parse-ignore"><img src="@Model.IconLinkedin" id="HomePageLinkedinShareIconImage" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Linkedin Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'HomePage-Button-LinkedinShareIcon'});"></a></div>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col justify-content-center align-items-center" id="HomeStatusMessage">
+                <partial name="../../Areas/Identity/Pages/Account/Manage/_StatusMessage" model="Model.StatusMessage" />
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="container-body">
+            <div class="row justify-content-center align-items-center">
+                <div class="col justify-content-center align-items-center">
+                    <h2 class="font-style-content-head" id="GreatestChallengeTitle">@_loc[Model.GreatestChallengeTitle]</h2>
+                </div>
+            </div>
+        </div>
+        <div class="container-body">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-lg-8 justify-content-center align-items-center">
+                    <h2 class="font-style-content align-content-center" id="GreatestChallengePara">@_loc[Model.GreatestChallengePara]</h2>
+                </div>
+            </div>
+        </div>
+        <div class="container-body">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-lg-8 justify-content-center align-items-center">
+                    <h3 class="thumb-block" id="CannotDependSolelyPara">@_loc[Model.CannotDependSolelyPara]</h3>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-3 thumb-block" id="RAEImpactsIcon">
+                <div class="col justify-content-center align-items-center">
+                    <a id="_TrackRAEImpactsIconLink" asp-area="" asp-controller="ReduceAnimalExtinction" asp-action="ReduceAnimalExtinction" asp-route-culture="@CultureInfo.CurrentCulture.Name"><img src="@Model.RAEIconImage" id="HomepageRAEIconImage" onclick="DisableLinks('HomepageRAEIconImage', true, 'Home'); gtag('event','click',{'event_category':'Click','event_label':'HomePage-Button-TrackRAEImpactsIcon'});" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="My actions to reduce animal extinction icon"></a>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <a asp-area="" asp-controller="ReduceAnimalExtinction" asp-action="ReduceAnimalExtinction" asp-route-culture="@CultureInfo.CurrentCulture.Name"><p class="link-style" id="HomePageRAEIconText" width="100" style=" margin: 0px 0px 40px 0px;" onclick="DisableLinks('HomePageRAEIconText', true, 'Home'); gtag('event','click',{'event_category':'Click','event_label':'HomePage-Button-TrackRAEImpactsText'});">@_loc[Model.RAEIconText]</p></a>
+                </div>
+            </div>
+            <div class="col-lg-3 thumb-block" id="RGWImpactsIcon">
+                <div class="col justify-content-center align-items-center">
+                    <a id="_TrackRGWImpactsIconLink" asp-area="" asp-controller="ReduceGlobalWarming" asp-action="ReduceGlobalWarming" asp-route-culture="@CultureInfo.CurrentCulture.Name"><img src="@Model.RGWIconImage" id="HomepageRGWIconImage" onclick="DisableLinks('HomepageRGWIconImage', true, 'Home'); gtag('event','click',{'event_category':'Click','event_label':'HomePage-Button-TrackRGWImpactsIcon'});" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="My actions to reduce global warming icon"></a>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <a asp-area="" asp-controller="ReduceGlobalWarming" asp-action="ReduceGlobalWarming" asp-route-culture="@CultureInfo.CurrentCulture.Name"><p class="link-style" id="HomePageRGWIconText" width="100" style=" margin: 0px 0px 40px 0px;" onclick="DisableLinks('HomePageRGWIconText', true, 'Home'); gtag('event','click',{'event_category':'Click','event_label':'HomePage-Button-TrackRGWImpactsText'});">@_loc[Model.RGWIconText]</p></a>
+                </div>
+            </div>
+            <div class="col-lg-3 thumb-block" id="RDFImpactsIcon">
+                <div class="col justify-content-center align-items-center">
+                    <a id="_TrackRDFImpactsIconLink" asp-area="" asp-controller="ReduceDeforestation" asp-action="ReduceDeforestation" asp-route-culture="@CultureInfo.CurrentCulture.Name"><img src="@Model.RDFIconImage" id="HomepageRDFIconImage" onclick="DisableLinks('HomepageRDFIconImage', true, 'Home'); gtag('event','click',{'event_category':'Click','event_label':'HomePage-Button-TrackRDFImpactsIcon'});" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="My actions to reduce deforestation icon"></a>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <a asp-area="" asp-controller="ReduceDeforestation" asp-action="ReduceDeforestation" asp-route-culture="@CultureInfo.CurrentCulture.Name"><p class="link-style" id="HomePageRDFIconText" width="100" style=" margin: 0px 0px 40px 0px;" onclick="DisableLinks('HomePageRDFIconText', true, 'Home'); gtag('event','click',{'event_category':'Click','event_label':'HomePage-Button-TrackRDFImpactsText'});">@_loc[Model.RDFIconText]</p></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-3 thumb-block" id="AccessNewsfeedIcon">
+                <div class="col justify-content-center align-items-center">
+                    <a id="_HomePageNewsfeedIconLink" data-toggle="modal" data-target="#homePageComingSoonModal" data-title="@_loc[Model.NavBarNewsfeed]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.LikeToSee]" asp-area="" asp-controller="" asp-action="" asp-route-culture="@CultureInfo.CurrentCulture.Name"><img src="@Model.NewsfeedIconImage" id="HomePageNewsfeedIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="Newsfeed Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'HomePage-Button-NewsfeedIcon'});"></a>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <a id="_HomePageNewsfeedIconTextLink" data-toggle="modal" data-target="#homePageComingSoonModal" data-title="@_loc[Model.NavBarNewsfeed]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.LikeToSee]" asp-area="" asp-controller="" asp-action="" asp-route-culture="@CultureInfo.CurrentCulture.Name"><p class="link-style" id="HomePageNewsfeedIconText" width="100" style=" margin: 0px 0px 40px 0px;" onclick="gtag('event','click',{'event_category':'Click','event_label':'HomePage-Button-NewsfeedIconText'});">@_loc[Model.NewsfeedIconText]</p></a>
+                </div>
+            </div>
+            <div class="col-lg-3 thumb-block" id="ArticlesIcon">
+                <div class="col justify-content-center align-items-center">
+                    <a id="_HomepageArticlesIconLink" asp-area="" asp-controller="Articles" asp-action="Articles" asp-route-culture="@CultureInfo.CurrentCulture.Name"><img src="@Model.ArticlesIconImage" id="HomepageArticlesIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="View Articles Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'HomePage-Button-ArticlesIcon'});"></a>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <a asp-area="" asp-controller="Articles" asp-action="Articles" asp-route-culture="@CultureInfo.CurrentCulture.Name"><p class="link-style" id="HomePageArticlesIconText" width="100" style=" margin: 0px 0px 40px 0px;" onclick="gtag('event','click',{'event_category':'Click','event_label':'HomePage-Button-ArticlesIconText'});">@_loc[Model.ArticlesIconText]</p></a>
+                </div>
+            </div>
+            <div class="col-lg-3 thumb-block" id="OffsetCarbonIcon">
+                <div class="col justify-content-center align-items-center">
+                    <!--<a id="_HomepageOffsetCarbonIconLink" asp-area="" asp-controller="CarbonOffsets" asp-action="CarbonOffsets" asp-route-culture="@CultureInfo.CurrentCulture.Name"><img src="@Model.OffsetIconImage" id="HomepageOffsetIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="Offset My Carbon Icon"></a>-->
+                    <a id="_HomepageOffsetCarbonIconLinkTemp" data-toggle="modal" data-target="#homePageComingSoonModal" data-title="@_loc[Model.OffsetIconText]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.LikeToSee]" asp-area="" asp-controller="" asp-action="" asp-route-culture="@CultureInfo.CurrentCulture.Name"><img src="@Model.OffsetIconImage" id="HomepageOffsetIconImageTemp" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="Offset My Carbon Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'HomePage-Button-OffsetMyCarbonIcon'});"></a>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <!--<a class="font-heading" asp-area="" asp-controller="CarbonOffsets" asp-action="CarbonOffsets" asp-route-culture="@CultureInfo.CurrentCulture.Name"><p id="HomePageOffsetIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.OffsetIconText]</p></a>-->
+                    <a id="_HomePageOffsetCarbonIconTextLinkTemp" data-toggle="modal" data-target="#homePageComingSoonModal" data-title="@_loc[Model.OffsetIconText]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.LikeToSee]" asp-area="" asp-controller="" asp-action="" asp-route-culture="@CultureInfo.CurrentCulture.Name"><p class="link-style" id="HomePageOffsetIconTextTemp" width="100" style=" margin: 0px 0px 40px 0px;" onclick="gtag('event','click',{'event_category':'Click','event_label':'HomePage-Button-OffsetMyCarbonIconText'});">@_loc[Model.OffsetIconText]</p></a>
+                </div>
+            </div>
+            <div class="col-lg-3 thumb-block" id="CreateAgileInitiativeIcon">
+                <div class="col justify-content-center align-items-center">
+                    <a id="_HomePageAgileInitiativeIconLink" data-toggle="modal" data-target="#homePageComingSoonModal" data-title="@_loc[Model.AgileIconText]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.LikeToSee]" asp-area="" asp-controller="" asp-action="" asp-route-culture="@CultureInfo.CurrentCulture.Name"><img src="@Model.AgileIconImage" id="HomepageAgileIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="Create Agile Initiative Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'HomePage-Button-AgileInitiativeIcon'});"></a>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <a id="_HomePageAgileInitiativeIconTextLink" data-toggle="modal" data-target="#homePageComingSoonModal" data-title="@_loc[Model.AgileIconText]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.LikeToSee]" asp-area="" asp-controller="" asp-action="" asp-route-culture="@CultureInfo.CurrentCulture.Name"><p class="link-style" id="HomePageAgileIconText" width="100" style=" margin: 0px 0px 40px 0px;" onclick="gtag('event','click',{'event_category':'Click','event_label':'HomePage-Button-AgileInitiativeIconText'});">@_loc[Model.AgileIconText]</p></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="container">
+        <div>
+            <div class="row justify-content-center align-items-center co2-bg-img">
+                <div class="col-sm-12 col-lg-6 justify-content-center align-items-center">
+                    <!--Last test: only this component with contents below this one deleted shows defect. Next step is to try adjusting col-lg-6 to solve issue on sm screen-->
+                    <a asp-area="" asp-controller="ReduceGlobalWarming" asp-action="ReduceGlobalWarming" asp-route-culture="@CultureInfo.CurrentCulture.Name"><h3 class="thumb-block" id="CarbonClockTitle" onclick="DisableLinks('CarbonClockTitle', true, 'Home'); gtag('event','click',{'event_category':'Click','event_label':'HomePage-Content-CarbonClockTitleText'});">@_loc[Model.CarbonClockTitle]</h3></a>
+                    <a asp-area="" asp-controller="ReduceGlobalWarming" asp-action="ReduceGlobalWarming" asp-route-culture="@CultureInfo.CurrentCulture.Name"><p class="font-style-content justify-content-center thumb-text-block" id="CarbonClockPara1" onclick="DisableLinks('CarbonClockPara1', true, 'Home'); gtag('event','click',{'event_category':'Click','event_label':'HomePage-Content-CarbonClockPara1Text'});">@_loc[Model.CarbonClockPara1]</p></a>
+                    <a asp-area="" asp-controller="ReduceGlobalWarming" asp-action="ReduceGlobalWarming" asp-route-culture="@CultureInfo.CurrentCulture.Name"><p class="font-style-content justify-content-center thumb-text-block" style="color:firebrick" id="CarbonClockPara2" onclick="DisableLinks('CarbonClockPara2', true, 'Home'); gtag('event','click',{'event_category':'Click','event_label':'HomePage-Content-CarbonClockPara2Text'});">@_loc[Model.CarbonClockPara2]</p></a>
+                    <br />
+                    <a button type="button" class="d-none d-sm-none d-md-none d-lg-block d-xl-block btn btn-success button-title justify-content-center align-items-center" id="CarbonClockHowCanIHelpButton1" asp-area="" asp-controller="ReduceGlobalWarming" asp-action="ReduceGlobalWarming" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="DisableLinks('CarbonClockHowCanIHelpButton1', true, 'Home'); gtag('event','click',{'event_category':'Click','event_label':'HomePage-Link-CarbonClockHowCanIHelpButtonLink'});">@_loc[Model.HowCanIHelpLabel]</a>
+                </div>
+                <div class="col-sm-12 col-lg-3 justify-content-center align-items-center">
+                    <div class="row justify-content-center align-items-center">
+                        <h3 class="font-style-content" id="1pt5DegTimeUntilTitle">@_loc[Model.TimeUntilTitle]:</h3>
+                        <h3 class="font-style-content" id="1pt5DegTitle">@_loc[Model.OneHalfDegreeDepletedTitle]</h3>
+                    </div>
+                    <hr />
+                    <div class="row justify-content-center align-items-center">
+                        <div class="thumb-block font-style-content-head" id="CarbonClock15" style="color:firebrick" />
+                    </div>
+                </div>
+                <hr />
+                <div class="justify-content-center align-items-center">
+                    <div class="row justify-content-center align-items-center">
+                        <h3 class="font-style-content" id="2DegTimeUntilTitle">@_loc[Model.TimeUntilTitle]:</h3>
+                        <h3 class="font-style-content" id="2DegTitle">@_loc[Model.TwoDegreeDepletedTitle]</h3>
+                    </div>
+                    <hr />
+                    <div class="row justify-content-center align-items-center">
+                        <div class="thumb-block font-style-content-head" id="CarbonClock20" style="color:firebrick" />
+                    </div>
+                </div>
+                <br />
+                <a button type="button" class="d-block d-sm-block d-md-block d-lg-none d-xl-none btn btn-success button-title justify-content-center align-items-center" id="CarbonClockHowCanIHelpButton2" asp-area="" asp-controller="ReduceGlobalWarming" asp-action="ReduceGlobalWarming" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="DisableLinks('CarbonClockHowCanIHelpButton2', true, 'Home'); gtag('event','click',{'event_category':'Click','event_label':'HomePage-Link-CarbonClockHowCanIHelpButtonLink-SS'});">@_loc[Model.HowCanIHelpLabel]</a>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="container">
+        <div>
+            <div class="row justify-content-center align-items-center rhino-bg-img">
+                <div class="col-sm-12 col-lg-6 justify-content-center align-items-center">
+                    <a asp-area="" asp-controller="ReduceAnimalExtinction" asp-action="ReduceAnimalExtinction" asp-route-culture="@CultureInfo.CurrentCulture.Name"><h3 class="thumb-block" id="ExtinctionClockTitle" onclick="DisableLinks('ExtinctionClockTitle', true, 'Home'); gtag('event','click',{'event_category':'Click','event_label':'HomePage-ContentLink-ExtinctionClockTitleText'});">@_loc[Model.ExtinctionClockTitle]</h3></a>
+                    <a asp-area="" asp-controller="ReduceAnimalExtinction" asp-action="ReduceAnimalExtinction" asp-route-culture="@CultureInfo.CurrentCulture.Name"><p class="font-style-content justify-content-center thumb-text-block" id="ExtinctionClockPara1" onclick="DisableLinks('ExtinctionClockPara1', true, 'Home'); gtag('event','click',{'event_category':'Click','event_label':'HomePage-ContentLink-ExtinctionClockPara1Text'});">@_loc[Model.ExtinctionClockPara1]</p></a>
+                    <a asp-area="" asp-controller="ReduceAnimalExtinction" asp-action="ReduceAnimalExtinction" asp-route-culture="@CultureInfo.CurrentCulture.Name"><p class="font-style-content justify-content-center thumb-text-block" style="color:firebrick" id="ExtinctionClockPara2" onclick="DisableLinks('ExtinctionClockPara2', true, 'Home'); gtag('event','click',{'event_category':'Click','event_label':'HomePage-ContentLink-ExtinctionClockPara1Text'});">@_loc[Model.ExtinctionClockPara2] <!-- <a href="" class="thumb-block" id="ExtinctionClockLearnMore">@_loc[Model.ExtinctionClockLearnMore]</a> --></p></a>
+                    <br />
+                    <a button type="button" class="d-none d-sm-none d-md-none d-lg-block d-xl-block btn btn-success button-title justify-content-center align-items-center" id="ExtinctionClockHowCanIHelpButton1" asp-area="" asp-controller="ReduceAnimalExtinction" asp-action="ReduceAnimalExtinction" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="DisableLinks('ExtinctionClockHowCanIHelpButton1', true, 'Home'); gtag('event','click',{'event_category':'Click','event_label':'HomePage-Link-ExtinctionClockHowCanIHelpButtonLink'});">@_loc[Model.HowCanIHelpLabel]</a>
+                </div>
+                <div class="col-sm-12 col-lg-3 justify-content-center align-items-center">
+                    <div class="row justify-content-center align-items-center">
+                        <br />
+                        <br />
+                        <h3 class="thumb-block font-style-content" id="AllSpeciesExtinctTimeUntilTitle">@_loc[Model.TimeUntilTitle]:</h3>
+                        <h3 class="thumb-block font-style-content" id="AllSpeciesExtinctTitle">@_loc[Model.MostSpeciesLostTitle]</h3>
+                    </div>
+                    <hr />
+                    <div class="row justify-content-center align-items-center">
+                        <div class="thumb-block font-style-content-head" id="ExtinctionClockMostLost" style="color:firebrick" />
+                    </div>
+                </div>
+                <hr />
+                <div class="justify-content-center align-items-center">
+                    <div class="row justify-content-center align-items-center">
+                        <h3 class="thumb-block font-style-content" id="ExtinctionsSinceTitle">@_loc[Model.ExtinctionsSinceTitle]:</h3>
+                        <h3 class="thumb-block font-style-content" id="GFGLaunchTitle">@_loc[Model.GFGLaunchedTitle]</h3>
+                    </div>
+                    <hr />
+                    <div class="row justify-content-center align-items-center">
+                        <div class="thumb-block font-style-content-head" id="ExtinctionClockSinceLaunch" style="color:firebrick" />
+                    </div>
+                </div>
+                <br />
+                <a button type="button" class="d-block d-sm-block d-md-block d-lg-none d-xl-none btn btn-success button-title justify-content-center align-items-center" id="ExtinctionClockHowCanIHelpButton2" asp-area="" asp-controller="ReduceAnimalExtinction" asp-action="ReduceAnimalExtinction" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="DisableLinks('ExtinctionClockHowCanIHelpButton2', true, 'Home'); gtag('event','click',{'event_category':'Click','event_label':'HomePage-Link-ExtinctionClockHowCanIHelpButtonLink-SS'});">@_loc[Model.HowCanIHelpLabel]</a>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="container">
+        <div>
+            <div class="row justify-content-center align-items-center forestsos-bg-img">
+                <div class="col-sm-12 col-lg-6 justify-content-center align-items-center">
+                    <a asp-area="" asp-controller="ReduceDeforestation" asp-action="ReduceDeforestation" asp-route-culture="@CultureInfo.CurrentCulture.Name"><h3 class="thumb-block" id="ForestClockTitle" onclick="DisableLinks('ForestClockTitle', true, 'Home'); gtag('event','click',{'event_category':'Click','event_label':'HomePage-ContentLink-DeforestationClockTitleText'});">@_loc[Model.ForestClockTitle]</h3></a>
+                    <a asp-area="" asp-controller="ReduceDeforestation" asp-action="ReduceDeforestation" asp-route-culture="@CultureInfo.CurrentCulture.Name"><p class="font-style-content justify-content-center thumb-text-block" id="ForestClockPara1" onclick="DisableLinks('ForestClockPara1', true, 'Home'); gtag('event','click',{'event_category':'Click','event_label':'HomePage-ContentLink-DeforestationClockTitleText'});">@_loc[Model.ForestClockPara1]</p></a>
+                    <a asp-area="" asp-controller="ReduceDeforestation" asp-action="ReduceDeforestation" asp-route-culture="@CultureInfo.CurrentCulture.Name"><p class="font-style-content justify-content-center thumb-text-block" style="color:firebrick" id="ForestClockPara2" onclick="DisableLinks('ForestClockPara2', true, 'Home'); gtag('event','click',{'event_category':'Click','event_label':'HomePage-ContentLink-DeforestationClockTitleText'});">@_loc[Model.ForestClockPara2] <!-- <a href="" class="thumb-block" id="ForestClockLearnMore">@_loc[Model.ForestClockLearnMore]</a> --></p></a>
+                    <br />
+                    <a button type="button" class="d-none d-sm-none d-md-none d-lg-block d-xl-block btn btn-success button-title justify-content-center align-items-center" id="ForestClockHowCanIHelpButton1" asp-area="" asp-controller="ReduceDeforestation" asp-action="ReduceDeforestation" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="DisableLinks('ForestClockHowCanIHelpButton1', true, 'Home'); gtag('event','click',{'event_category':'Click','event_label':'HomePage-Link-DeforestationClockHowCanIHelpButtonLink'});">@_loc[Model.HowCanIHelpLabel]</a>
+                </div>
+                <div class="col-sm-12 col-lg-3 justify-content-center align-items-center">
+                    <div class="row justify-content-center align-items-center">
+                        <br />
+                        <br />
+                        <h3 class="font-style-content" id="AllForestLostTimeUntilTitle">@_loc[Model.TimeUntilTitle]:</h3>
+                        <h3 class="font-style-content" id="AllForestLostTitle">@_loc[Model.AllForestLostTitle]</h3>
+                    </div>
+                    <hr />
+                    <div class="row justify-content-center align-items-center">
+                        <div class="thumb-block font-style-content-head" id="ForestClockAllLost" style="color:firebrick" />
+                    </div>
+                </div>
+                <hr />
+                <div class="justify-content-center align-items-center">
+                    <div class="row justify-content-center align-items-center">
+                        <h3 class="font-style-content" id="ForestLostSinceTitle">@_loc[Model.ForestLostSinceTitle]:</h3>
+                        <h3 class="thumb-block font-style-content" id="ForestGFGLaunchTitle">@_loc[Model.GFGLaunchedTitle]</h3>
+                    </div>
+                    <hr />
+                    <div class="row justify-content-center align-items-center">
+                        <div class="thumb-block font-style-content-head" id="ForestClockSinceLaunch" style="color:firebrick" />
+                    </div>
+                </div>
+                <hr />
+                <br />
+                <a button type="button" class="d-block d-sm-block d-md-block d-lg-none d-xl-none btn btn-success button-title justify-content-center align-items-center" id="ForestClockHowCanIHelpButton2" asp-area="" asp-controller="ReduceDeforestation" asp-action="ReduceDeforestation" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="DisableLinks('ForestClockHowCanIHelpButton2', true, 'Home'); gtag('event','click',{'event_category':'Click','event_label':'HomePage-Link-DeforestationClockHowCanIHelpButtonLink-SS'});">@_loc[Model.HowCanIHelpLabel]</a>
+            </div>
+        </div>
+    </div>
+    <br />
+</body>
+@section Scripts{
+    <script src="~/js/homePageComingSoonModal.js"></script>
+    <script src="~/js/homeactive.js"></script>
+    <script src="~/js/carbonclock.js"></script>
+    <script src="~/js/extinctionclock.js"></script>
+    <script src="~/js/forestclock.js"></script>
+    <script src="~/js/HomeDisableEnableLinks.js"></script>
+    <script src="~/js/DisableEnableLinks.js"></script>
+    <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+}

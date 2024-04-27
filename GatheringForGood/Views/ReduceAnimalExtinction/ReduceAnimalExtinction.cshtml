@@ -1,0 +1,565 @@
+﻿@model ReduceAnimalExtinctionViewModel
+@using Microsoft.AspNetCore.Identity
+@using GatheringForGood.Data
+@using System.Globalization
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = _loc[Model.PageTabTitle];
+}
+@section meta_head_tags{
+    <meta name='description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change. Learn what you can do to reduce animal extinction today!" />
+    <meta property='og:locale' content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property='og:title' content="GatheringForGood - The place where ideas and expertise come together to solve the world's problems. Learn what you can do to reduce animal extinctions today!" />
+    <meta property='og:description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change. Learn what you can do to reduce animal extinctions today!" />
+    <meta property='og:url' content="https://gatheringforgood.com/en/ReduceAnimalExtinction/ReduceAnimalExtinction" />
+    <meta property='og:site_name' content="gatheringforgood" />
+    <meta property='og:image' content="http://www.gatheringforgood.com/images/shareimagerae.jpg" />
+    <meta property='og:image:width' content="1200" />
+    <meta property='og:image:height' content="600" />
+    <meta property='og:image:alt' content="gatheringforgood sharing image" />
+    <meta property="og:author" content="gatheringforgood">
+    <link rel="preload" as="image" href="@Model.GetEarthHandsReducedImageUrl" imagesrcset="@Model.GetEarthHandsReduced400ImageUrl 2.5x, @Model.GetEarthHandsReduced800ImageUrl 2x, @Model.GetEarthHandsReduced1200ImageUrl 1x, @Model.GetEarthHandsReduced1600ImageUrl 0.5x" sizes="100vw">
+}
+@section header_image{
+    <div class="bg-img-non-home" id="ReduceAnimalExtinctionPageBanner">
+        <nav class="navbar navbar-expand-lg navbar-light" id="main-navbar-rae-page">
+            <div class="container">
+                <a class="navbar-brand mt-20" onclick="changeactive('Home'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-GoToHomeLogo'});" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/circle_logo.webp" id="_raePageLogoImg" width="40" height="40" style="margin:0px 20px;" alt="Logo Image">
+                </a>
+                <button class="navbar-toggler" type="button" id="_raePageNavBarToggler" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item" onclick="changeactive('Home')">
+                            <a class="nav-link" id="_raePageHomeNavLink" asp-area="" asp-controller="Home" asp-action="Index" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-NavLink-Home'});">@_loc[Model.NavBarHome]</a>
+                        </li>
+                        <li class="nav-item" onclick="changeactive('Articles')">
+                            <a class="nav-link" id="_raePageArticlesNavLink" asp-area="" asp-controller="Articles" asp-action="Articles" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-NavLink-Articles'});"><p id="RAE-Articles-NavLink-Para" onclick="DisableLinks('RAE-Articles-NavLink-Para', true, 'RAE');">@_loc[Model.Articles]</p></a>
+                        </li>
+                        <li class="nav-item" onclick="changeactive('About')">
+                            <a class="nav-link" id="_raePageAboutNavLink" asp-area="" asp-controller="About" asp-action="About" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-NavLink-About'});">@_loc[Model.NavBarAbout]</a>
+                        </li>
+                        <li class="nav-item" onclick="changeactive('Help')">
+                            <a class="nav-link" id="_raePageHelpNavLink" asp-area="" asp-controller="Help" asp-action="Help" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-NavLink-Help'});">@_loc[Model.NavBarHelpCenter]</a>
+                        </li>
+                        <partial name="_LoginPartial" />
+                    </ul>
+                </div>
+            </div>
+        </nav>
+}
+@section header_content{
+    <div class="container-title">
+        <div class="block-title">
+            <br>
+            @if (!SignInManager.IsSignedIn(User))
+            {
+                <a button type="button" class="btn btn-success button-title" id="ReduceAnimalExtinctionPageMakeDiffBtn" asp-area="Identity" asp-page="/Account/Register" asp-route-culture="@CultureInfo.CurrentCulture.Name">@_loc[Model.ButtonText]</a>
+            }
+            <h1 class="block-subtitle-text" id="raePageSubtitle">@_loc[Model.Subtitle]</h1>
+            <h2 class="block-title-text-non-home" id="raePageTitle">@_loc[Model.Title]</h2>
+        </div>
+    </div>
+}
+</div>
+<body class="body-bg-img">
+    <div class="modal fade" id="raePageComingSoonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content comingsoon-bg-img">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="ComingSoonModalTitle">Modal Error!1</h3>
+                    <button type="button" id="ComingSoonModalHeaderCloseButton" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="col justify-content-center align-items-center">
+                    <h4 class="modal-body" id="raePageLearnMoreModalPara">Modal Error!2</h4>
+                </div>
+                <br />
+                <div class="form-group thumb-block">
+                    <form action="@Url.Action("SaveUserEntry","ReduceAnimalExtinction")" method="post">
+                        <label class="modal-body1 col-form-label" id="raePageComingSoonModalFormLabel">Modal Error!3</label>
+                        <br />
+                        <textarea class="form-control" name="newsfeedUserEntry" id="newsfeedUserEntry" type="text"></textarea>
+                        <div class="modal-footer">
+                            <button type="submit" id="ComingSoonModalFooterSubmitButton" class="btn btn-success" data-dismiss="raePageComingSoonModal" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-ComingSoonModalSubmit'});">@_loc[Model.Submit]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="raePageSocialShareModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog centered" role="document">
+            <div class="modal-content socialshare-bg-img centered">
+                <div class="modal-header">
+                    <h3 class="modal-title1" id="SocialShareModalTitle">Modal Error!1</h3>
+                    <button type="button" id="SocialShareModalHeaderCloseButton" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <hr />
+                <div class="container-body">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col justify-content-center align-items-center">
+                            <h4 class="modal-body font-style-content-head justify-content-center align-items-center" id="raePageSocialShareModalPara1">Modal Error!2</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-body">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col justify-content-center align-items-center">
+                            <img src="~/images/socialexampleblur.png" class="socialex-img" id="raePageSocialShareModalImage" />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="container-body">
+                    <div class="col justify-content-center align-items-center">
+                        <div class="row justify-content-center align-items-center">
+                            <h4 class="modal-body1 font-style-content" id="raePageSocialShareModalPara2">Modal Error!3</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-body">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col justify-content-center align-items-center">
+                            <div id="tweetBtn">
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+                <div class="container-body">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col justify-content-center align-items-center">
+                            <br />
+                            <div data-href="http://www.gatheringforgood.com" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.gatheringforgood.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><img src="@Model.IconFacebook" id="RAEPageFBShareIconImage1" width="30" height="30" style=" margin: 0px 10px 30px 0px;" alt="Facebook Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-SocialShareModalFacebook'});"></a></div>
+                            <div><a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.gatheringforgood.com/&title=Make A Difference&summary=gatheringforgood.com&source=GatheringForGood" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=400,height=500,toolbar=1,resizable=0'); return false;" class="fb-xfbml-parse-ignore"><img src="@Model.IconLinkedin" id="RAEPageLinkedinShareIconImage1" width="30" height="30" style=" margin: 0px 10px 30px 0px;" alt="Linkedin Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-SocialShareModalLinkedin'});"></a></div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="raePageLearnMoreModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="raelearnMoreModalTitle">Modal Error!1</h3>
+                    <button type="button" id="raelearnMoreModalHeaderCloseButton" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="col-lg-6 justify-content-center align-items-center">
+                    <h4 class="modal-body" id="raePageLearnMoreModalPara">Modal Error!2</h4>
+                </div>
+                <div class="form-group thumb-block">
+                    <label class="modal-body1 col-form-label" id="raePageLearnMoreModalFormLabel">Modal Error!3</label>
+                    <textarea class="form-control" id="rae-Page-Learn-More-Modal-message-text"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="raelearnMoreModalFooterCloseButton" class="btn btn-success" data-dismiss="modal">@_loc[Model.Close]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col justify-content-center align-items-center">
+                <a href="@_loc[Model.RAEpageShare]" data-size="small"><img src="@Model.IconTwitter" id="RAEPageTwitterShareIconImage" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Twitter Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-TwitterShareIcon'});"></a>
+            </div>
+            <div class="col justify-content-center align-items-center">
+                <div data-href="" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.gatheringforgood.com%2Fen%2FReduceAnimalExtinction%2FReduceAnimalExtinction&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><img src="@Model.IconFacebook" id="RAEPageFBShareIconImage" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Facebook Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-FacebookShareIcon'});"></a></div>
+            </div>
+            <div class="col justify-content-center align-items-center">
+                <div><a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.gatheringforgood.com/en/ReduceAnimalExtinction/ReduceAnimalExtinction&title=Make A Difference&summary=gatheringforgood.com&source=GatheringForGood" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=400,height=500,toolbar=1,resizable=0'); return false;" class="fb-xfbml-parse-ignore"><img src="@Model.IconLinkedin" id="RAEPageLinkedinShareIconImage" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Linkedin Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-LinkedinShareIcon'});"></a></div>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-3 thumb-block" id="RAEPageRAEImpactsIcon">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.RAEIconImage" class="transparent-image" id="RAEPageRAEIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="My actions to reduce animal extinction rates icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-DISABLEDButton-TrackRAEImpactsIcon'});">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p class="link-style-selected" id="RAEPageRAEIconText" width="100" style="margin: 0px 0px 40px 0px; color: darkseagreen;" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-DISABLEDButton-TrackRAEImpactsText'});">@_loc[Model.RAEIconText]</p>
+                </div>
+            </div>
+            <div class="col-lg-3 thumb-block" id="RAEPageRGWImpactsIcon">
+                <div class="col justify-content-center align-items-center">
+                    <a id="RAEPage_TrackRGWImpactsIconLink" asp-area="" asp-controller="ReduceGlobalWarming" asp-action="ReduceGlobalWarming" asp-route-culture="@CultureInfo.CurrentCulture.Name"><img src="@Model.RGWIconImage" id="RAEPageRGWIconImage" onclick="DisableLinks('RAEPageRGWIconImage', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-TrackRGWImpactsIcon'});" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="My actions to reduce global warming icon"></a>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <a class="link-style" asp-area="" asp-controller="ReduceGlobalWarming" asp-action="ReduceGlobalWarming" asp-route-culture="@CultureInfo.CurrentCulture.Name"><p id="RAEPageRGWIconText" width="100" style=" margin: 0px 0px 40px 0px;" onclick="DisableLinks('RAEPageRGWIconText', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-TrackRGWImpactsText'});">@_loc[Model.RGWIconText]</p></a>
+                </div>
+            </div>
+            <div class="col-lg-3 thumb-block" id="RAEPageRDFImpactsIcon">
+                <div class="col justify-content-center align-items-center">
+                    <a id="RAEPage_TrackRDFImpactsIconLink" asp-area="" asp-controller="ReduceDeforestation" asp-action="ReduceDeforestation" asp-route-culture="@CultureInfo.CurrentCulture.Name"><img src="@Model.RDFIconImage" id="RAEPageRDFIconImage" onclick="DisableLinks('RAEPageRDFIconImage', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-TrackRDFImpactsIcon'});" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="My actions to reduce deforestation icon"></a>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <a class="link-style" asp-area="" asp-controller="ReduceDeforestation" asp-action="ReduceDeforestation" asp-route-culture="@CultureInfo.CurrentCulture.Name"><p id="RAEPageRDFIconText" width="100" style=" margin: 0px 0px 40px 0px;" onclick="DisableLinks('RAEPageRDFIconText', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-TrackRDFImpactsText'});">@_loc[Model.RDFIconText]</p></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="container-body">
+            <div class="row justify-content-center align-items-center">
+                <div class="col justify-content-center align-items-center">
+                    <h2 class="font-style-content-head" id="raeDoSomethingTodayTitle">@_loc[Model.DoSomethingTodayTitle]</h2>
+                </div>
+            </div>
+        </div>
+        <div class="container-body">
+            <div class="col-lg-8 justify-content-center align-items-center">
+                <div class="row justify-content-center align-items-center">
+                    <h2 class="thumb-text-block font-style-content" id="raeDoSomethingTodayPara"><strong>@_loc[Model.DoSomethingTodayPara]</strong></h2>
+                </div>
+                <br />
+                <div class="row justify-content-center align-items-center">
+                    <h2 class="thumb-text-block font-style-content" id="raeDoSomethingTodayPara"><strong>@_loc[Model.DoSomethingTodayPara2]</strong></h2>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 thumb-block">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.AllUserActionsIcon" id="RAEPageAllUserActionsIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="All User Actions Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-TotalActionsAllUsersImage'});">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p class="centered font-heading" id="RAEPageAllUserActionsIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.SiteImpactTitle]</p>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p class="font-style-content" id="RAEPageAllUserActionsTotalText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.SiteImpactTotal]</p>
+                </div>
+                <div class="row justify-content-center align-items-center">
+                    <a href="@_loc[Model.TotalActionsAllUsersShare]" data-size="small"><img src="@Model.IconTwitter" id="RAEPageTwitterShareIconImage1" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Twitter Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-TotalActionsAllUsersShareTwitter'});"></a>
+                    <br />
+                    <div data-href="" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.gatheringforgood.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><img src="@Model.IconFacebook" id="RAEPageFBShareIconImage2" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Facebook Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-TotalActionsAllUsersShareFacebook'});"></a></div>
+                    <br />
+                    <div><a href="https://www.linkedin.com/shareArticle?mini=true&url=http://www.gatheringforgood.com/&title=Make A Difference&summary=gatheringforgood.com&source=GatheringForGood" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=400,height=500,toolbar=1,resizable=0'); return false;" class="fb-xfbml-parse-ignore"><img src="@Model.IconLinkedin" id="RAEPageLinkedinShareIconImage2" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Linkedin Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-TotalActionsAllUsersShareLinkedin'});"></a></div>
+                    <br />
+                </div>
+            </div>
+            <div class="col-lg-6 thumb-block">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.AllUsersCO2ImpactIcon" id="RAEPageMyTotalActionsIconImage" width="110" height="100" style=" margin: 0px 0px 40px 0px;" alt="All Users CO2 Reduction Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-TotalCO2ReductionAllUsersImage'});">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p class="centered font-heading" id="RAEPageMyTotalActionsIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.AllUsersCO2ImpactTitle]</p>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p class="font-style-content" id="RAEPageMyTotalActionsTotalText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.AllUsersCO2ImpactTotal]</p>
+                </div>
+                <div class="row justify-content-center align-items-center">
+                    <a href="@_loc[Model.AllUsersCO2MyShare]" data-size="small"><img src="@Model.IconTwitter" id="RAEPageTwitterShareIconImage3" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Twitter Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-TotalCO2ReductionAllUsersShareTwitter'});"></a>
+                    <br />
+                    <div data-href="" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.gatheringforgood.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><img src="@Model.IconFacebook" id="RAEPageFBShareIconImage4" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Facebook Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-TotalCO2ReductionAllUsersShareFacebook'});"></a></div>
+                    <br />
+                    <div><a href="https://www.linkedin.com/shareArticle?mini=true&url=http://www.gatheringforgood.com/&title=Make A Difference&summary=gatheringforgood.com&source=GatheringForGood" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=400,height=500,toolbar=1,resizable=0'); return false;" class="fb-xfbml-parse-ignore"><img src="@Model.IconLinkedin" id="RAEPageLinkedinShareIconImage4" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Linkedin Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-TotalCO2ReductionAllUsersShareLinkedin'});"></a></div>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-4 thumb-block">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.AllUserRAEActionsIcon" id="RAEPageRAEUserActionsIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="Extinction Actions All Users Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-ExtinctionActionsAllUsersImage'});">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p class="centered font-heading" id="RAEPageRAEUserActionsIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.RAEImpactTitle]</p>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p class="font-style-content" id="RAEPageRAEUserActionsTotalText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.RAEImpactTotal]</p>
+                </div>
+                <div class="row justify-content-center align-items-center">
+                    <a href="@_loc[Model.GlobalWarmingAllUsersShare]" data-size="small"><img src="@Model.IconTwitter" id="RAEPageTwitterShareIconImage2" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Twitter Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-ExtinctionActionsAllUsersShareTwitter'});"></a>
+                    <br />
+                    <div data-href="" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.gatheringforgood.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><img src="@Model.IconFacebook" id="RAEPageFBShareIconImage3" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Facebook Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-ExtinctionActionsAllUsersShareFacebook'});"></a></div>
+                    <br />
+                    <div><a href="https://www.linkedin.com/shareArticle?mini=true&url=http://www.gatheringforgood.com/&title=Make A Difference&summary=gatheringforgood.com&source=GatheringForGood" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=400,height=500,toolbar=1,resizable=0'); return false;" class="fb-xfbml-parse-ignore"><img src="@Model.IconLinkedin" id="RAEPageLinkedinShareIconImage3" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Linkedin Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-ExtinctionActionsAllUsersShareLinkedin'});"></a></div>
+                    <br />
+                </div>
+            </div>
+            <div class="col-lg-4 thumb-block">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.MyTotalActionsIcon" id="RAEPageMyTotalActionsIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="My Total Actions Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-MyTotalActionsImage'});">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p class="centered font-heading" id="RAEPageMyTotalActionsIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.UserImpactTitle]</p>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p class="font-style-content" id="RAEPageMyTotalActionsTotalText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.UserImpactTotal]</p>
+                </div>
+                <div class="row justify-content-center align-items-center">
+                    <a href="@_loc[Model.TotalActionsMyShare]" data-size="small"><img src="@Model.IconTwitter" id="RAEPageTwitterShareIconImage3" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Twitter Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-MyTotalActionsShareTwitter'});"></a>
+                    <br />
+                    <div data-href="" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.gatheringforgood.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><img src="@Model.IconFacebook" id="RAEPageFBShareIconImage4" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Facebook Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-MyTotalActionsShareFacebook'});"></a></div>
+                    <br />
+                    <div><a href="https://www.linkedin.com/shareArticle?mini=true&url=http://www.gatheringforgood.com/&title=Make A Difference&summary=gatheringforgood.com&source=GatheringForGood" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=400,height=500,toolbar=1,resizable=0'); return false;" class="fb-xfbml-parse-ignore"><img src="@Model.IconLinkedin" id="RAEPageLinkedinShareIconImage4" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Linkedin Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-MyTotalActionsShareLinkedin'});"></a></div>
+                    <br />
+                </div>
+            </div>
+            <div class="col-lg-4 thumb-block">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.MyCO2ImpactIcon" id="RAEPageMyCO2ImpactIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="My Total CO2 Reduction Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-MyTotalCO2ReductionImage'});">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p class="centered font-heading" id="RAEPageMyCO2ImpactIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.RAEMyCO2ImpactTitle]</p>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p class="font-style-content" id="RAEPageMyCO2ImpactTotalText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.RAEMyCO2ImpactTotal]</p>
+                </div>
+                <div class="row justify-content-center align-items-center">
+                    <a href="@_loc[Model.CO2ReductionMyShare]" data-size="small"><img src="@Model.IconTwitter" id="RAEPageTwitterShareIconImage4" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Twitter Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-MyTotalCO2ReductionShareTwitter'});"></a>
+                    <br />
+                    <div data-href="" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.gatheringforgood.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><img src="@Model.IconFacebook" id="RAEPageFBShareIconImage5" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Facebook Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-MyTotalCO2ReductionShareFacebook'});"></a></div>
+                    <br />
+                    <div><a href="https://www.linkedin.com/shareArticle?mini=true&url=http://www.gatheringforgood.com/&title=Make A Difference&summary=gatheringforgood.com&source=GatheringForGood" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=400,height=500,toolbar=1,resizable=0'); return false;" class="fb-xfbml-parse-ignore"><img src="@Model.IconLinkedin" id="RAEPageLinkedinShareIconImage5" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Linkedin Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-MyTotalCO2ReductionShareLinkedin'});"></a></div>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <hr />
+    <div class="container-body">
+        <table class="table">
+            <thead class="thead-dark centered">
+                <tr>
+                    <th scope="col" colspan="6" id="RAESharingOn"><label for="RAEEnableSharingCheckbox">@_loc[Model.EnableSharing] <input type="checkbox" id="RAEEnableSharingCheckbox" name="RAEEnableSharingCheckbox" checked="checked" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Button-SharingCheckboxChanged'});" /></label></th>
+                </tr>
+            </thead>
+            <thead class="thead-dark centered">
+                <tr>
+                    <th scope="col" id="raeWhatCanIDoTitle">@_loc[Model.WhatCanIDo]</th>
+                    <th scope="col" class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="raeInformationTitle">@_loc[Model.Information]</th>
+                    <th scope="col" id="raeImpactTitle">@_loc[Model.Impact]</th>
+                    <th scope="col" id="raeClickDetailsTitle">@_loc[Model.ClickDetails]</th>
+                    <th scope="col" id="raeIDidThisTodayTitle">@_loc[Model.IDidThisToday]</th>
+                    <th scope="col" id="raeMyImpactTitle">@_loc[Model.MyImpact]</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-success">
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="raeReduceMeatIntakeTitleMobile"><strong>@_loc[Model.ReduceMeatIntakeTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="raeReduceMeatIntakeTitle"><strong>@_loc[Model.ReduceMeatIntakeTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="raeReduceMeatIntakePara">@_loc[Model.SixtyPercent] @_loc[Model.ReduceMeatIntakePara2] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.ReduceMeatIntakeTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow1">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Rhinoicon5" id="raeImpactIconRow1" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-ImpactIconRow1Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="raeReduceMeatIntakeClickDetails"><strong>@_loc[Model.ReduceMeatClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 1 })"><img src="@Model.MouseClickIconThumbnailUrl" id="raeMouseClickIconRow1" onclick="DisableEnableLinks('raeMouseClickIconRow1', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow1Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 1 })"><img src="@Model.HandTapIconThumbnailUrl" id="raeHandTapIconRow1" onclick="DisableEnableLinks('raeHandTapIconRow1', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow1Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="raeMyImpactReduceMeat"><strong>@_loc[Model.MyImpactReduceMeat]</strong></td>
+                </tr>
+                <tr class="table-success">
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="raeReduceMeatIntakeParaB">@_loc[Model.SixtyPercent] @_loc[Model.ReduceMeatIntakePara2]<!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.ReduceMeatIntakeTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow1b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr>
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="raeReducedFamilySizesTitleMobile"><strong>@_loc[Model.ReducedFamilySizesTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="raeReducedFamilySizesTitle"><strong>@_loc[Model.ReducedFamilySizesTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="ReducedFamilySizesPara">@_loc[Model.ReducedFamilySizesPara1] @_loc[Model.ReducedFamilySizesPara2] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.ReducedFamilySizesTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow2">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Rhinoicon5" id="raeImpactIconRow2" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-ImpactIconRow2Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="raeReducedFamilySizesClickDetails"><strong>@_loc[Model.FamilySizesClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 2 })"><img src="@Model.MouseClickIconThumbnailUrl" id="raeMouseClickIconRow2" onclick="DisableEnableLinks('raeMouseClickIconRow2', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow2Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 2 })"><img src="@Model.HandTapIconThumbnailUrl" id="raeHandTapIconRow2" onclick="DisableEnableLinks('raeHandTapIconRow2', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow2Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="raeMyImpactFamilySizes"><strong>@_loc[Model.MyImpactFamilySizes]</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="ReducedFamilySizesParaB">@_loc[Model.ReducedFamilySizesPara1] @_loc[Model.ReducedFamilySizesPara2] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.ReducedFamilySizesTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow2b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr class="table-success">
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="raeMinimisePlasticTitleMobile"><strong>@_loc[Model.MinimisePlasticTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="raeMinimisePlasticTitle"><strong>@_loc[Model.MinimisePlasticTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="raeMinimisePlasticPara1">@_loc[Model.MinimisePlasticPara1] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.MinimisePlasticTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow3">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Rhinoicon5" id="raeImpactIconRow3" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-ImpactIconRow3Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="raeMinimisePlasticClickDetails"><strong>@_loc[Model.MinimisePlasticClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 3 })"><img src="@Model.MouseClickIconThumbnailUrl" id="raeMouseClickIconRow3" onclick="DisableEnableLinks('raeMouseClickIconRow3', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow3Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 3 })"><img src="@Model.HandTapIconThumbnailUrl" id="raeHandTapIconRow3" onclick="DisableEnableLinks('raeHandTapIconRow3', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow3Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="raeMyImpactMinimisePlastic"><strong>@_loc[Model.MyImpactMinimisePlastic]</strong></td>
+                </tr>
+                <tr class="table-success">
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="raeMinimisePlasticPara1B">@_loc[Model.MinimisePlasticPara1] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.MinimisePlasticTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow3b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr>
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="raeGoVegetarianTitleMobile"><strong>@_loc[Model.GoVegetarianTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="raeGoVegetarianTitle"><strong>@_loc[Model.GoVegetarianTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="raeGoVegetarianPara1">@_loc[Model.GoVegetarianPara1] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.GoVegetarianTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow4">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Rhinoicon5" id="raeImpactIconRow4" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-ImpactIconRow4Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="raeGoVegetarianClickDetails"><strong>@_loc[Model.GoVegetarianClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 4 })"><img src="@Model.MouseClickIconThumbnailUrl" id="raeMouseClickIconRow4" onclick="DisableEnableLinks('raeMouseClickIconRow4', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow4Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 4 })"><img src="@Model.HandTapIconThumbnailUrl" id="raeHandTapIconRow4" onclick="DisableEnableLinks('raeHandTapIconRow4', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow4Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="raeMyImpactGoVegetarian"><strong>@_loc[Model.MyImpactGoVegetarian]</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="raeGoVegetarianPara1B">@_loc[Model.GoVegetarianPara1] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.GoVegetarianTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow4b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr class="table-success">
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="raeGoVeganTitleMobile"><strong>@_loc[Model.GoVeganTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="raeGoVeganTitle"><strong>@_loc[Model.GoVeganTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="raeGoVeganPara1">@_loc[Model.GoVeganPara1] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.GoVeganTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow5">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Rhinoicon5" id="raeImpactIconRow5" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-ImpactIconRow5Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="raeGoVeganClickDetails"><strong>@_loc[Model.GoVeganClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 5 })"><img src="@Model.MouseClickIconThumbnailUrl" id="raeMouseClickIconRow5" onclick="DisableEnableLinks('raeMouseClickIconRow5', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow5Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 5 })"><img src="@Model.HandTapIconThumbnailUrl" id="raeHandTapIconRow5" onclick="DisableEnableLinks('raeHandTapIconRow5', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow5Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="raeMyImpactGoVegan"><strong>@_loc[Model.MyImpactGoVegan]</strong></td>
+                </tr>
+                <tr class="table-success">
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="raeGoVeganPara1B">@_loc[Model.GoVeganPara1] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.GoVeganTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow5b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr>
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="raeSupportHabitatRestorationTitleMobile"><strong>@_loc[Model.SupportHabitatRestorationTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="raeSupportHabitatRestorationTitle"><strong>@_loc[Model.SupportHabitatRestorationTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="SupportHabitatRestorationPara1">@_loc[Model.SupportHabitatRestorationPara1] @_loc[Model.SupportHabitatRestorationPara2] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.SupportHabitatRestorationTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow6">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Rhinoicon4" id="raeImpactIconRow6" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-ImpactIconRow6Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="raeSupportHabitatRestorationClickDetails"><strong>@_loc[Model.NotQuantifiableClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 6 })"><img src="@Model.MouseClickIconThumbnailUrl" id="raeMouseClickIconRow6" onclick="DisableEnableLinks('raeMouseClickIconRow6', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow6Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 6 })"><img src="@Model.HandTapIconThumbnailUrl" id="raeHandTapIconRow6" onclick="DisableEnableLinks('raeHandTapIconRow6', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow6Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="raeMyImpactHabitatRestoration"><strong>@_loc[Model.MyImpactHabitatRestoration]</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="SupportHabitatRestorationPara1B">@_loc[Model.SupportHabitatRestorationPara1] @_loc[Model.SupportHabitatRestorationPara2] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.SupportHabitatRestorationTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow6b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr class="table-success">
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="raeWildlifeRefugeTitleMobile"><strong>@_loc[Model.WildlifeRefugeTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="raeWildlifeRefugeTitle"><strong>@_loc[Model.WildlifeRefugeTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="WildlifeRefugePara">@_loc[Model.WildlifeRefugePara1] @_loc[Model.WildlifeRefugePara2] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.WildlifeRefugeTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow7">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Rhinoicon3" id="raeImpactIconRow7" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-ImpactIconRow7Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="raeWildlifeRefugeClickDetails"><strong>@_loc[Model.NotQuantifiableClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 7 })"><img src="@Model.MouseClickIconThumbnailUrl" id="raeMouseClickIconRow7" onclick="DisableEnableLinks('raeMouseClickIconRow7', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow7Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 7 })"><img src="@Model.HandTapIconThumbnailUrl" id="raeHandTapIconRow7" onclick="DisableEnableLinks('raeHandTapIconRow7', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow7Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="raeMyImpactWildlifeRefuge"><strong>@_loc[Model.MyImpactWildlifeRefuge]</strong></td>
+                </tr>
+                <tr class="table-success">
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="WildlifeRefugePara1B">@_loc[Model.WildlifeRefugePara1] @_loc[Model.WildlifeRefugePara2] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.WildlifeRefugeTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow7b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr>
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="raeStandUpMobile"><strong>@_loc[Model.StandUp]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="raeStandUp"><strong>@_loc[Model.StandUp]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="raeStandUpPara1">@_loc[Model.StandUpPara1] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.StandUp]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow8">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Rhinoicon3" id="raeImpactIconRow8" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-ImpactIconRow8Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="raeStandUpClickDetails"><strong>@_loc[Model.NotQuantifiableClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 8 })"><img src="@Model.MouseClickIconThumbnailUrl" id="raeMouseClickIconRow8" onclick="DisableEnableLinks('raeMouseClickIconRow8', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow8Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 8 })"><img src="@Model.HandTapIconThumbnailUrl" id="raeHandTapIconRow8" onclick="DisableEnableLinks('raeHandTapIconRow8', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow8Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="raeMyImpactStandUp"><strong>@_loc[Model.MyImpactStandUp]</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="raeStandUpPara1B">@_loc[Model.StandUpPara1] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.StandUp]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow8b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr class="table-success">
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="raeHerbsAndPesticidesTitleMobile"><strong>@_loc[Model.HerbsAndPesticidesTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="raeHerbsAndPesticidesTitle"><strong>@_loc[Model.HerbsAndPesticidesTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="HerbsAndPesticidesPara1">@_loc[Model.HerbsAndPesticidesPara1] @_loc[Model.HerbsAndPesticidesPara2]<!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.HerbsAndPesticidesTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow9">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Rhinoicon3" id="raeImpactIconRow9" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-ImpactIconRow9Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="raeHerbsAndPesticidesClickDetails"><strong>@_loc[Model.NotQuantifiableClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 9 })"><img src="@Model.MouseClickIconThumbnailUrl" id="raeMouseClickIconRow9" onclick="DisableEnableLinks('raeMouseClickIconRow9', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow9Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 9 })"><img src="@Model.HandTapIconThumbnailUrl" id="raeHandTapIconRow9" onclick="DisableEnableLinks('raeHandTapIconRow9', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow9Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="raeMyImpactHerbsAndPesticides"><strong>@_loc[Model.MyImpactHerbsAndPesticides]</strong></td>
+                </tr>
+                <tr class="table-success">
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="HerbsAndPesticidesPara1B">@_loc[Model.HerbsAndPesticidesPara1] @_loc[Model.HerbsAndPesticidesPara2]<!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.HerbsAndPesticidesTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow9b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr>
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="raeSlowDownTitleMobile"><strong>@_loc[Model.SlowDownTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="raeSlowDownTitle"><strong>@_loc[Model.SlowDownTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="SlowDownPara1">@_loc[Model.SlowDownPara1] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.SlowDownTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow10">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Rhinoicon2" id="raeImpactIconRow10" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-ImpactIconRow10Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="raeSlowDownClickDetails"><strong>@_loc[Model.NotQuantifiableClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 10 })"><img src="@Model.MouseClickIconThumbnailUrl" id="raeMouseClickIconRow10" onclick="DisableEnableLinks('raeMouseClickIconRow10', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow10Click'});" width="20" height="35" alt="Mouse TClickap Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 10 })"><img src="@Model.HandTapIconThumbnailUrl" id="raeHandTapIconRow10" onclick="DisableEnableLinks('raeHandTapIconRow10', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow10Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="raeMyImpactSlowDown"><strong>@_loc[Model.MyImpactSlowDown]</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="SlowDownPara1B">@_loc[Model.SlowDownPara1] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.SlowDownTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow10b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr class="table-success">
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="raePlantNativePlantsTitleMobile"><strong>@_loc[Model.PlantNativePlantsTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="raePlantNativePlantsTitle"><strong>@_loc[Model.PlantNativePlantsTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="PlantNativePlants">@_loc[Model.PlantNativePlants] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.PlantNativePlantsTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow11">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Rhinoicon2" id="raeImpactIconRow11" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-ImpactIconRow11Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="raePlantNativePlantsClickDetails"><strong>@_loc[Model.NotQuantifiableClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 11 })"><img src="@Model.MouseClickIconThumbnailUrl" id="raeMouseClickIconRow11" onclick="DisableEnableLinks('raeMouseClickIconRow11', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow11Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 11 })"><img src="@Model.HandTapIconThumbnailUrl" id="raeHandTapIconRow11" onclick="DisableEnableLinks('raeHandTapIconRow11', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow11Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="raeMyImpactPlantNativePlants"><strong>@_loc[Model.MyImpactPlantNativePlants]</strong></td>
+                </tr>
+                <tr class="table-success">
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="PlantNativePlantsB">@_loc[Model.PlantNativePlants] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.PlantNativePlantsTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow11b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr>
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="raeGreenRecoveryTitleMobile"><strong>@_loc[Model.GreenRecoveryTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="raeGreenRecoveryTitle"><strong>@_loc[Model.GreenRecoveryTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="raeGreenRecoveryPara1">@_loc[Model.GreenRecoveryPara1] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.GreenRecoveryTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow12">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Rhinoicon2" id="raeImpactIconRow12" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-ImpactIconRow12Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="raeGreenRecoveryClickDetails"><strong>@_loc[Model.NotQuantifiableClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 12 })"><img src="@Model.MouseClickIconThumbnailUrl" id="raeMouseClickIconRow12" onclick="DisableEnableLinks('raeMouseClickIconRow12', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow12Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 12 })"><img src="@Model.HandTapIconThumbnailUrl" id="raeHandTapIconRow12" onclick="DisableEnableLinks('raeHandTapIconRow12', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow12Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="raeMyImpactGreenRecovery"><strong>@_loc[Model.MyImpactGreenRecovery]</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="raeGreenRecoveryPara1B">@_loc[Model.GreenRecoveryPara1] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.GreenRecoveryTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow12b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr class="table-success">
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="raeBuyRecycledTitleMobile"><strong>@_loc[Model.BuyRecycledTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="raeBuyRecycledTitle"><strong>@_loc[Model.BuyRecycledTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="raeBuyRecycledPara1">@_loc[Model.BuyRecycledPara1] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.BuyRecycledTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow13">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Rhinoicon2" id="raeImpactIconRow13" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-ImpactIconRow13Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="raeBuyRecycledClickDetails"><strong>@_loc[Model.NotQuantifiableClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 13 })"><img src="@Model.MouseClickIconThumbnailUrl" id="raeMouseClickIconRow13" onclick="DisableEnableLinks('raeMouseClickIconRow13', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow13Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 13 })"><img src="@Model.HandTapIconThumbnailUrl" id="raeHandTapIconRow13" onclick="DisableEnableLinks('raeHandTapIconRow13', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow13Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="raeMyImpactBuyRecycled"><strong>@_loc[Model.MyImpactBuyRecycled]</strong></td>
+                </tr>
+                <tr class="table-success">
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="raeBuyRecycledPara1B">@_loc[Model.BuyRecycledPara1] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.BuyRecycledTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow13b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr>
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="raeUseABlueRecyclingBinTitleMobile"><strong>@_loc[Model.UseARecyclingBinTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="raeUseABlueRecyclingBinTitle"><strong>@_loc[Model.UseARecyclingBinTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="raeUseABlueRecyclingBinPara1">@_loc[Model.UseARecyclingBinPara1] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.UseARecyclingBinTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow14">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Rhinoicon2" id="raeImpactIconRow14" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-ImpactIconRow14Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="raeUseABlueRecyclingBinClickDetails"><strong>@_loc[Model.RecyclingBinClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 14 })"><img src="@Model.MouseClickIconThumbnailUrl" id="raeMouseClickIconRow14" onclick="DisableEnableLinks('raeMouseClickIconRow14', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow14Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 14 })"><img src="@Model.HandTapIconThumbnailUrl" id="raeHandTapIconRow14" onclick="DisableEnableLinks('raeHandTapIconRow14', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow14Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="raeMyImpactRecyclingBin"><strong>@_loc[Model.MyImpactRecyclingBin]</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="raeUseABlueRecyclingBinPara1B">@_loc[Model.UseARecyclingBinPara1] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.UseARecyclingBinTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow14b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+                <tr class="table-success">
+                    <td class="centered d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-medium-black" id="raeSignAPetitionTitleMobile"><strong>@_loc[Model.SignAPetitionTitle]</strong></td>
+                    <td class="centered d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell font-style-content-black" id="raeSignAPetitionTitle"><strong>@_loc[Model.SignAPetitionTitle]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" id="raeSignAPetitionPara1">@_loc[Model.SignAPetitionPara1] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.SignAPetitionTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow15">@_loc[Model.LearnMore]</a>--></td>
+                    <td style="vertical-align:middle; text-align:center;"><img src="@Model.Rhinoicon1" id="raeImpactIconRow15" width="40" height="52" alt="Impact Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-ImpactIconRow15Click'});"></td>
+                    <td style="vertical-align:middle; text-align:center;" class="font-small" id="raeSignAPetitionClickDetails"><strong>@_loc[Model.NotQuantifiableClickDetails]</strong></td>
+                    <td class="d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 15 })"><img src="@Model.MouseClickIconThumbnailUrl" id="raeMouseClickIconRow15" onclick="DisableEnableLinks('raeMouseClickIconRow15', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow15Click'});" width="20" height="35" alt="Mouse Click Here Image"></a></td>
+                    <td class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none" style="vertical-align:middle; text-align:center;"><a href="@Url.Action("RAEInsertNewActionNumber", "ReduceAnimalExtinction", new { actionNumber = 15 })"><img src="@Model.HandTapIconThumbnailUrl" id="raeHandTapIconRow15" onclick="DisableEnableLinks('raeHandTapIconRow15', true, 'RAE'); gtag('event','click',{'event_category':'Click','event_label':'RAEPage-Image-IDidThisTodayIconRow15Click-SS'});" width="20" height="35" alt="Hand Tap Here Image"></a></td>
+                    <td class="centered font-style-content-black" style="vertical-align:middle; text-align:center;" id="raeMyImpactSignPetition"><strong>@_loc[Model.MyImpactSignPetition]</strong></td>
+                </tr>
+                <tr class="table-success">
+                    <td colspan="5" class="d-table-cell d-sm-table-cell d-md-table-cell d-lg-none d-xl-none font-style-content-small-black" id="raeSignAPetitionPara1B">@_loc[Model.SignAPetitionPara1] <!--<a href="" data-toggle="modal" data-target="#raePageLearnMoreModal" data-title="@_loc[Model.SignAPetitionTitle]" data-body="@_loc[Model.ComingSoon]" data-body1="@_loc[Model.WhatDidYouExpectPara]" id="raePageLearnMoreRow15b">@_loc[Model.LearnMore]</a>--></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+@section Scripts{
+    <script src="~/js/raePageComingSoonModal.js"></script>
+    <script src="~/js/raePageLearnMoreModal.js"></script>
+    <script src="~/js/showSocialShareModalOnPageLoad.js"></script>
+    <script src="~/js/nonmenuactive.js"></script>
+    <script src="~/js/DisableEnableLinks.js"></script>
+    <script src="~/js/HomeDisableEnableLinks.js"></script>
+    <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+}

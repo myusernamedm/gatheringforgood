@@ -1,0 +1,30 @@
+﻿@using System.Globalization
+<div class="row justify-content-center align-items-center" style="margin:0px 10px 0px 10px">
+    <div class="col-lg-3 justify-content-center align-items-center" id="PlantATreePartialOneTreeIconLargeLinkSection">
+        <div class="row justify-content-center align-items-center">
+            <a href="javascript:void(0)" id="PlantATreePartialOneTreeIconLargeLink"><img src="@Model.OneTreeIconImageUrl" width="150" height="150" id="OneTreeIconLarge" align="middle" onclick="checkboxClicked(); gtag('event','click',{'event_category':'Click','event_label':'TreePurchasePartial-Button-OneTreeIconLarge'});"></a>
+        </div>
+    </div>
+    <div class="col-lg-6" id="PlantATreePartialTextDiv">
+        <div class="row font-style-content-head">
+            <p id="PlantATreePartialTitle">@_loc[Model.PlantATreeTitle]</p>
+        </div>
+        <div class="row font-style-content">
+            <p id="PlantATreePartialPara1">@_loc[Model.PlantATreePara1]</p>
+        </div>
+        <div class="row font-style-content">
+            <p id="PlantATreePartialPara2">@_loc[Model.PlantATreePara2]</p>
+        </div>
+        <div class="row font-style-content">
+            <p class="font-heading-not-bold"  id="PlantATreePartialPurchaseTandCs1">@_loc[Model.TreePurchaseTandCs1] <a class="link-style" id="_TreePurchasePartialTandCsLink" asp-area="" asp-controller="TermsAndConditions" asp-action="TermsAndConditions" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'TreePurchasePartial-Link-TandCs'});">@_loc[Model.TreePurchaseTandCs2]</a></p>
+        </div>
+    </div>
+    <div class="col-lg-3 thumb-block" id="PlantATreePartialCheckedIconGroup">
+        <div class="col justify-content-center align-items-center">
+            <a href="javascript:void(0)" id="PlantATreePartialIconLink"><img src="@Model.PlantATreeUncheckedImageUrl" id="PlantATreePartialCheckedIcon" onclick="checkboxClicked(); gtag('event','click',{'event_category':'Click','event_label':'TreePurchasePartial-Button-CheckBox'});" width="150" height="150" style=" margin: 0px 0px 40px 0px;" alt="Tree purchase checkbox icon"></a>
+        </div>
+        <div class="col justify-content-center align-items-center font-heading">
+            <a href="javascript:void(0)" id="PlantATreeParticlCheckedTextLink"><p class="link-style" id="PlantATreeParticlCheckedText" style=" margin: 0px 0px 40px 0px;" onclick="checkboxClicked(); gtag('event','click',{'event_category':'Click','event_label':'TreePurchasePartial-Link-CheckBox'});">@_loc[Model.PlantATreeClickHere]</p></a>
+        </div>
+    </div>
+</div>

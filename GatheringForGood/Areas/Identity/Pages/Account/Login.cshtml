@@ -1,0 +1,213 @@
+﻿@page
+@model LoginModel
+@using LazZiya.ExpressLocalization
+@using System.Globalization
+@inject ISharedCultureLocalizer _loc
+@{
+    ViewData["Title"] = _loc[Model.PageTabTitle];
+}
+@section meta_head_tags{
+    <meta name='description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:locale' content="en_US" />
+    <meta property="og:type" content="website" />
+    @if (Model.ArticleTitle != null)
+    {
+        <meta property='og:title' content="@Model.ArticleTitle" />
+    }
+    else
+    {
+        <meta property='og:title' content="GatheringForGood - The place where ideas and expertise come together to solve the world's problems." />
+    }
+    <meta property='og:description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:site_name' content="gatheringforgood" />
+    @if (Model.OGUrl != null)
+    {
+        <meta property='og:url' content="@Model.OGUrl" />
+    }
+    else
+    {
+        <meta property='og:url' content="https://gatheringforgood.com/en/Identity/Account/Login" />
+    }
+
+    @if (Model.ArticleTitleImageUrl != null)
+    {
+        <meta property='og:image' content="@Html.DisplayFor(modelItem => Model.ArticleTitleImageUrl)" />
+    }
+    else
+    {
+        <meta property='og:image' content="http://www.gatheringforgood.com/images/shareimagearticles.jpg" />
+    }
+    <meta property='og:image:width' content="1200" />
+    <meta property='og:image:height' content="600" />
+    <meta property='og:image:alt' content="gatheringforgood sharing image" />
+    <meta name="og:author" content="gatheringforgood">
+    <link rel="preload" as="image" href="@Model.GetEarthHandsReducedImageUrl" imagesrcset="@Model.GetEarthHandsReduced400ImageUrl 2.5x, @Model.GetEarthHandsReduced800ImageUrl 2x, @Model.GetEarthHandsReduced1200ImageUrl 1x, @Model.GetEarthHandsReduced1600ImageUrl 0.5x" sizes="100vw">
+}
+@section header_image{
+    <div class="bg-img-non-home" id="LoginPageBanner">
+        <nav class="navbar navbar-expand-lg navbar-light" id="main-navbar-login-page">
+            <div class="container">
+                <a class="navbar-brand mt-20" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/circle_logo.webp" id="_LoginPageLogoImg" width="40" height="40" style="margin:0px 20px;" alt="Logo Image" onclick="gtag('event','click',{'event_category':'Click','event_label':'LoginPage-GoToHomeLogo'});">
+                </a>
+                <button class="navbar-toggler" type="button" id="_LoginPageNavBarToggler" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" id="_LoginPageHomeNavLink" asp-area="" asp-controller="Home" asp-action="Index" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'LoginPage-NavLink-Home'});">@_loc[Model.NavBarHome]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="_LoginPageArticlesNavLink" asp-area="" asp-controller="Articles" asp-action="Articles" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'LoginPage-NavLink-Articles'});"><p id="LoginPage-Articles-NavLink-Para" onclick="DisableLinks('LoginPage-Articles-NavLink-Para', true, 'LoginPage');">@_loc[Model.Articles]</p></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="_LoginPageAboutNavLink" asp-area="" asp-controller="About" asp-action="About" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'LoginPage-NavLink-About'});">@_loc[Model.NavBarAbout]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="_LoginPageHelpNavLink" asp-area="" asp-controller="Help" asp-action="Help" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'LoginPage-NavLink-Help'});">@_loc[Model.NavBarHelpCenter]</a>
+                        </li>
+                        <partial name="_LoginPartial" />
+                    </ul>
+                </div>
+            </div>
+        </nav>
+}
+@section header_content{
+    <div class="container-title">
+        <div class="block-title">
+            <br>
+            <h1 class="block-subtitle-text" id="LoginPageSubtitle">@_loc[Model.SubTitle]</h1>
+            <h2 class="block-title-text-non-home" id="LoginPageTitle">@_loc[Model.Title]</h2>
+        </div>
+    </div>
+}
+</div>
+<body class="body-bg-img">
+    <div class="modal fade" id="loginPageComingSoonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content comingsoon-bg-img">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="ComingSoonModalTitle">Modal Error!1</h3>
+                    <button type="button" id="ComingSoonModalHeaderCloseButton" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="col justify-content-center align-items-center">
+                    <h4 class="modal-body" id="loginPageLearnMoreModalPara">Modal Error!2</h4>
+                </div>
+                <br />
+                <div class="form-group thumb-block">
+                    <form asp-page="Login" asp-page-handler="SaveUserEntry" method="post">
+                        <label class="modal-body1 col-form-label" id="loginPageComingSoonModalFormLabel">Modal Error!3</label>
+                        <br />
+                        <textarea class="form-control" name="newsfeedUserEntry" id="newsfeedUserEntry" type="text"></textarea>
+                        <div class="modal-footer">
+                            <button type="submit" id="ComingSoonModalFooterSubmitButton" class="btn btn-success" data-dismiss="loginPageComingSoonModal" onclick="gtag('event','click',{'event_category':'Click','event_label':'LoginPage-Button-ComingSoonModalSubmit'});">@_loc[Model.Submit]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col">
+                <br />
+                <h2 class="font-style-content-head" id="LoginHeading">@_loc[Model.Heading]</h2>
+                <div id="LoginStatusMessage">
+                </div>
+                <hr />
+            </div>
+        </div>
+        <br />
+    </div>
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-sm-8 col-md-6 col-lg-4 col-xl-4">
+                <!--Change back to col-md-4 when enabling 3rd party registration below-->
+                <form id="account" method="post" asp-route-returnurl="@Model.ReturnUrl">
+                    <partial name="_StatusMessage" model="Model.StatusMessage" />
+                    <div class="form-group">
+                        <label class="font-heading" asp-for="Input.Email" id="LoginEmailHeading">@_loc[Model.EmailHeading]</label>
+                        <input asp-for="Input.Email" autocomplete="off" class="form-control" id="LoginEmailInputField" onclick="gtag('event','click',{'event_category':'Click','event_label':'LoginPage-Field-EmailField'});" />
+                        <span asp-validation-for="Input.Email" class="font-danger" id="LoginEmailValidationLabel"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="font-heading" asp-for="Input.Password" id="LoginPasswordHeading">@_loc[Model.PasswordHeading]</label>
+                        <input asp-for="Input.Password" autocomplete="off" class="form-control" id="LoginPasswordInputField" onclick="gtag('event','click',{'event_category':'Click','event_label':'LoginPage-Field-PasswordField'});" />
+                        <span asp-validation-for="Input.Password" class="font-danger" id="LoginPasswordValidationLabel"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label class="font-heading" asp-for="Input.RememberMe" id="LoginRememberMe">
+                                <input asp-for="Input.RememberMe" onclick="gtag('event','click',{'event_category':'Click','event_label':'LoginPage-Button-RememberMeCheckChanged'});" />
+                                <localize>@Html.DisplayNameFor(m => m.Input.RememberMe)</localize>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group" style="text-align: center">
+                        <p>
+                            <button type="submit" class="btn btn-success button-title" asp-route-returnurl="@Model.ReturnUrl" asp-area="Identity" asp-page="Login" id="LoginButton" onclick="DisableLinks('LoginButton', true, 'Login'); gtag('event','click',{'event_category':'Click','event_label':'LoginPage-Button-LoginSubmit'});">@_loc[Model.LoginButtonName]</button>
+                        </p>
+                    </div>
+                    <div class="form-group" style="text-align: center">
+                        <p>
+                            <button type="submit" class="btn btn-success button-title" asp-page-handler="SendVerificationEmail" id="ResendEmailButton" onclick="gtag('event','click',{'event_category':'Click','event_label':'LoginPage-Button-ResendEmailConf'});">@_loc[Model.ResendEmailConfirmation]</button>
+                        </p>
+                    </div>
+                    <div class="form-group" style="text-align: center">
+                        <p>
+                            <a class="link-style-upper" asp-page="./ForgotPassword" asp-route-culture="@CultureInfo.CurrentCulture.Name" id="LoginForgotPasswordLink" onclick="gtag('event','click',{'event_category':'Click','event_label':'LoginPage-Link-ForgotPassword'});">@_loc[Model.ForgotPassword]</a>
+                        </p>
+                    </div>
+                    <div class="form-group" style="text-align: center">
+                        <p>
+                            <a class="link-style-upper" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" id="RegisterAsNewUserLink" onclick="gtag('event','click',{'event_category':'Click','event_label':'LoginPage-Link-RegisterAsNewUser'});">@_loc[Model.RegisterAsNewUser]</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+            <!--
+            <div class="col-md-4 col-md-offset-2">
+                <section>
+                    <h4 class="font-heading" id="LoginUseAnotherService">@_loc[Model.ServiceHeading]</h4>
+                    <hr />
+                    @{
+                        if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                        {
+                            <div>
+                                <p>
+                                    There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                                    for details on setting up this ASP.NET application to support logging in via external services.
+                                </p>
+                            </div>
+                        }
+                        else
+                        {
+                            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                <div>
+                                    <p>
+                                        @foreach (var provider in Model.ExternalLogins)
+                                        {
+                                            <button type="submit" class="btn btn-outline-success button-title" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                        }
+                                    </p>
+                                </div>
+                            </form>
+                        }
+                    }
+                </section>
+            </div>
+                -->
+        </div>
+    </div>
+</body>
+<script src="~/js/loginactive.js"></script>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/loginPageComingSoonModal.js"></script>
+    <script src="~/js/HomeDisableEnableLinks.js"></script>
+    <script src="~/js/DisableEnableLinks.js"></script>
+    <script src="~/js/Login_DisableButtons.js"></script>
+}

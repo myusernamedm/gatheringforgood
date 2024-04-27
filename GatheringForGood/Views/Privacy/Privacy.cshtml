@@ -1,0 +1,870 @@
+﻿@model PrivacyViewModel
+@using Microsoft.AspNetCore.Identity
+@using GatheringForGood.Data
+@using System.Globalization
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = _loc[Model.PageTabTitle];
+}
+@section meta_head_tags{
+    <meta name='description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:locale' content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property='og:title' content="GatheringForGood - The place where ideas and expertise come together to solve the world's problems." />
+    <meta property='og:description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:url' content="https://gatheringforgood.com/en/Privacy/Privacy" />
+    <meta property='og:site_name' content="gatheringforgood" />
+    <meta property='og:image' content="http://www.gatheringforgood.com/images/shareimage.jpg" />
+    <meta property='og:image:width' content="1200" />
+    <meta property='og:image:height' content="600" />
+    <meta property='og:image:alt' content="gatheringforgood sharing image" />
+    <meta property="og:author" content="gatheringforgood">
+    <link rel="preload" as="image" href="@Model.GetEarthHandsReducedImageUrl" imagesrcset="@Model.GetEarthHandsReduced400ImageUrl 2.5x, @Model.GetEarthHandsReduced800ImageUrl 2x, @Model.GetEarthHandsReduced1200ImageUrl 1x, @Model.GetEarthHandsReduced1600ImageUrl 0.5x" sizes="100vw">
+}
+@section header_image{
+    <div class="bg-img-non-home" id="PrivacyPageBanner">
+        <nav class="navbar navbar-expand-lg navbar-light" id="main-navbar-privacy-page">
+            <div class="container">
+                <a class="navbar-brand mt-20" onclick="changeactive('Home'); gtag('event','click',{'event_category':'Click','event_label':'PrivacyPage-GoToHomeLogo'});" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/circle_logo.webp" id="_PrivacyPageLogoImg" width="40" height="40" style="margin:0px 20px;" alt="Logo Image">
+                </a>
+                <button class="navbar-toggler" type="button" id="_PrivacyPageNavBarToggler" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item" onclick="changeactive('Home')">
+                            <a class="nav-link" id="_PrivacyPageHomeNavLink" asp-area="" asp-controller="Home" asp-action="Index" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'PrivacyPage-NavLink-Home'});">@_loc[Model.NavBarHome]</a>
+                        </li>
+                        <li class="nav-item" onclick="changeactive('Articles')">
+                            <a class="nav-link" id="_PrivacyPageArticlesNavLink" asp-area="" asp-controller="Articles" asp-action="Articles" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'PrivacyPage-NavLink-Articles'});"><p id="Privacy-Articles-NavLink-Para" onclick="DisableLinks('Privacy-Articles-NavLink-Para', true, 'Privacy');">@_loc[Model.Articles]</p></a>
+                        </li>
+                        <li class="nav-item" onclick="changeactive('About')">
+                            <a class="nav-link" id="_PrivacyPageAboutNavLink" asp-area="" asp-controller="About" asp-action="About" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'PrivacyPage-NavLink-About'});">@_loc[Model.NavBarAbout]</a>
+                        </li>
+                        <li class="nav-item" onclick="changeactive('Help')">
+                            <a class="nav-link" id="_PrivacyPageHelpNavLink" asp-area="" asp-controller="Help" asp-action="Help" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'PrivacyPage-NavLink-Help'});">@_loc[Model.NavBarHelpCenter]</a>
+                        </li>
+                        <partial name="_LoginPartial" />
+                    </ul>
+                </div>
+            </div>
+        </nav>
+}
+@section header_content{
+    <div class="container-title">
+        <div class="block-title">
+            <br>
+            @if (!SignInManager.IsSignedIn(User))
+            {
+                <a button type="button" class="btn btn-success button-title" id="PrivacyPageMakeDiffBtn" asp-area="Identity" asp-page="/Account/Register" asp-route-culture="@CultureInfo.CurrentCulture.Name">@_loc[Model.ButtonText]</a>
+            }
+            <h1 class="block-subtitle-text" id="PrivacyPageSubtitle" localize-content>@_loc[Model.Subtitle]</h1>
+            <h2 class="block-title-text-non-home" id="PrivacyPageTitle" localize-content>@_loc[Model.Title]</h2>
+        </div>
+    </div>
+}
+</div>
+<body class="body-bg-img">
+    <div class="modal fade" id="privacyPageComingSoonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content comingsoon-bg-img">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="ComingSoonModalTitle">Modal Error!1</h3>
+                    <button type="button" id="ComingSoonModalHeaderCloseButton" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="col justify-content-center align-items-center">
+                    <h4 class="modal-body" id="privacyPageLearnMoreModalPara">Modal Error!2</h4>
+                </div>
+                <br />
+                <div class="form-group thumb-block">
+                    <form action="@Url.Action("SaveUserEntry","Privacy")" method="post">
+                        <label class="modal-body1 col-form-label" id="privacyPageComingSoonModalFormLabel">Modal Error!3</label>
+                        <br />
+                        <textarea class="form-control" name="newsfeedUserEntry" id="newsfeedUserEntry" type="text"></textarea>
+                        <div class="modal-footer">
+                            <button type="submit" id="ComingSoonModalFooterSubmitButton" class="btn btn-success" data-dismiss="privacyPageComingSoonModal" onclick="gtag('event','click',{'event_category':'Click','event_label':'PrivacyPage-Button-ComingSoonModalSubmit'});">@_loc[Model.Submit]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col">
+                <br />
+                <h2 class="font-style-content-head" id="YourPrivacyMattersTitle">@_loc[Model.YourPrivacyMattersTitle]</h2>
+            </div>
+        </div>
+        <br />
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col">
+                <h2 class="font-style-content-small" id="PrivacyEffectiveDate">@_loc[Model.PrivacyEffectiveDate]</h2>
+            </div>
+        </div>
+        <br />
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-3 font-style-content thumb-text-block">
+                <div class="font-style-content-head-small thumb-text-block">
+                    <h3 id="PrivacyTableOfContentsTitle">@_loc[Model.PrivacyTableOfContentsTitle]</h3>
+                </div>
+                <div class="font-style-content-small thumb-text-block" id="PrivacyIntroductionLink">
+                    <a class="link-style" href="javascript:void(0)" id="PrivacyIntroductionLink" onclick="privacyPageScrollToElement('introduction')">@_loc[Model.PrivacyIntroductionLink]</a>
+                </div>
+                <div class="font-style-content-small thumb-text-block" id="PrivacyDataWeCollectLink">
+                    <a class="link-style" href="javascript:void(0)" id="PrivacyDataWeCollectLink" onclick="privacyPageScrollToElement('wecollect')">@_loc[Model.PrivacyDataWeCollectLink]</a>
+                </div>
+                <div class="font-style-content-small thumb-text-block" id="PrivacyTandCLink">
+                    <a class="link-style" href="javascript:void(0)" id="PrivacyTandCLink" onclick="privacyPageScrollToElement('TandC')">@_loc[Model.TermsConditions]</a>
+                </div>
+                <div class="font-style-content-small thumb-text-block" id="PrivacyHowWeUseYourDataLink">
+                    <a class="link-style" href="javascript:void(0)" id="PrivacyHowWeUseYourDataLink" onclick="privacyPageScrollToElement('weuse')">@_loc[Model.PrivacyHowWeUseYourDataLink]</a>
+                </div>
+                <div class="font-style-content-small thumb-text-block" id="PrivacyHowWeShareInformationLink">
+                    <a class="link-style" href="javascript:void(0)" id="PrivacyHowWeShareInformationLink" onclick="privacyPageScrollToElement('weshare')">@_loc[Model.PrivacyHowWeShareInformationLink]</a>
+                </div>
+                <div class="font-style-content-small thumb-text-block" id="PrivacyChoicesAndObligationsLink">
+                    <a class="link-style" href="javascript:void(0)" id="PrivacyChoicesAndObligationsLink" onclick="privacyPageScrollToElement('choices')">@_loc[Model.PrivacyChoicesAndObligationsLink]</a>
+                </div>
+                <div class="font-style-content-small thumb-text-block" id="PrivacyOtherInformationLink">
+                    <a class="link-style" href="javascript:void(0)" id="PrivacyOtherInformationLink" onclick="privacyPageScrollToElement('otherinformation')">@_loc[Model.PrivacyOtherInformationLink]</a>
+                </div>
+                <br>
+            </div>
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <br />
+                <p id="YourPrivacyMattersPara1">@_loc[Model.YourPrivacyMattersPara1]</p>
+                <p id="YourPrivacyMattersPara2">@_loc[Model.YourPrivacyMattersPara2]</p>
+            </div>
+        </div>
+    </div>
+    <br />
+    <hr />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col">
+                <h2 class="font-style-content-head" id="PrivacyIntroductionTitle">@_loc[Model.PrivacyIntroductionLink]</h2>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-4 font-style-content-small thumb-text-block" id="IntroductionShortPara">
+                @_loc[Model.IntroductionShortPara]
+            </div>
+            <div class="col-lg-4 font-style-content-small thumb-text-block">
+                <p id="IntroductionPara1">@_loc[Model.IntroductionPara1]<q><b>@_loc[Model.Members]</b></q>@_loc[Model.IntroductionPara2]<q><b>@_loc[Model.Visitors]</b></q>@_loc[Model.IntroductionPara3]</p>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="ServicesTitle">@_loc[Model.ServicesTitle]</h3>
+                </div>
+                <p id="ServicesPara1">@_loc[Model.ServicesPara1]<q><b>@_loc[Model.ServicesTitle]</b></q>@_loc[Model.ServicesPara2]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="ServicesShortPara">
+                <b>@_loc[Model.ServicesShortPara] @_loc[Model.ServicesTitle]</b>.
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="DataControllersTitle">@_loc[Model.DataControllersTitle]</h3>
+                </div>
+                <p id="DataControllersPara1">@_loc[Model.DataControllersPara1]</p>
+                <p id="DataControllersPara2">@_loc[Model.DataControllersPara2]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="DataControllersShortPara">
+                <b>@_loc[Model.DataControllersShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="PolicyChangesTitle">@_loc[Model.PolicyChangesTitle]</h3>
+                </div>
+                <p id="PolicyChangesPara1">@_loc[Model.PolicyChangesPara1]</p>
+                <p id="PolicyChangesPara2">@_loc[Model.PolicyChangesPara2]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="PolicyChangesShortPara">
+                <b>@_loc[Model.PolicyChangesShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <br />
+    <hr />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col">
+                <h2 class="font-style-content-head" id="DataWeCollectTitle">@_loc[Model.PrivacyDataWeCollectLink]</h2>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="RegistrationTitle">@_loc[Model.RegistrationTitle]</h3>
+                </div>
+                <p id="RegistrationPara1">@_loc[Model.RegistrationPara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="RegistrationShortPara">
+                <b>@_loc[Model.RegistrationShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="ProfileTitle">@_loc[Model.ProfileTitle]</h3>
+                </div>
+                <p id="ProfilePara1">@_loc[Model.ProfilePara1]</p>
+                <p id="ProfilePara2">@_loc[Model.ProfilePara2]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="ProfileShortPara">
+                <b>@_loc[Model.ProfileShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="PostingTitle">@_loc[Model.PostingTitle]</h3>
+                </div>
+                <p id="PostingPara1">@_loc[Model.PostingPara1]</p>
+                <p id="PostingPara2">@_loc[Model.PostingPara2]</p>
+                <p id="PostingPara3">@_loc[Model.PostingPara3]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="PostingShortPara">
+                <b>@_loc[Model.PostingShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="ContentTitle">@_loc[Model.ContentTitle]</h3>
+                </div>
+                <p id="ContentPara1">@_loc[Model.ContentPara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="ContentShortPara">
+                <b>@_loc[Model.ContentShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="ContactsAndCalendarTitle">@_loc[Model.ContactsAndCalendarTitle]</h3>
+                </div>
+                <p id="ContactsAndCalendarPara1">@_loc[Model.ContactsAndCalendarPara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="ContactsAndCalendarShortPara">
+                <b>@_loc[Model.ContactsAndCalendarShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="CustomersAndPartnersTitle">@_loc[Model.CustomersAndPartnersTitle]</h3>
+                </div>
+                <p id="CustomersAndPartnersPara1">@_loc[Model.CustomersAndPartnersPara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="CustomersAndPartnersShortPara">
+                <b>@_loc[Model.CustomersAndPartnersShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="ServiceUsageTitle">@_loc[Model.ServiceUsageTitle]</h3>
+                </div>
+                <p id="ServiceUsagePara1">@_loc[Model.ServiceUsagePara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="ServiceUsageShortPara">
+                <b>@_loc[Model.ServiceUsageShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="CookiesTitle">@_loc[Model.CookiesTitle]</h3>
+                </div>
+                <p id="CookiesPara1">@_loc[Model.CookiesPara1] <!--<b><a id="PrivacyCookiesLink" asp-area="" asp-controller="Cookies" asp-action="Cookies" asp-route-culture="@CultureInfo.CurrentCulture.Name">-->@_loc[Model.CookiePolicy]<!--</a></b>--> @_loc[Model.CookiesPara2]</p>
+                <p id="CookiesPara2">@_loc[Model.CookiesPara3]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="CookiesShortPara">
+                <b>@_loc[Model.CookiesShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="DevicesAndLocationTitle">@_loc[Model.DevicesAndLocationTitle]</h3>
+                </div>
+                <p id="DevicesAndLocationPara1">@_loc[Model.DevicesAndLocationPara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="DevicesAndLocationShortPara">
+                <b>@_loc[Model.DevicesAndLocationShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="MessagesTitle">@_loc[Model.MessagesTitle]</h3>
+                </div>
+                <p id="MessagesPara1">@_loc[Model.MessagesPara1] <b><a class="link-style" id="PrivacyCookiesLink" asp-area="" asp-controller="TermsAndConditions" asp-action="TermsAndConditions" asp-route-culture="@CultureInfo.CurrentCulture.Name">@_loc[Model.TermsConditions]</a></b> <!-- @_loc[Model.MessagesPara2] <a id="PrivacyCookiesLink" asp-area="" asp-controller="" asp-action="" asp-route-culture="@CultureInfo.CurrentCulture.Name">@_loc[Model.MemberPolicies]</a>--> @_loc[Model.MessagesPara3]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="MessagesShortPara">
+                <b>@_loc[Model.MessagesShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="SchoolAndOthersInfoTitle">@_loc[Model.SchoolAndOthersInfoTitle]</h3>
+                </div>
+                <p id="SchoolAndOthersInfoPara1">@_loc[Model.SchoolAndOthersInfoPara1]</p>
+                <p id="SchoolAndOthersInfoPara2">@_loc[Model.SchoolAndOthersInfoPara2]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="SchoolAndOthersInfoShortPara">
+                <b>@_loc[Model.SchoolAndOthersInfoShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="OtherSitesAndServicesTitle">@_loc[Model.OtherSitesAndServicesTitle]</h3>
+                </div>
+                <p id="OtherSitesAndServicesPara1">@_loc[Model.OtherSitesAndServicesPara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="OtherSitesAndServicesShortPara">
+                <b>@_loc[Model.OtherSitesAndServicesShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="OtherDataWeCollectTitle">@_loc[Model.OtherDataWeCollectTitle]</h3>
+                </div>
+                <p id="OtherDataWeCollectPara1">@_loc[Model.OtherDataWeCollectPara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="OtherDataWeCollectShortPara">
+                <b>@_loc[Model.OtherDataWeCollectShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <br />
+    <hr />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col">
+                <h2 class="font-style-content-head" id="HowWeUseYourDataTitle">@_loc[Model.PrivacyHowWeUseYourDataLink]</h2>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <p id="HowWeUseYourDataPara1">@_loc[Model.HowWeUseYourDataPara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="HowWeUseYourDataShortPara">
+                <b>@_loc[Model.HowWeUseYourDataShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="ConnectAndStayConnectedTitle">@_loc[Model.ConnectAndStayConnectedTitle]</h3>
+                </div>
+                <p id="ConnectAndStayConnectedPara1">@_loc[Model.ConnectAndStayConnectedPara1]</p>
+                <p id="ConnectAndStayConnectedPara2">@_loc[Model.ConnectAndStayConnectedPara2]</p>
+                <p id="ConnectAndStayConnectedPara3">@_loc[Model.ConnectAndStayConnectedPara3]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="ConnectAndStayConnectedShortPara">
+                <b>@_loc[Model.ConnectAndStayConnectedShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="StayInformedTitle">@_loc[Model.StayInformedTitle]</h3>
+                </div>
+                <p id="StayInformedPara1">@_loc[Model.StayInformedPara1]</p>
+                <p id="StayInformedPara2">@_loc[Model.StayInformedPara2]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="StayInformedShortPara">
+                <b>@_loc[Model.StayInformedShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="ProductivityTitle">@_loc[Model.ProductivityTitle]</h3>
+                </div>
+                <p id="ProductivityPara1">@_loc[Model.ProductivityPara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="ProductivityShortPara">
+                <b>@_loc[Model.ProductivityShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="PaidPremiumServicesTitle">@_loc[Model.PaidPremiumServicesTitle]</h3>
+                </div>
+                <p id="PaidPremiumServicesPara1">@_loc[Model.PaidPremiumServicesPara1]</p>
+                <p id="PaidPremiumServicesPara2">@_loc[Model.PaidPremiumServicesPara2]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="PaidPremiumServicesShortPara">
+                <b>@_loc[Model.PaidPremiumServicesShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="CommunicationsTitle">@_loc[Model.CommunicationsTitle]</h3>
+                </div>
+                <p id="CommunicationsPara1">@_loc[Model.CommunicationsPara1]</p>
+                <p id="CommunicationsPara2">@_loc[Model.CommunicationsPara2]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="CommunicationsShortPara">
+                <b>@_loc[Model.CommunicationsShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="AdvertisingTitle">@_loc[Model.AdvertisingTitle]</h3>
+                </div>
+                <p id="AdvertisingPara1">@_loc[Model.AdvertisingPara1]</p>
+                <i id="AdvertisingPara2">@_loc[Model.AdvertisingPara2]</i>
+                <i id="AdvertisingPara3">@_loc[Model.AdvertisingPara3]</i>
+                <i id="AdvertisingPara4">@_loc[Model.AdvertisingPara4]</i>
+                <i id="AdvertisingPara5">@_loc[Model.AdvertisingPara5]</i>
+                <i id="AdvertisingPara6">@_loc[Model.AdvertisingPara6]</i>
+                <i id="AdvertisingPara7">@_loc[Model.AdvertisingPara7]</i>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="AdvertisingShortPara">
+                <b>@_loc[Model.AdvertisingShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="AdChoicesTitle">@_loc[Model.AdChoicesTitle]</h3>
+                </div>
+                <p id="AdChoicesPara1">@_loc[Model.AdChoicesPara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="AdChoicesShortPara">
+                <b>@_loc[Model.AdChoicesShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="InfoToAdProvidersTitle">@_loc[Model.InfoToAdProvidersTitle]</h3>
+                </div>
+                <p id="InfoToAdProvidersPara1">@_loc[Model.InfoToAdProvidersPara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="InfoToAdProvidersShortPara">
+                <b>@_loc[Model.InfoToAdProvidersShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="MarketingTitle">@_loc[Model.MarketingTitle]</h3>
+                </div>
+                <p id="MarketingPara1">@_loc[Model.MarketingPara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="MarketingShortPara">
+                <b>@_loc[Model.MarketingShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="ServiceDevelopmentTitle">@_loc[Model.ServiceDevelopmentTitle]</h3>
+                </div>
+                <p id="ServiceDevelopmentPara1">@_loc[Model.ServiceDevelopmentPara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="ServiceDevelopmentShortPara">
+                <b>@_loc[Model.ServiceDevelopmentShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="OtherResearchTitle">@_loc[Model.OtherResearchTitle]</h3>
+                </div>
+                <p id="OtherResearchPara1">@_loc[Model.OtherResearchPara1]</p>
+                <p id="OtherResearchPara2">@_loc[Model.OtherResearchPara2]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="OtherResearchShortPara">
+                <b>@_loc[Model.OtherResearchShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="PollsAndSurveysTitle">@_loc[Model.PollsAndSurveysTitle]</h3>
+                </div>
+                <p id="PollsAndSurveysPara1">@_loc[Model.PollsAndSurveysPara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="PollsAndSurveysShortPara">
+                <b>@_loc[Model.PollsAndSurveysShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="CustomerSupportTitle">@_loc[Model.CustomerSupportTitle]</h3>
+                </div>
+                <p id="CustomerSupportPara1">@_loc[Model.CustomerSupportPara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="CustomerSupportShortPara">
+                <b>@_loc[Model.CustomerSupportShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="NonIdentifyingInsightsTitle">@_loc[Model.NonIdentifyingInsightsTitle]</h3>
+                </div>
+                <p id="NonIdentifyingInsightsPara1">@_loc[Model.NonIdentifyingInsightsPara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="NonIdentifyingInsightsShortPara">
+                <b>@_loc[Model.NonIdentifyingInsightsShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="SecurityInvestigationsTitle">@_loc[Model.SecurityInvestigationsTitle]</h3>
+                </div>
+                <p id="SecurityInvestigationsPara1">@_loc[Model.SecurityInvestigationsPara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="SecurityInvestigationsShortPara">
+                <b>@_loc[Model.SecurityInvestigationsShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <br />
+    <hr />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col">
+                <h2 class="font-style-content-head" id="HowWeShareInformationTitle">@_loc[Model.PrivacyHowWeShareInformationLink]</h2>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="YourProfileTitle">@_loc[Model.YourProfileTitle]</h3>
+                </div>
+                <p id="YourProfilePara1">@_loc[Model.YourProfilePara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="YourProfileShortPara">
+                <b>@_loc[Model.YourProfileShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="PostsLikesTitle">@_loc[Model.PostsLikesTitle]</h3>
+                </div>
+                <p id="PostsLikesPara1">@_loc[Model.PostsLikesPara1]</p>
+                <p id="PostsLikesPara2">@_loc[Model.PostsLikesPara2]</p>
+                <p id="PostsLikesPara3">@_loc[Model.PostsLikesPara3]</p>
+                <p id="PostsLikesPara4">@_loc[Model.PostsLikesPara4]</p>
+                <p id="PostsLikesPara5">@_loc[Model.PostsLikesPara5]</p>
+                <p id="PostsLikesPara6">@_loc[Model.PostsLikesPara6]</p>
+                <p id="PostsLikesPara7">@_loc[Model.PostsLikesPara7]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="PostsLikesShortPara">
+                <b>@_loc[Model.PostsLikesShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="EnterpriseAccountsTitle">@_loc[Model.EnterpriseAccountsTitle]</h3>
+                </div>
+                <p id="EnterpriseAccountsPara1">@_loc[Model.EnterpriseAccountsPara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="EnterpriseAccountsShortPara">
+                <b>@_loc[Model.EnterpriseAccountsShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="OthersServicesTitle">@_loc[Model.OthersServicesTitle]</h3>
+                </div>
+                <p id="OthersServicesPara1">@_loc[Model.OthersServicesPara1]</p>
+                <p id="OthersServicesPara2">@_loc[Model.OthersServicesPara2]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="OthersServicesShortPara">
+                <b>@_loc[Model.OthersServicesShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="RelatedServicesTitle">@_loc[Model.RelatedServicesTitle]</h3>
+                </div>
+                <p id="RelatedServicesPara1">@_loc[Model.RelatedServicesPara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="RelatedServicesShortPara">
+                <b>@_loc[Model.RelatedServicesShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="ServiceProvidersTitle">@_loc[Model.ServiceProvidersTitle]</h3>
+                </div>
+                <p id="ServiceProvidersPara1">@_loc[Model.ServiceProvidersPara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="ServiceProvidersShortPara">
+                <b>@_loc[Model.ServiceProvidersShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="LegalDisclosuresTitle">@_loc[Model.LegalDisclosuresTitle]</h3>
+                </div>
+                <p id="LegalDisclosuresPara1">@_loc[Model.LegalDisclosuresPara1]</p>
+                <p id="LegalDisclosuresPara2">@_loc[Model.LegalDisclosuresPara2]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="LegalDisclosuresShortPara">
+                <b>@_loc[Model.LegalDisclosuresShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="ChangeInControlTitle">@_loc[Model.ChangeInControlTitle]</h3>
+                </div>
+                <p id="ChangeInControlPara1">@_loc[Model.ChangeInControlPara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="ChangeInControlShortPara">
+                <b>@_loc[Model.ChangeInControlShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <br />
+    <hr />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col">
+                <h2 class="font-style-content-head" id="ChoicesAndObligationsTitle">@_loc[Model.PrivacyChoicesAndObligationsLink]</h2>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="DataRetentionTitle">@_loc[Model.DataRetentionTitle]</h3>
+                </div>
+                <p id="DataRetentionPara1">@_loc[Model.DataRetentionPara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="DataRetentionShortPara">
+                <b>@_loc[Model.DataRetentionShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="DataAccessControlTitle">@_loc[Model.DataAccessControlTitle]</h3>
+                </div>
+                <p id="DataAccessControlPara1">@_loc[Model.DataAccessControlPara1]</p>
+                <i id="DataAccessControlPara2"><b>@_loc[Model.DeleteData]</b> @_loc[Model.DataAccessControlPara2]</i>
+                <i id="DataAccessControlPara3"><b>@_loc[Model.ChangeData]</b> @_loc[Model.DataAccessControlPara3]</i>
+                <i id="DataAccessControlPara4"><b>@_loc[Model.AccessData]</b> @_loc[Model.DataAccessControlPara4]</i>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="DataAccessControlShortPara">
+                <b>@_loc[Model.DataAccessControlShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="DeleteAccountTitle">@_loc[Model.DeleteAccountTitle]</h3>
+                </div>
+                <p id="DeleteAccountPara1">@_loc[Model.DeleteAccountPara1]</p>
+                <p id="DeleteAccountPara2">@_loc[Model.DeleteAccountPara2]</p>
+                <p id="DeleteAccountPara3">@_loc[Model.DeleteAccountPara3]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="DeleteAccountShortPara">
+                <b>@_loc[Model.DeleteAccountShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <br />
+    <hr />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col">
+                <h2 class="font-style-content-head" id="OtherInformationTitle">@_loc[Model.PrivacyOtherInformationLink]</h2>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="SecurityTitle">@_loc[Model.SecurityTitle]</h3>
+                </div>
+                <p id="SecurityPara1">@_loc[Model.SecurityPara1]</p>
+                <p id="SecurityPara2">@_loc[Model.SecurityPara2]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="SecurityShortPara">
+                <b>@_loc[Model.SecurityShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="CrossBorderDataTitle">@_loc[Model.CrossBorderDataTitle]</h3>
+                </div>
+                <p id="CrossBorderDataPara1">@_loc[Model.CrossBorderDataPara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="CrossBorderDataShortPara">
+                <b>@_loc[Model.CrossBorderDataShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="ProcessingLawfulBasisTitle">@_loc[Model.ProcessingLawfulBasisTitle]</h3>
+                </div>
+                <p id="ProcessingLawfulBasisPara1">@_loc[Model.ProcessingLawfulBasisPara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="ProcessingLawfulBasisShortPara">
+                <b>@_loc[Model.ProcessingLawfulBasisShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 font-style-content-small thumb-text-block">
+                <div class="col">
+                    <h3 id="ContactUsTitle">@_loc[Model.ContactUsTitle]</h3>
+                </div>
+                <p id="ContactUsPara1">@_loc[Model.ContactUsPara1]</p>
+            </div>
+            <div class="col-lg-3 font-style-content-small thumb-text-block" id="ContactUsShortPara">
+                <b>@_loc[Model.ContactUsShortPara]</b>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+</body>
+@section Scripts {
+    <script src="~/js/nonmenuactive.js"></script>
+    <script src="~/js/privacyPageScrollToElement.js"></script>
+    <script src="~/js/privacyPageComingSoonModal.js"></script>
+    <script src="~/js/DisableEnableLinks.js"></script>
+    <script src="~/js/HomeDisableEnableLinks.js"></script>
+}

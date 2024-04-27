@@ -1,0 +1,221 @@
+﻿@page
+@model RegisterConfirmationModel
+@using LazZiya.ExpressLocalization
+@using System.Globalization
+@inject ISharedCultureLocalizer _loc
+@{
+    ViewData["Title"] = _loc[Model.PageTabTitle];
+}
+@section meta_head_tags{
+    <meta name='description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:locale' content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property='og:title' content="GatheringForGood - The place where ideas and expertise come together to solve the world's problems." />
+    <meta property='og:description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:url' content="https://gatheringforgood.com" />
+    <meta property='og:site_name' content="gatheringforgood" />
+    <meta property='og:image' content="http://www.gatheringforgood.com/images/shareimage.jpg" />
+    <meta property='og:image:width' content="1200" />
+    <meta property='og:image:height' content="600" />
+    <meta property='og:image:alt' content="gatheringforgood sharing image" />
+    <meta property="og:author" content="gatheringforgood">
+    <link rel="preload" as="image" href="@Model.GetEarthHandsReducedImageUrl" imagesrcset="@Model.GetEarthHandsReduced400ImageUrl 2.5x, @Model.GetEarthHandsReduced800ImageUrl 2x, @Model.GetEarthHandsReduced1200ImageUrl 1x, @Model.GetEarthHandsReduced1600ImageUrl 0.5x" sizes="100vw">
+}
+@section header_image{
+    <div class="bg-img-non-home" id="RegisterConfPageBanner">
+        <nav class="navbar navbar-expand-lg navbar-light" id="main-navbar-registerconf-page">
+            <div class="container">
+                <a class="navbar-brand mt-20" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/circle_logo.webp" id="_RegisterConfPageLogoImg" width="40" height="40" style="margin:0px 20px;" alt="Logo Image" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterConfPage-GoToHomeLogo'});">
+                </a>
+                <button class="navbar-toggler" type="button" id="_RegisterConfPageNavBarToggler" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link normal-item" id="_RegisterConfPageHomeNavLink" asp-area="" asp-controller="Home" asp-action="Index" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterConfPage-NavLink-Home'});">@_loc[Model.NavBarHome]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link normal-item" id="_RegisterConfPageArticlesNavLink" asp-area="" asp-controller="Articles" asp-action="Articles" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterConfPage-NavLink-Articles'});"><p id="RegisterConfPage-Articles-NavLink-Para" onclick="DisableLinks('RegisterConfPage-Articles-NavLink-Para', true, 'RegisterConfPage');">@_loc[Model.Articles]</p></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link normal-item" id="_RegisterConfPageAboutNavLink" asp-area="" asp-controller="About" asp-action="About" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterConfPage-NavLink-About'});">@_loc[Model.NavBarAbout]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link normal-item" id="_RegisterConfPageHelpNavLink" asp-area="" asp-controller="Help" asp-action="Help" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterConfPage-NavLink-Help'});">@_loc[Model.NavBarHelpCenter]</a>
+                        </li>
+                        <partial name="_LoginPartial" />
+                    </ul>
+                </div>
+            </div>
+        </nav>
+}
+@section header_content{
+    <div class="container-title">
+        <div class="block-title">
+            <br>
+            <h1 class="block-subtitle-text" id="RegisterConfPageSubtitle">@_loc[Model.SubTitle]</h1>
+            <h2 class="block-title-text-non-home" id="RegisterConfPageTitle">@_loc[Model.Title]</h2>
+        </div>
+    </div>
+}
+</div>
+<body class="body-bg-img">
+    <div class="modal fade" id="registerConfirmationPageComingSoonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content comingsoon-bg-img">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="ComingSoonModalTitle">Modal Error!1</h3>
+                    <button type="button" id="ComingSoonModalHeaderCloseButton" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="col justify-content-center align-items-center">
+                    <h4 class="modal-body" id="registerConfirmationPageLearnMoreModalPara">Modal Error!2</h4>
+                </div>
+                <br />
+                <div class="form-group thumb-block">
+                    <form asp-page="RegisterConfirmation" asp-page-handler="SaveUserEntry" method="post">
+                        <label class="modal-body1 col-form-label" id="registerConfirmationPageComingSoonModalFormLabel">Modal Error!3</label>
+                        <br />
+                        <textarea class="form-control" name="newsfeedUserEntry" id="newsfeedUserEntry" type="text"></textarea>
+                        <div class="modal-footer">
+                            <button type="submit" id="ComingSoonModalFooterSubmitButton" class="btn btn-success" data-dismiss="registerConfirmationPageComingSoonModal" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterConfPage-Button-ComingSoonModalSubmit'});">@_loc[Model.Submit]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col">
+                <br />
+                <h2 class="font-style-content-head" id="RegisterConfHeading">@_loc[Model.Heading]</h2>
+                <hr />
+            </div>
+        </div>
+        <br />
+    </div>
+    <br />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            @{
+                if (@Model.DisplayConfirmAccountLink)
+                {
+                    <p localize-args="@(new[] { "https://aka.ms/aspaccountconf", Model.EmailConfirmationUrl })">
+                        This app does not currently have a real email sender registered, see <a href="{0}">these docs</a> for how to configure a real email sender.
+                        Normally this would be emailed: <a id="confirm-link" href="@Model.EmailConfirmationUrl">Click here to confirm your account</a>
+                    </p>
+                }
+                else
+                {
+                    <p><strong>@_loc[Model.CheckEmailHeading1]</strong> @_loc[Model.CheckEmailHeading2]</p>
+                }
+            }
+        </div>
+    </div>
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-sm-auto col-md-auto col-lg-auto col-xl-auto">
+                <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    <div asp-validation-summary="ModelOnly" class="font-danger"></div>
+                    <div class="form-group" style="text-align: center">
+                        <p>
+                            <button type="submit" class="btn btn-warning button-title" asp-page-handler="RegisterConfirmationSkip" id="_RegisterConfPageButtonSkip" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterConfPage-Button-Skip'});">@_loc[Model.Skip]</button>
+                        </p>
+                        <label class="font-info" id="SkipForNowInfo" style="margin-top: 20px">@_loc[Model.SkipInfo]</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="font-heading" asp-for="Input.FirstName" id="FirstNameHeading">@_loc[Model.FirstNameHeading]</label>
+                        <input asp-for="Input.FirstName" autocomplete="off" class="form-control" id="FirstNameInputField" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterConfPage-Field-FirstName'});" />
+                        <span asp-validation-for="Input.FirstName" class="font-danger" id="FirstNameValidationLabel"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="font-heading" asp-for="Input.SurName" id="SurNameHeading">@_loc[Model.SurNameHeading]</label>
+                        <input asp-for="Input.SurName" autocomplete="off" class="form-control" id="SurNameInputField" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterConfPage-Field-SurName'});" />
+                        <span asp-validation-for="Input.SurName" class="font-danger" id="SurNameValidationLabel"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="font-heading" asp-for="Input.Age" id="AgeHeading">@_loc[Model.AgeHeading]</label>
+                        <input asp-for="Input.Age" autocomplete="off" class="form-control" id="AgeInputField" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterConfPage-Field-Age'});" />
+                        <span asp-validation-for="Input.Age" class="font-danger" id="AgeValidationLabel"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.Country" class="font-heading" id="CountryHeading">@_loc[Model.CountryHeading]</label>
+                        <div class="input-group">
+                            <label asp-for="Input.Country" class="input-group-text" for="inputGroupCountrySelect" id="countryMatchHeading">@_loc[Model.Country]</label>
+                            <select class="form-control" asp-items="@Model.ListOfCountries" name="inputGroupCountrySelect" id="inputGroupCountrySelect" onclick="populateRegionList(); gtag('event','click',{'event_category':'Click','event_label':'RegisterConfPage-DropDown-SelectCountry'});">
+                                <option selected>Choose...</option>
+                            </select>
+                            <br />
+                        </div>
+                        <input type="hidden" asp-for="Input.Country" autocomplete="off" class="form-control" id="CountryHiddenInputField" />
+                    </div>
+                    <div class="form-group">
+                        <label class="font-heading" asp-for="Input.Region" id="RegionHeading">@_loc[Model.RegionHeading]</label>
+                        <div class="input-group">
+                            <label asp-for="Input.Region" class="input-group-text" for="inputGroupRegionSelect" id="regionMatchHeading">@_loc[Model.Region]</label>
+                            <select class="form-control" name="inputGroupRegionSelect" id="inputGroupRegionSelect" onclick="populateHiddenRegionField(); gtag('event','click',{'event_category':'Click','event_label':'RegisterConfPage-DropDown-SelectRegion'});" disabled>
+                                <option selected>Choose...</option>
+                            </select>
+                            <br />
+                        </div>
+                        <input type="hidden" asp-for="Input.Region" autocomplete="off" class="form-control" id="RegionHiddenInputField" />
+                    </div>
+                    <div class="form-group">
+                        <br />
+                        <label class="font-heading" asp-for="Input.CompanyName" id="CompanyNameHeading">@_loc[Model.CompanyNameHeading]</label>
+                        <input asp-for="Input.CompanyName" autocomplete="off" class="form-control" id="CompanyNameInputField" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterConfPage-Field-CompanyName'});" />
+                        <span asp-validation-for="Input.CompanyName" class="font-danger" id="CompanyNameValidationLabel"></span>
+                    </div>
+                    <div class="form-group">
+                        <br />
+                        <label asp-for="Input.Skill" class="font-heading" id="SkillHeading">@_loc[Model.SkillHeading]</label>
+                        <div class="input-group">
+                            <label asp-for="Input.Skill" class="input-group-text" for="inputGroupSkillSelect" id="skillsMatchHeading">Skills</label>
+                            <select asp-for="Input.Skill" class="form-control" asp-items="@Model.ListOfSkills" name="inputGroupSkillSelect" id="inputGroupSkillSelect" onclick="displaySelectedSkill(); gtag('event','click',{'event_category':'Click','event_label':'RegisterConfPage-DropDown-Skills'});">
+                                <option selected>Choose...</option>
+                            </select>
+                            <br />
+                        </div>
+                        <label class="font-info" id="SkillCommaInfo" style="margin-top: 20px">@_loc[Model.SeparateSkillComma]</label>
+                        <textarea asp-for="Input.Skill" autocomplete="off" class="form-control" id="SkillInputField" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterConfPage-Field-SkillInput'});"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <br />
+                        <label asp-for="Input.AreaOfInterest" class="font-heading" id="AreaOfInterestHeading">@_loc[Model.AreaOfInterestHeading]</label>
+                        <div class="input-group">
+                            <label asp-for="Input.AreaOfInterest" class="input-group-text" for="inputGroupInterestsSelect" id="interestsMatchHeading">Interests</label>
+                            <select asp-for="Input.AreaOfInterest" class="form-control" asp-items="@Model.AreasOfInterest" name="inputGroupInterestsSelect" id="inputGroupInterestsSelect" onclick="displaySelectedInterest(); gtag('event','click',{'event_category':'Click','event_label':'RegisterConfPage-DropDown-Interests'});">
+                                <option selected>Choose...</option>
+                            </select>
+                            <br />
+                        </div>
+                        <label class="font-info" id="AreaOfInterestCommaInfo" style="margin-top: 20px">@_loc[Model.SeparateAreaComma]</label>
+                        <textarea asp-for="Input.AreaOfInterest" autocomplete="off" class="form-control" id="AreaOfInterestInputField" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterConfPage-Field-InterestInput'});"></textarea>
+                    </div>
+                    <br />
+                    <div class="form-group" style="text-align: center">
+                        <p>
+                            <button type="submit" class="btn btn-success button-title" id="RegisterConfButton" onclick="DisableEnableLinks('RegisterConfButton', true); gtag('event', 'click', { 'event_category': 'Click', 'event_label': 'RegisterConfPage-Button-Submit' });">@_loc[Model.Submit]</button>
+                        </p>
+                    </div>
+                </form>
+                <br />
+            </div>
+        </div>
+    </div>
+</body>
+@section Scripts {
+    <script src="~/js/registerConfirmationPageComingSoonModal.js"></script>
+    <script src="~/js/DisableEnableLinks.js"></script>
+    <script src="~/js/DisplaySelectedSkill.js"></script>
+    <script src="~/js/DisplaySelectedInterest.js"></script>
+    <script src="~/js/PopulateRegionList.js"></script>
+    <script src="~/js/populateHiddenRegionField.js"></script>
+    <script src="~/js/HomeDisableEnableLinks.js"></script>
+    <script src="~/js/DisableEnableLinks.js"></script>
+    <script src="~/js/RegisterConfirmation_DisableButtons.js"></script>
+}

@@ -1,0 +1,288 @@
+﻿@model UserBadgesViewModel
+@using Microsoft.AspNetCore.Identity
+@using GatheringForGood.Data
+@using System.Globalization
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = _loc[Model.PageTabTitle];
+}
+@section meta_head_tags{
+    <meta name='description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:locale' content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property='og:title' content="GatheringForGood - The place where ideas and expertise come together to solve the world's problems." />
+    <meta property='og:description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:url' content="https://gatheringforgood.com/en/UserBadges/UserBadges" />
+    <meta property='og:site_name' content="gatheringforgood" />
+    <meta property='og:image' content="http://www.gatheringforgood.com/images/shareimage.jpg" />
+    <meta property='og:image:width' content="1200" />
+    <meta property='og:image:height' content="600" />
+    <meta property='og:image:alt' content="gatheringforgood sharing image" />
+    <meta property="og:author" content="gatheringforgood">
+    <link rel="preload" as="image" href="@Model.GetEarthHandsReducedImageUrl" imagesrcset="@Model.GetEarthHandsReduced400ImageUrl 2.5x, @Model.GetEarthHandsReduced800ImageUrl 2x, @Model.GetEarthHandsReduced1200ImageUrl 1x, @Model.GetEarthHandsReduced1600ImageUrl 0.5x" sizes="100vw">
+}
+@section header_image{
+    <div class="bg-img-non-home" id="UserBadgesPageBanner">
+        <nav class="navbar navbar-expand-lg navbar-light" id="main-navbar-userbadges-page">
+            <div class="container">
+                <a class="navbar-brand mt-20" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/circle_logo.webp" id="_UserBadgesPageLogoImg" width="40" height="40" style="margin:0px 20px;" alt="Logo Image" onclick="gtag('event','click',{'event_category':'Click','event_label':'UserBadgesPage-GoToHomeLogo'});">
+                </a>
+                <button class="navbar-toggler" type="button" id="_UserBadgesPageNavBarToggler" dacircle_logo.webpta-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" id="_UserBadgesPageHomeNavLink" asp-area="" asp-controller="Home" asp-action="Index" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'UserBadgesPage-NavLink-Home'});">@_loc[Model.NavBarHome]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="_UserBadgesPageArticlesNavLink" asp-area="" asp-controller="Articles" asp-action="Articles" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'UserBadgesPage-NavLink-Articles'});"><p id="UserBadges-Articles-NavLink-Para" onclick="DisableLinks('UserBadges-Articles-NavLink-Para', true, 'UserBadges');">@_loc[Model.Articles]</p></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="_UserBadgesPageAboutNavLink" asp-area="" asp-controller="About" asp-action="About" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'UserBadgesPage-NavLink-About'});">@_loc[Model.NavBarAbout]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="_UserBadgesPageHelpNavLink" asp-area="" asp-controller="Help" asp-action="Help" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'UserBadgesPage-NavLink-Help'});">@_loc[Model.NavBarHelpCenter]</a>
+                        </li>
+                        <partial name="_LoginPartial" />
+                    </ul>
+                </div>
+            </div>
+        </nav>
+}
+@section header_content{
+    <div class="container-title">
+        <div class="block-title block-title1">
+            <br>
+            <h1 class="block-subtitle-text" id="UserBadgesPageSubtitle">@_loc[Model.Subtitle]</h1>
+            <h2 class="block-title-text-non-home" id="UserBadgesPageTitle">@_loc[Model.Title]</h2>
+        </div>
+    </div>
+}
+</div>
+<body class="body-bg-img">
+    <div class="modal fade" id="userBadgesPageComingSoonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content comingsoon-bg-img">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="ComingSoonModalTitle">Modal Error!1</h3>
+                    <button type="button" id="ComingSoonModalHeaderCloseButton" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="col justify-content-center align-items-center">
+                    <h4 class="modal-body" id="userBadgesPageLearnMoreModalPara">Modal Error!2</h4>
+                </div>
+                <br />
+                <div class="form-group thumb-block">
+                    <form action="@Url.Action("SaveUserEntry","UserBadges")" method="post">
+                        <label class="modal-body1 col-form-label" id="userBadgesPageComingSoonModalFormLabel">Modal Error!3</label>
+                        <br />
+                        <textarea class="form-control" name="newsfeedUserEntry" id="newsfeedUserEntry" type="text"></textarea>
+                        <div class="modal-footer">
+                            <button type="submit" id="ComingSoonModalFooterSubmitButton" class="btn btn-success" data-dismiss="userBadgesPageComingSoonModal" onclick="gtag('event','click',{'event_category':'Click','event_label':'UserBadgesPage-Button-ComingSoonModalSubmit'});">@_loc[Model.Submit]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col">
+                <br />
+                <h2 class="font-style-content-head" id="MyAwardsAndBadgesTitle">@_loc[Model.Subtitle]</h2>
+            </div>
+        </div>
+        <br />
+    </div>
+    <br />
+    <hr />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-3 thumb-block" id="HelpfulBadgeImageIcon">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.HelpfulBadgeImageThumbnailUrl" id="HelpfulBadgeImageIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="Newsfeed Icon">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p id="HelpfulBadgeImageIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.HelpfulTitle]</p>
+                    <p class="block-subtitle-text-grey" id="HelpfulBadgeInfo" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.HelpfulInfo]</p>
+                </div>
+            </div>
+            <div class="col-lg-3 thumb-block" id="LeaderBadgeImageIcon">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.LeaderBadgeImageThumbnailUrl" id="LeaderBadgeImageIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="View Articles Icon">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p id="LeaderBadgeImageIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.LeaderTitle]</p>
+                    <p class="block-subtitle-text-grey" id="LeaderBadgeInfo" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.LeaderInfo]</p>
+                </div>
+            </div>
+            <div class="col-lg-3 thumb-block" id="VisionaryBadgeImageIcon">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.VisionaryBadgeImageThumbnailUrl" id="VisionaryBadgeImageIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="Offset My Carbon Icon">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p id="VisionaryBadgeImageIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.VisionaryTitle]</p>
+                    <p class="block-subtitle-text-grey" id="VisionaryBadgeInfo" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.VisionaryInfo]</p>
+                </div>
+            </div>
+            <div class="col-lg-3 thumb-block" id="ThankyouBadgeImageIcon">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.ThankyouBadgeImageThumbnailUrl" id="ThankyouBadgeImageIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="Track My Impacts Icon">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p id="ThankyouBadgeImageIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.ThankyouTitle]</p>
+                    <p class="block-subtitle-text-grey" id="ThankyouBadgeInfo" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.ThankyouInfo]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-3 thumb-block" id="FirstStepBadgeImageIcon">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.FirstStepBadgeImageThumbnailUrl" id="FirstStepBadgeImageIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="Newsfeed Icon">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p id="FirstStepBadgeImageIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.FirstStepBadgeTitle]</p>
+                    <p class="block-subtitle-text-grey" id="FirstStepBadgeInfo" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.FirstStepBadgeInfo]</p>
+                </div>
+            </div>
+            <div class="col-lg-3 thumb-block" id="GathererForGoodBadgeImageIcon">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.GathererForGoodBadgeImageThumbnailUrl" id="GathererForGoodBadgeImageIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="View Articles Icon">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p id="GathererForGoodBadgeImageIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.GathererForGoodTitle]</p>
+                    <p class="block-subtitle-text-grey" id="GathererForGoodBadgeInfo" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.GathererForGoodInfo]</p>
+                </div>
+            </div>
+            <div class="col-lg-3 thumb-block" id="BuildingBackBetterBadgeImageIcon">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.BuildingBackBetterBadgeImageThumbnailUrl" id="BuildingBackBetterBadgeImageIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="Offset My Carbon Icon">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p id="BuildingBackBetterBadgeImageIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.BuildingBackBetterTitle]</p>
+                    <p class="block-subtitle-text-grey" id="BuildingBackBetterBadgeInfo" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.BuildingBackBetterInfo]</p>
+                </div>
+            </div>
+            <div class="col-lg-3 thumb-block" id="KeyDriverOfChangeBadgeImageIcon">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.KeyDriverOfChangeBadgeImageThumbnailUrl" id="KeyDriverOfChangeBadgeImageIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="Track My Impacts Icon">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p id="KeyDriverOfChangeBadgeImageIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.KeyDriverOfChangeTitle]</p>
+                    <p class="block-subtitle-text-grey" id="KeyDriverOfChangeBadgeInfo" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.KeyDriverOfChangeInfo]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-4 thumb-block" id="DefeatGlobalWarmingBadgeImageIcon">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.DefeatGlobalWarmingBadgeImageThumbnailUrl" id="DefeatGlobalWarmingBadgeImageIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="Newsfeed Icon">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p id="DefeatGlobalWarmingBadgeImageIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.DefeatGlobalWarmingTitle]</p>
+                    <p class="block-subtitle-text-grey" id="DefeatGlobalWarmingBadgeInfo" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.DefeatGlobalWarmingInfo]</p>
+                </div>
+            </div>
+            <div class="col-lg-4 thumb-block" id="DefeatAnimalExtinctionBadgeImageIcon">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.DefeatAnimalExtinctionBadgeImageThumbnailUrl" id="DefeatAnimalExtinctionBadgeImageIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="View Articles Icon">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p id="DefeatAnimalExtinctionBadgeImageIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.DefeatAnimalExtinctionTitle]</p>
+                    <p class="block-subtitle-text-grey" id="DefeatAnimalExtinctionBadgeInfo" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.DefeatAnimalExtinctionInfo]</p>
+                </div>
+            </div>
+            <div class="col-lg-4 thumb-block" id="DefeatDeforestationBadgeImageIcon">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.DefeatDeforestationBadgeImageThumbnailUrl" id="DefeatDeforestationBadgeImageIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="Offset My Carbon Icon">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p id="DefeatDeforestationBadgeImageIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.DefeatDeforestationTitle]</p>
+                    <p class="block-subtitle-text-grey" id="DefeatDeforestationBadgeInfo" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.DefeatDeforestationInfo]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-3 thumb-block" id="DeeplyCareBadgeImageIcon">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.DeeplyCareBadgeImageThumbnailUrl" id="DeeplyCareBadgeImageIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="Newsfeed Icon">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p id="DeeplyCareBadgeImageIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.DeeplyCareTitle]</p>
+                    <p class="block-subtitle-text-grey" id="DeeplyCareBadgeInfo" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.DeeplyCareInfo]</p>
+                </div>
+            </div>
+            <div class="col-lg-3 thumb-block" id="CommunicatingForDifferenceBadgeImageIcon">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.CommunicatingForDifferenceBadgeImageThumbnailUrl" id="CommunicatingForDifferenceBadgeImageIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="View Articles Icon">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p id="CommunicatingForDifferenceBadgeImageIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.CommunicatingForDifferenceTitle]</p>
+                    <p class="block-subtitle-text-grey" id="CommunicatingForDifferenceBadgeInfo" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.CommunicatingForDifferenceInfo]</p>
+                </div>
+            </div>
+            <div class="col-lg-3 thumb-block" id="ContributorForGoodBadgeImageIcon">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.ContributorForGoodBadgeImageThumbnailUrl" id="ContributorForGoodBadgeImageIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="Offset My Carbon Icon">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p id="ContributorForGoodBadgeImageIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.ContributorForGoodTitle]</p>
+                    <p class="block-subtitle-text-grey" id="ContributorForGoodBadgeInfo" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.ContributorForGoodInfo]</p>
+                </div>
+            </div>
+            <div class="col-lg-3 thumb-block" id="FeedbackHeroBadgeImageIcon">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.FeedbackHeroBadgeImageThumbnailUrl" id="FeedbackHeroBadgeImageIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="Track My Impacts Icon">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p id="FeedbackHeroBadgeImageIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.FeedbackHeroTitle]</p>
+                    <p class="block-subtitle-text-grey" id="FeedbackHeroBadgeInfo" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.FeedbackHeroInfo]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 thumb-block" id="LearningForGoodBadgeImageIcon">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.LearningForGoodBadgeImageThumbnailUrl" id="LearningForGoodBadgeImageIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="Track My Impacts Icon">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p id="LearningForGoodBadgeImageIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.LearningForGoodTitle]</p>
+                    <p class="block-subtitle-text-grey" id="LearningForGoodBadgeInfo" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.LearningForGoodInfo]</p>
+                </div>
+            </div>
+            <div class="col-lg-6 thumb-block" id="MakingADifferenceBadgeImageIcon">
+                <div class="col justify-content-center align-items-center">
+                    <img src="@Model.MakingADifferenceBadgeImageThumbnailUrl" id="MakingADifferenceBadgeImageIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="Track My Impacts Icon">
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <p id="MakingADifferenceBadgeImageIconText" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.MakingADifferenceTitle]</p>
+                    <p class="block-subtitle-text-grey" id="MakingADifferenceBadgeInfo" width="100" style=" margin: 0px 0px 40px 0px;">@_loc[Model.MakingADifferenceInfo]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+</body>
+@section Scripts{
+    <script src="~/js/userBadgesPageComingSoonModal.js"></script>
+    <script src="~/js/nonmenuactive.js"></script>
+    <script src="~/js/DisableEnableLinks.js"></script>
+    <script src="~/js/HomeDisableEnableLinks.js"></script>
+}

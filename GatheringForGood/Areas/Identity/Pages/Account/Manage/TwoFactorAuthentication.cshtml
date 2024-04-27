@@ -1,0 +1,135 @@
+﻿@page
+@model TwoFactorAuthenticationModel
+@using LazZiya.ExpressLocalization
+@using System.Globalization
+@inject ISharedCultureLocalizer _loc
+@{
+    ViewData["Title"] = _loc[Model.PageTabTitle];
+}
+@section meta_head_tags{
+    <meta name='description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:locale' content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property='og:title' content="GatheringForGood - The place where ideas and expertise come together to solve the world's problems." />
+    <meta property='og:description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:url' content="https://gatheringforgood.com" />
+    <meta property='og:site_name' content="gatheringforgood" />
+    <meta property='og:image' content="http://www.gatheringforgood.com/images/shareimage.jpg" />
+    <meta property='og:image:width' content="1200" />
+    <meta property='og:image:height' content="600" />
+    <meta property='og:image:alt' content="gatheringforgood sharing image" />
+    <meta property="og:author" content="gatheringforgood">
+    <link rel="preload" as="image" href="@Model.GetEarthHandsReducedImageUrl" imagesrcset="@Model.GetEarthHandsReduced400ImageUrl 2.5x, @Model.GetEarthHandsReduced800ImageUrl 2x, @Model.GetEarthHandsReduced1200ImageUrl 1x, @Model.GetEarthHandsReduced1600ImageUrl 0.5x" sizes="100vw">
+}
+@section header_image{
+    <div class="bg-img-non-home" id="_TwoFactorAuthPageBanner">
+        <nav class="navbar navbar-expand-lg navbar-light" id="main-navbar-twofamanage-page">
+            <div class="container">
+                <a class="navbar-brand mt-20" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/circle_logo.webp" id="_TwoFactorAuthPageLogoImg" width="40" height="40" style="margin:0px 20px;" alt="Logo Image" onclick="gtag('event','click',{'event_category':'Click','event_label':'TwoFAPage-GoToHomeLogo'});">
+                </a>
+                <button class="navbar-toggler" type="button" id="_TwoFactorAuthPageNavBarToggler" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" id="_TwoFactorAuthPageHomeNavLink" asp-area="" asp-controller="Home" asp-action="Index" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'TwoFAPage-NavLink-Home'});">@_loc[Model.NavBarHome]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="_TwoFactorAuthPageArticlesNavLink" asp-area="" asp-controller="Articles" asp-action="Articles" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'TwoFAPage-NavLink-Articles'});"><p id="2FA-Articles-NavLink-Para" onclick="DisableLinks('2FA-Articles-NavLink-Para', true, '2FA');">@_loc[Model.Articles]</p></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="_TwoFactorAuthPageAboutNavLink" asp-area="" asp-controller="About" asp-action="About" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'TwoFAPage-NavLink-About'});">@_loc[Model.NavBarAbout]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="_TwoFactorAuthPageHelpNavLink" asp-area="" asp-controller="Help" asp-action="Help" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'TwoFAPage-NavLink-Help'});">@_loc[Model.NavBarHelpCenter]</a>
+                        </li>
+                        <partial name="_LoginPartial" />
+                    </ul>
+                </div>
+            </div>
+        </nav>
+}
+@section header_content{
+    <div class="container-title">
+        <div class="block-title">
+            <br>
+            <h1 class="block-subtitle-text" id="TwoFactorAuthPageSubtitle">@_loc[Model.SubTitle]</h1>
+            <h2 class="block-title-text-non-home" id="TwoFactorAuthPageTitle">@_loc[Model.Title]</h2>
+        </div>
+    </div>
+}
+</div>
+<body class="body-bg-img">
+    <div class="container-body justify-content-center align-items-center">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-12  justify-content-center align-items-center">
+                <div class="container-body  justify-content-center align-items-center">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-9 font-style-content">
+                            <div class="form-group justify-content-center align-items-center">
+                                @if (Model.Is2faEnabled)
+                                {
+                                    if (Model.RecoveryCodesLeft == 0)
+                                    {
+                                        <div class="alert alert-danger">
+                                            <strong>You have no recovery codes left.</strong>
+                                            <p>You must <a asp-page="./GenerateRecoveryCodes">generate a new set of recovery codes</a> before you can log in with a recovery code.</p>
+                                        </div>
+                                    }
+                                    else if (Model.RecoveryCodesLeft == 1)
+                                    {
+                                        <div class="alert alert-danger">
+                                            <strong>You have 1 recovery code left.</strong>
+                                            <p>You can <a asp-page="./GenerateRecoveryCodes">generate a new set of recovery codes</a>.</p>
+                                        </div>
+                                    }
+                                    else if (Model.RecoveryCodesLeft <= 3)
+                                    {
+                                        <div class="alert alert-warning">
+                                            <strong>You have @Model.RecoveryCodesLeft recovery codes left.</strong>
+                                            <p>You should <a asp-page="./GenerateRecoveryCodes">generate a new set of recovery codes</a>.</p>
+                                        </div>
+                                    }
+
+                                    if (Model.IsMachineRemembered)
+                                    {
+                                        <form method="post" style="display: inline-block">
+                                            <button type="submit" class="btn btn-outline-success button-title">Forget this browser</button>
+                                        </form>
+                                    }
+                                    <a asp-page="./Disable2fa" class="btn btn-primary">Disable 2FA</a>
+                                    <a asp-page="./GenerateRecoveryCodes" class="btn btn-outline-success button-title">Reset recovery codes</a>
+                                }
+
+                                <h5 class="font-heading" id="_TwoFactorAuthPageAuthenticatorAppHeading">@_loc[Model.AuthAppHeading]</h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-9 font-style-content">
+                            <div class="form-group justify-content-center align-items-center">
+                                <br />
+                                @if (!Model.HasAuthenticator)
+                                {
+                                    <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-outline-success button-title">@_loc[Model.AddAuthAppButtonText]</a>
+                                }
+                                else
+                                {
+                                    <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-outline-success button-title">@_loc[Model.SetupAuthAppButtonText]</a>
+                                    <a id="reset-authenticator" asp-page="./ResetAuthenticator" class="btn btn-outline-success button-title">@_loc[Model.ResetAuthAppButtonText]</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/HomeDisableEnableLinks.js"></script>
+    <script src="~/js/DisableEnableLinks.js"></script>
+}

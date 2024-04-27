@@ -1,0 +1,232 @@
+﻿@page
+@model GatheringForGood.Areas.Identity.Pages.Account.Manage.InfoModel
+@using LazZiya.ExpressLocalization
+@using System.Globalization
+@inject ISharedCultureLocalizer _loc
+@{
+    ViewData["Title"] = _loc[Model.PageTabTitle];
+}
+@section meta_head_tags{
+    <meta name='description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:locale' content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property='og:title' content="GatheringForGood - The place where ideas and expertise come together to solve the world's problems." />
+    <meta property='og:description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:url' content="https://gatheringforgood.com" />
+    <meta property='og:site_name' content="gatheringforgood" />
+    <meta property='og:image' content="http://www.gatheringforgood.com/images/shareimage.jpg" />
+    <meta property='og:image:width' content="1200" />
+    <meta property='og:image:height' content="600" />
+    <meta property='og:image:alt' content="gatheringforgood sharing image" />
+    <meta property="og:author" content="gatheringforgood">
+    <link rel="preload" as="image" href="@Model.GetEarthHandsReducedImageUrl" imagesrcset="@Model.GetEarthHandsReduced400ImageUrl 2.5x, @Model.GetEarthHandsReduced800ImageUrl 2x, @Model.GetEarthHandsReduced1200ImageUrl 1x, @Model.GetEarthHandsReduced1600ImageUrl 0.5x" sizes="100vw">
+}
+@section header_image{
+    <div class="bg-img-non-home" id="InfoPageBanner">
+        <nav class="navbar navbar-expand-lg navbar-light" id="main-navbar-info-page">
+            <div class="container">
+                <a class="navbar-brand mt-20" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/circle_logo.webp" id="_InfoPageLogoImg" width="40" height="40" style="margin:0px 20px;" alt="Logo Image" onclick="gtag('event','click',{'event_category':'Click','event_label':'InfoPage-GoToHomeLogo'});">
+                </a>
+                <button class="navbar-toggler" type="button" id="_InfoPageNavBarToggler" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link normal-item" id="_InfoPageHomeNavLink" asp-area="" asp-controller="Home" asp-action="Index" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'InfoPage-NavLink-Home'});">@_loc[Model.NavBarHome]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link normal-item" id="_InfoPageArticlesNavLink" asp-area="" asp-controller="Articles" asp-action="Articles" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'InfoPage-NavLink-Articles'});"><p id="Info-Articles-NavLink-Para" onclick="DisableLinks('Info-Articles-NavLink-Para', true, 'Info');">@_loc[Model.Articles]</p></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link normal-item" id="_InfoPageAboutNavLink" asp-area="" asp-controller="About" asp-action="About" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'InfoPage-NavLink-About'});">@_loc[Model.NavBarAbout]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link normal-item" id="_InfoPageHelpNavLink" asp-area="" asp-controller="Help" asp-action="Help" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'InfoPage-NavLink-Help'});">@_loc[Model.NavBarHelpCenter]</a>
+                        </li>
+                        <partial name="_LoginPartial" />
+                    </ul>
+                </div>
+            </div>
+        </nav>
+}
+@section header_content{
+    <div class="container-title">
+        <div class="block-title">
+            <br>
+            <h1 class="block-subtitle-text" id="InfoPageSubtitle">@_loc[Model.SubTitle]</h1>
+            <h2 class="block-title-text-non-home" id="InfoPageTitle">@_loc[Model.Title]</h2>
+        </div>
+    </div>
+}
+</div>
+<body class="body-bg-img">
+    <div class="modal fade" id="infoPageComingSoonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content comingsoon-bg-img">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="ComingSoonModalTitle">Modal Error!1</h3>
+                    <button type="button" id="ComingSoonModalHeaderCloseButton" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="col justify-content-center align-items-center">
+                    <h4 class="modal-body" id="infoPageLearnMoreModalPara">Modal Error!2</h4>
+                </div>
+                <br />
+                <div class="form-group thumb-block">
+                    <form asp-page="Info" asp-page-handler="SaveUserEntry" method="post">
+                        <label class="modal-body1 col-form-label" id="infoPageComingSoonModalFormLabel">Modal Error!3</label>
+                        <br />
+                        <textarea class="form-control" name="newsfeedUserEntry" id="newsfeedUserEntry" type="text"></textarea>
+                        <div class="modal-footer">
+                            <button type="submit" id="ComingSoonModalFooterSubmitButton" class="btn btn-success" data-dismiss="infoPageComingSoonModal" onclick="gtag('event','click',{'event_category':'Click','event_label':'InfoPage-Button-ComingSoonModalSubmit'});">@_loc[Model.Submit]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-body justify-content-center align-items-center">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-12  justify-content-center align-items-center">
+                <form form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    <div class="container-body  justify-content-center align-items-center">
+                        <div class="row justify-content-center align-items-center">
+                            <div class="col-lg-9 font-style-content">
+                                <div class="form-group">
+                                    <label class="font-heading" asp-for="Input.NewFirstName" id="InfoPageFirstNameHeading">@_loc[Model.FirstNameHeading]</label>
+                                    <input autocomplete="off" class="form-control" asp-for="ExistingFirstName" id="InfoPageExistingFirstNameInputField" disabled />
+                                    <label class="font-info" id="InfoPageReplaceFirstNameInputFieldNewLabel" style="margin-top: 20px">@_loc[Model.NewValue]</label>
+                                    <input asp-for="Input.NewFirstName" autocomplete="off" class="form-control" runat="server" id="InfoPageReplaceFirstNameInputField" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="font-heading" asp-for="Input.NewSurName" id="InfoPageSurNameHeading">@_loc[Model.SurNameHeading]</label>
+                                    <input autocomplete="off" class="form-control" asp-for="ExistingSurName" id="InfoPageExistingSurNameInputField" disabled />
+                                    <label class="font-info" id="InfoPageReplaceSurnameInputFieldNewLabel" style="margin-top: 20px">@_loc[Model.NewValue]</label>
+                                    <input asp-for="Input.NewSurName" autocomplete="off" class="form-control" id="InfoPageReplaceSurNameInputField" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="font-heading" asp-for="Input.NewAge" id="InfoPageAgeHeading">@_loc[Model.AgeHeading]</label>
+                                    <input autocomplete="off" class="form-control" asp-for="ExistingAge" id="InfoPageExistingAgeInputField" disabled />
+                                    <label class="font-info" id="InfoPageReplaceAgeInputFieldNewLabel" style="margin-top: 20px">@_loc[Model.NewValue]</label>
+                                    <input asp-for="Input.NewAge" autocomplete="off" class="form-control" id="InfoPageReplaceAgeInputField" />
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Input.NewCountry" class="font-heading" id="InfoPageCountryHeading">@_loc[Model.CountryHeading]</label>
+                                    <input autocomplete="off" class="form-control" asp-for="ExistingCountry" id="InfoPageExistingCountryInputField" disabled />
+                                    <label class="font-info" id="InfoPageReplaceCountryInputFieldNewLabel" style="margin-top: 20px">@_loc[Model.NewValue]</label>
+                                    <div class="input-group">
+                                        <label asp-for="Input.NewCountry" class="input-group-text" for="InfoPageinputGroupCountrySelect" id="InfoPagecountryMatchHeading">@_loc[Model.Country]</label>
+                                        <select class="form-control" asp-items="@Model.ListOfCountries" name="InfoPageinputGroupCountrySelect" id="InfoPageinputGroupCountrySelect" onchange="populateNewCountryField()" onclick="populateNewCountryField(); gtag('event','click',{'event_category':'Click','event_label':'InfoPage-DropDown-SelectCountry'});">
+                                            <option selected>Choose...</option>
+                                        </select>
+                                        <br />
+                                    </div>
+                                    <input type="hidden" asp-for="Input.NewCountry" autocomplete="off" class="form-control" id="InfoPageReplaceCountryHiddenInputField" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="font-heading" asp-for="Input.NewRegion" id="InfoPageRegionHeading">@_loc[Model.RegionHeading]</label>
+                                    <input autocomplete="off" class="form-control" asp-for="ExistingRegion" id="InfoPageExistingRegionInputField" disabled />
+                                    <label class="font-info" id="InfoPageReplaceRegionInputFieldNewLabel" style="margin-top: 20px">@_loc[Model.NewValue]</label>
+                                    <label class="font-info">@_loc[Model.SelectCountryFirstPara]</label>
+                                    <div class="input-group">
+                                        <label asp-for="Input.NewRegion" class="input-group-text" for="InfoPageinputGroupRegionSelect" id="InfoPageregionMatchHeading">@_loc[Model.Region]</label>
+                                        <select class="form-control" name="InfoPageinputGroupRegionSelect" id="InfoPageinputGroupRegionSelect" onclick="populateNewRegionField(); gtag('event','click',{'event_category':'Click','event_label':'InfoPage-DropDown-SelectRegion'});" disabled>
+                                            <option selected>Choose...</option>
+                                        </select>
+                                        <br />
+                                    </div>
+                                    <input type="hidden" asp-for="Input.NewRegion" autocomplete="off" class="form-control" id="InfoPageReplaceRegionHiddenInputField" />
+                                </div>
+                                <div class="form-group">
+                                    <br />
+                                    <label class="font-heading" asp-for="Input.NewCompanyName" id="InfoPageCompanyNameHeading">@_loc[Model.CompanyNameHeading]</label>
+                                    <input autocomplete="off" class="form-control" asp-for="ExistingCompanyName" id="InfoPageExistingCompanyInputField" disabled />
+                                    <label class="font-info" id="InfoPageReplaceCompanyInputFieldNewLabel" style="margin-top: 20px">@_loc[Model.NewValue]</label>
+                                    <input asp-for="Input.NewCompanyName" autocomplete="off" class="form-control" id="InfoPageReplaceCompanyNameInputField" />
+                                </div>
+                                <div class="form-group">
+                                    <br />
+                                    <label asp-for="Input.NewSkill" class="font-heading" id="InfoPageSkillHeading">@_loc[Model.SkillHeading]</label>
+                                    <textarea autocomplete="off" class="form-control" asp-for="ExistingSkills" id="InfoPageExistingSkillInputField" disabled></textarea>
+                                    <div class="input-group">
+                                        <label asp-for="Input.NewSkill" class="input-group-text" for="inputGroupSkillSelect" id="InfoPageskillsMatchHeading">Skills</label>
+                                        <select class="form-control" asp-items="@Model.ListOfSkills" name="InfoPageinputGroupSkillSelect" id="InfoPageinputGroupSkillSelect" onclick="populateNewSkills(); gtag('event','click',{'event_category':'Click','event_label':'InfoPage-DropDown-SelectSkills'});">
+                                            <option selected>Choose...</option>
+                                        </select>
+                                        <br />
+                                    </div>
+                                    <label class="font-info" id="InfoPageSkillCommaInfo" style="margin-top: 20px">@_loc[Model.SeparateSkillComma]</label>
+                                    <textarea asp-for="Input.NewSkill" autocomplete="off" class="form-control" id="InfoPageReplaceSkillInputField"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <br />
+                                    <label asp-for="Input.NewAreaOfInterest" class="font-heading" id="InfoPageAreaOfInterestHeading">@_loc[Model.AreaOfInterestHeading]</label>
+                                    <textarea autocomplete="off" class="form-control" asp-for="ExistingInterests" id="InfoPageExistingAreaOfInterestInputField" disabled></textarea>
+                                    <div class="input-group">
+                                        <label asp-for="Input.NewAreaOfInterest" class="input-group-text" for="inputGroupInterestsSelect" id="InfoPageinterestsMatchHeading">Interests</label>
+                                        <select class="form-control" asp-items="@Model.AreasOfInterest" name="InfoPageinputGroupInterestsSelect" id="InfoPageinputGroupInterestsSelect" onclick="populateNewInterest(); gtag('event','click',{'event_category':'Click','event_label':'InfoPage-DropDown-SelectAreasofInterest'});">
+                                            <option selected>Choose...</option>
+                                        </select>
+                                        <br />
+                                    </div>
+                                    <label class="font-info" id="AreaOfInterestCommaInfo" style="margin-top: 20px">@_loc[Model.SeparateAreaComma]</label>
+                                    <textarea asp-for="Input.NewAreaOfInterest" autocomplete="off" class="form-control" id="InfoPageReplaceAreaOfInterestInputField"></textarea>
+                                </div>
+                                <div class="form-group" style="text-align: center">
+                                    <p class="font-heading" id="InfoPageMarketingHeading">@_loc[Model.MarketingHeading]</p>
+                                    <input type="checkbox" asp-for="Input.MarketingCommsI" name="Input.MarketingCommsI" id="InfoPageInput_MarketingComms" onclick="populateHiddenCheckboxField(1)" />
+                                    <input type="hidden" asp-for="NewMarketingComms" autocomplete="off" class="form-control" name="InfoPageNewMarketingCheckboxHiddenInputField" id="InfoPageNewMarketingCheckboxHiddenInputField" />
+                                </div>
+                                <div class="form-group" style="text-align: center">
+                                    <p class="font-heading" id="InfoPageYouCanHelpHeading">@_loc[Model.HelpOthers]</p>
+                                    <input type="checkbox" asp-for="Input.HelpOthersCheckbox" name="Input.HelpOthersCheckbox" id="InfoPageInput_HelpOthers" onclick="populateHiddenCheckboxField(2)" />
+                                    <input type="hidden" asp-for="NewHelpOthers" autocomplete="off" class="form-control" name="InfoPageNewHelpOthersCheckboxHiddenInputField" id="InfoPageNewHelpOthersCheckboxHiddenInputField" />
+                                </div>
+                                <div class="form-group" style="text-align: center">
+                                    <p class="font-heading" id="InfoPageFeatureUpdatesHeading">@_loc[Model.FeatureUpdates]</p>
+                                    <input type="checkbox" asp-for="Input.FeatureUpdatesCheckbox" name="Input.FeatureUpdatesCheckbox" id="InfoPageInput_FeatureUpdates" onclick="populateHiddenCheckboxField(3)" />
+                                    <input type="hidden" asp-for="NewFeatureUpdates" autocomplete="off" class="form-control" name="InfoPageNewFeatureUpdatesCheckboxHiddenInputField" id="InfoPageNewFeatureUpdatesCheckboxHiddenInputField" />
+                                </div>
+                                <div class="form-group" style="text-align: center">
+                                    <p class="font-heading" id="InfoPageArticlesPostsHeading">@_loc[Model.ArticlesPosts]</p>
+                                    <input type="checkbox" asp-for="Input.ArticlesPostsCheckbox" name="Input.ArticlesPostsCheckbox" id="InfoPageInput_ArticlesPosts" onclick="populateHiddenCheckboxField(4)" />
+                                    <input type="hidden" asp-for="NewArticlesPosts" autocomplete="off" class="form-control" name="InfoPageNewArticlesPostsCheckboxHiddenInputField" id="InfoPageNewArticlesPostsCheckboxHiddenInputField" />
+                                </div>
+                                <div class="form-group" style="text-align: center">
+                                    <p class="font-heading" id="InfoPageProductNewsHeading">@_loc[Model.ProductNews]</p>
+                                    <input type="checkbox" asp-for="Input.ProductNewsCheckbox" name="Input.ProductNewsCheckbox" id="InfoPageInput_ProductNews" onclick="populateHiddenCheckboxField(5)" />
+                                    <input type="hidden" asp-for="NewProductNews" autocomplete="off" class="form-control" name="InfoPageNewProductNewsCheckboxHiddenInputField" id="InfoPageNewProductNewsCheckboxHiddenInputField" />
+                                </div>
+                                <input type="hidden" asp-for="ExistingMarketing" autocomplete="off" class="form-control" name="InfoPageMarketingExistingCheckboxField" id="InfoPageMarketingExistingCheckboxField" />
+                                <input type="hidden" asp-for="ExistingHelpOthers" autocomplete="off" class="form-control" name="InfoPageHelpOthersExistingCheckboxField" id="InfoPageHelpOthersExistingCheckboxField" />
+                                <input type="hidden" asp-for="ExistingFeatureUpdates" autocomplete="off" class="form-control" name="InfoPageFeatureUpdatesExistingCheckboxField" id="InfoPageFeatureUpdatesExistingCheckboxField" />
+                                <input type="hidden" asp-for="ExistingArticlesPosts" autocomplete="off" class="form-control" name="InfoPageArticlesPostsExistingCheckboxField" id="InfoPageArticlesPostsExistingCheckboxField" />
+                                <input type="hidden" asp-for="ExistingProductNews" autocomplete="off" class="form-control" name="InfoPageProductNewsExistingCheckboxField" id="InfoPageProductNewsExistingCheckboxField" />
+                                <br />
+                                <div class="form-group" style="text-align: center">
+                                    <button type="submit" class="btn btn-success button-title" id="InfoPageButton" onclick="DisableLinks('InfoPageButton', true, 'Info'); gtag('event','click',{'event_category':'Click','event_label':'InfoPage-Button-InfoChangesSubmit'});">@_loc[Model.Submit]</button>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+@section Scripts {
+    <script src="~/js/infoPageComingSoonModal.js"></script>
+    <script src="~/js/PopulateInfoFields.js"></script>
+    <script src="~/js/PopulateNewCountryField.js"></script>
+    <script src="~/js/PopulateNewRegionField.js"></script>
+    <script src="~/js/PopulateNewSkills.js"></script>
+    <script src="~/js/PopulateNewInterest.js"></script>
+    <script src="~/js/populateHiddenCheckboxField.js"></script>
+    <script src="~/js/HomeDisableEnableLinks.js"></script>
+    <script src="~/js/DisableEnableLinks.js"></script>
+    <script src="~/js/MyArticles_DisableSubMenuButtons.js"></script>
+}

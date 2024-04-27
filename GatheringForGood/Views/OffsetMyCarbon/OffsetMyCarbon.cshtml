@@ -1,0 +1,665 @@
+﻿@model OffsetMyCarbonViewModel
+@using Microsoft.AspNetCore.Identity
+@using GatheringForGood.Data
+@using System.Globalization
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = _loc[Model.PageTabTitle];
+}
+@section meta_head_tags{
+    <meta name='description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change. Offset your carbon today." />
+    <meta property='og:locale' content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property='og:title' content="GatheringForGood - The place where ideas and expertise come together to solve the world's problems. Offset your carbon today." />
+    <meta property='og:description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change. Offset your carbon today." />
+    <meta property='og:url' content="https://gatheringforgood.com" />
+    <meta property='og:site_name' content="gatheringforgood" />
+    <meta property='og:image' content="http://www.gatheringforgood.com/images/shareimagecarbonoffset.jpg" />
+    <meta property='og:image:width' content="1200" />
+    <meta property='og:image:height' content="600" />
+    <meta property='og:image:alt' content="gatheringforgood sharing image" />
+    <meta property="og:author" content="gatheringforgood">
+    <link rel="preload" as="image" href="@Model.GetEarthHandsReducedImageUrl" imagesrcset="@Model.GetEarthHandsReduced400ImageUrl 2.5x, @Model.GetEarthHandsReduced800ImageUrl 2x, @Model.GetEarthHandsReduced1200ImageUrl 1x, @Model.GetEarthHandsReduced1600ImageUrl 0.5x" sizes="100vw">
+}
+@section header_image{
+    <div class="bg-img-non-home" id="OffsetMyCarbonPageBanner">
+        <nav class="navbar navbar-expand-lg navbar-light" id="main-navbar-offsetmycarbon-page">
+            <div class="container">
+                <a class="navbar-brand mt-20" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/circle_logo.webp" id="_OffsetMyCarbonPageLogoImg" width="40" height="40" style="margin:0px 20px;" alt="Logo Image" onclick="gtag('event','click',{'event_category':'Click','event_label':'OffsetMyCarbonPage-GoToHomeLogo'});">
+                </a>
+                <button class="navbar-toggler" type="button" id="_OffsetMyCarbonPageNavBarToggler" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" id="_OffsetMyCarbonPageHomeNavLink" asp-area="" asp-controller="Home" asp-action="Index" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'OffsetMyCarbonPage-NavLink-Home'});">@_loc[Model.NavBarHome]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="_OffsetMyCarbonPageArticlesNavLink" asp-area="" asp-controller="Articles" asp-action="Articles" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'OffsetMyCarbonPage-NavLink-Articles'});"><p id="OffsetMyCarbon-Articles-NavLink-Para" onclick="DisableLinks('OffsetMyCarbon-Articles-NavLink-Para', true, 'OffsetMyCarbon');">@_loc[Model.Articles]</p></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="_OffsetMyCarbonPageAboutNavLink" asp-area="" asp-controller="About" asp-action="About" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'OffsetMyCarbonPage-NavLink-About'});">@_loc[Model.NavBarAbout]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="_OffsetMyCarbonPageHelpNavLink" asp-area="" asp-controller="Help" asp-action="Help" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'OffsetMyCarbonPage-NavLink-Help'});">@_loc[Model.NavBarHelpCenter]</a>
+                        </li>
+                        <partial name="_LoginPartial" />
+                    </ul>
+                </div>
+            </div>
+        </nav>
+}
+@section header_content{
+    <div class="container-title">
+        <div class="block-title block-title1">
+            <br>
+            @if (!SignInManager.IsSignedIn(User))
+            {
+                <a button type="button" class="btn btn-success button-title" id="AboutPageMakeDiffBtn" asp-area="Identity" asp-page="/Account/Register" asp-route-culture="@CultureInfo.CurrentCulture.Name">@_loc[Model.ButtonText]</a>
+            }
+            <h1 class="block-subtitle-text" id="OffsetMyCarbonPageSubtitle">@_loc[Model.Subtitle]</h1>
+            <h2 class="block-title-text-non-home" id="OffsetMyCarbonPageTitle">@_loc[Model.Title]</h2>
+        </div>
+    </div>
+}
+</div>
+<body class="body-bg-img" onresize="offsetMyCarbonPageLoad()">
+    <div class="modal fade" id="offsetMyCarbonPageComingSoonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content comingsoon-bg-img">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="ComingSoonModalTitle">Modal Error!1</h3>
+                    <button type="button" id="ComingSoonModalHeaderCloseButton" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="col justify-content-center align-items-center">
+                    <h4 class="modal-body" id="offsetMyCarbonPageLearnMoreModalPara">Modal Error!2</h4>
+                </div>
+                <br />
+                <div class="form-group thumb-block">
+                    <form action="@Url.Action("SaveUserEntry","OffsetMyCarbon")" method="post">
+                        <label class="modal-body1 col-form-label" id="offsetMyCarbonPageComingSoonModalFormLabel">Modal Error!3</label>
+                        <br />
+                        <textarea class="form-control" name="newsfeedUserEntry" id="newsfeedUserEntry" type="text"></textarea>
+                        <div class="modal-footer">
+                            <button type="submit" id="ComingSoonModalFooterSubmitButton" class="btn btn-success" data-dismiss="offsetMyCarbonPageComingSoonModal" onclick="gtag('event','click',{'event_category':'Click','event_label':'OffsetMyCarbonPage-Button-ComingSoonModalSubmit'});">@_loc[Model.Submit]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <!-- YOUR NORMAL MODE OF TRANSPORT -->
+    <div class="col">
+        <div class="container-body">
+            <div class="row justify-content-center align-items-center">
+                <div class="col justify-content-center align-items-center">
+                    <h2 class="font-style-content-head" id="CarbonOffsetsPageHeading">1. @_loc[Model.NormalModeOfTransport]</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <form asp-action="UserOffsetMyCarbon" method="post" name="OffsetCarbonForm" id="OffsetCarbonForm">
+                <div class="form-group" name="ModeOfTransportFormGroup" id="ModeOfTransportFormGroup">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-8" id="OffsetMyCarbonCycleWalkInputs">
+                            <div class="form-check">
+                                <input class="form-check-input d-none d-sm-none d-md-block d-lg-block d-xl-block" type="radio" name="flexRadioDefault" id="flexRadioCycleWalklg" onclick="offsetMyCarbonFormControl(1)">
+                                <label class="form-check-label font-style-content d-none d-sm-none d-md-block d-lg-block d-xl-block" for="flexRadioCycleWalklg">@_loc[Model.CycleWalk]</label>
+                                <input class="form-check-input d-block d-sm-block d-md-none d-lg-none d-xl-none" type="radio" name="flexRadioDefault" id="flexRadioCycleWalksm" onclick="offsetMyCarbonFormControl(1)">
+                                <label class="form-check-label font-style-content-small d-block d-sm-block d-md-none d-lg-none d-xl-none" for="flexRadioCycleWalksm">@_loc[Model.CycleWalk]</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-4" id="OffsetMyCarbonCycleWalkImages">
+                            <div class="row">
+                                <img src="~/images/cycleiconorange.png" class="d-none d-sm-none d-md-none d-lg-block d-xl-block" id="flexRadioCycleWalk_CycleIcon" width="40" height="40" style="margin:0px 10px 0px 0px;" align="middle" alt="Car Icon">
+                                <img src="~/images/walkiconorange.png" class="d-none d-sm-none d-md-none d-lg-block d-xl-block" id="flexRadioCycleWalk_WalkIcon" width="40" height="40" align="middle" alt="Walk Icon">
+                                <img src="~/images/cycleiconorange.png" class="d-block d-sm-block d-md-block d-lg-none d-xl-none" id="flexRadioCycleWalk_CycleIconsm" width="20" height="20" style="margin: 0px 5px 0px 0px;" align="middle" alt="Car Icon">
+                                <img src="~/images/walkiconorange.png" class="d-block d-sm-block d-md-block d-lg-none d-xl-none" id="flexRadioCycleWalk_WalkIconsm" width="20" height="20" align="middle" alt="Walk Icon">
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-8" id="OffsetMyCarbonCycleWalkInputs">
+                            <div class="form-check">
+                                <input class="form-check-input d-none d-sm-none d-md-block d-lg-block d-xl-block" type="radio" name="flexRadioDefault" id="flexRadioCycleWalkPubliclg" onclick="offsetMyCarbonFormControl(2)">
+                                <label class="form-check-label font-style-content d-none d-sm-none d-md-block d-lg-block d-xl-block" for="flexRadioCycleWalkPubliclg">@_loc[Model.CycleWalkPublic]</label>
+                                <input class="form-check-input d-block d-sm-block d-md-none d-lg-none d-xl-none" type="radio" name="flexRadioDefault" id="flexRadioCycleWalkPublicsm" onclick="offsetMyCarbonFormControl(2)">
+                                <label class="form-check-label font-style-content-small d-block d-sm-block d-md-none d-lg-none d-xl-none" for="flexRadioCycleWalkPublicsm">@_loc[Model.CycleWalkPublic]</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-4" id="OffsetMyCarbonCycleWalkImages">
+                            <div class="row">
+                                <img src="~/images/cycleiconorange.png" class="d-none d-sm-none d-md-block d-lg-block d-xl-block" id="flexRadioCycleWalkPublic_CycleIcon" width="40" height="40" style="margin: 0px 10px 0px 0px;" alt="Car Icon">
+                                <img src="~/images/walkiconorange.png" class="d-none d-sm-none d-md-block d-lg-block d-xl-block" id="flexRadioCycleWalkPublic_WalkIcon" width="40" height="40" style="margin: 0px 10px 0px 0px;" alt="Walk Icon">
+                                <img src="~/images/busiconorange.png" class="d-none d-sm-none d-md-block d-lg-block d-xl-block" id="flexRadioCycleWalkPublic_BusIcon" width="40" height="40" alt="Bus Icon">
+                                <img src="~/images/cycleiconorange.png" class="d-block d-sm-block d-md-none d-lg-none d-xl-none" id="flexRadioCycleWalkPublic_CycleIconsm" width="20" height="20" style="margin: 0px 5px 0px 0px;" alt="Car Icon">
+                                <img src="~/images/walkiconorange.png" class="d-block d-sm-block d-md-none d-lg-none d-xl-none" id="flexRadioCycleWalkPublic_WalkIconsm" width="20" height="20" style="margin: 0px 5px 0px 0px;" alt="Walk Icon">
+                                <img src="~/images/busiconorange.png" class="d-block d-sm-block d-md-none d-lg-none d-xl-none" id="flexRadioCycleWalkPublic_BusIconsm" width="20" height="20" alt="Bus Icon">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-10" id="OffsetMyCarbonCycleWalkInputs">
+                            <div class="hide" id="PercentSelectorCycleWalkPublic">
+                                <br />
+                                <div class="container-body">
+                                    <div class="row justify-content-center align-items-center">
+                                        <div class="col justify-content-center align-items-center">
+                                            <h2 class="font-heading" id="HelpPageLetUsKnowTitle">@_loc[Model.PercentPublic]</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container-body">
+                                    <div class="row justify-content-center align-items-center">
+                                        <div class="col justify-content-center align-items-center">
+                                            <select class="form-select font-style-content" name="OffsetMyCarbonPageInputGroupPublicSelect" id="OffsetMyCarbonPageInputGroupPublicSelect" aria-label="% Public Transport" onclick="offsetMyCarbonPercentClick(1)">
+                                                <option class="font-style-content" value="1">10 %</option>
+                                                <option class="font-style-content" value="2">20 %</option>
+                                                <option class="font-style-content" value="3">30 %</option>
+                                                <option class="font-style-content" value="4">40 %</option>
+                                                <option class="font-style-content" selected value="5">50 %</option>
+                                                <option class="font-style-content" value="6">60 %</option>
+                                                <option class="font-style-content" value="7">70 %</option>
+                                                <option class="font-style-content" value="8">80 %</option>
+                                                <option class="font-style-content" value="9">90 %</option>
+                                                <option class="font-style-content" value="10">100 %</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-8" id="OffsetMyCarbonCycleWalkInputs">
+                            <div class="form-check">
+                                <input class="form-check-input d-none d-sm-none d-md-block d-lg-block d-xl-block" type="radio" name="flexRadioDefault" id="flexRadioPubliclg" onclick="offsetMyCarbonFormControl(3)">
+                                <label class="form-check-label font-style-content d-none d-sm-none d-md-block d-lg-block d-xl-block" for="flexRadioPubliclg">@_loc[Model.Public]</label>
+                                <input class="form-check-input d-block d-sm-block d-md-none d-lg-none d-xl-none" type="radio" name="flexRadioDefault" id="flexRadioPublicsm" onclick="offsetMyCarbonFormControl(3)">
+                                <label class="form-check-label font-style-content-small d-block d-sm-block d-md-none d-lg-none d-xl-none" for="flexRadioPublicsm">@_loc[Model.Public]</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-4" id="OffsetMyCarbonCycleWalkImages">
+                            <div class="row">
+                                <img src="~/images/busiconorange.png" class="d-none d-sm-none d-md-block d-lg-block d-xl-block" id="flexRadioPublic_BusIcon" width="40" height="40" alt="Bus Icon">
+                                <img src="~/images/busiconorange.png" class="d-block d-sm-block d-md-none d-lg-none d-xl-none" id="flexRadioPublic_BusIconsm" width="20" height="20" alt="Bus Icon">
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-8" id="OffsetMyCarbonCycleWalkInputs">
+                            <div class="form-check">
+                                <input class="form-check-input d-none d-sm-none d-md-block d-lg-block d-xl-block" type="radio" name="flexRadioDefault" id="flexRadioCycleWalkDrivelg" onclick="offsetMyCarbonFormControl(4)">
+                                <label class="form-check-label font-style-content d-none d-sm-none d-md-block d-lg-block d-xl-block" for="flexRadioCycleWalkDrivelg">@_loc[Model.CycleWalkDrive]</label>
+                                <input class="form-check-input d-block d-sm-block d-md-none d-lg-none d-xl-none" type="radio" name="flexRadioDefault" id="flexRadioCycleWalkDrivesm" onclick="offsetMyCarbonFormControl(4)">
+                                <label class="form-check-label font-style-content-small d-block d-sm-block d-md-none d-lg-none d-xl-none" for="flexRadioCycleWalkDrivesm">@_loc[Model.CycleWalkDrive]</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-4" id="OffsetMyCarbonCycleWalkImages">
+                            <div class="row">
+                                <img src="~/images/cycleiconorange.png" class="d-none d-sm-none d-md-block d-lg-block d-xl-block" id="flexRadioCycleWalkDrive_CycleIcon" width="40" height="40" style="margin: 0px 10px 0px 0px;" alt="Car Icon">
+                                <img src="~/images/walkiconorange.png" class="d-none d-sm-none d-md-block d-lg-block d-xl-block" id="flexRadioCycleWalkDrive_WalkIcon" width="40" height="40" style="margin: 0px 10px 0px 0px;" alt="Walk Icon">
+                                <img src="~/images/cariconorange.png" class="d-none d-sm-none d-md-block d-lg-block d-xl-block" id="flexRadioCycleWalkDrive_CarIcon" width="40" height="40" alt="Car Icon">
+                                <img src="~/images/cycleiconorange.png" class="d-block d-sm-block d-md-none d-lg-none d-xl-none" id="flexRadioCycleWalkDrive_CycleIconsm" width="20" height="20" style="margin: 0px 5px 0px 0px;" alt="Car Icon">
+                                <img src="~/images/walkiconorange.png" class="d-block d-sm-block d-md-none d-lg-none d-xl-none" id="flexRadioCycleWalkDrive_WalkIconsm" width="20" height="20" style="margin: 0px 5px 0px 0px;" alt="Walk Icon">
+                                <img src="~/images/cariconorange.png" class="d-block d-sm-block d-md-none d-lg-none d-xl-none" id="flexRadioCycleWalkDrive_CarIconsm" width="20" height="20" alt="Car Icon">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-10" id="OffsetMyCarbonCycleWalkInputs">
+                            <div class="hide" id="PercentSelectorCycleWalkDrive">
+                                <br />
+                                <div class="container-body">
+                                    <div class="row justify-content-center align-items-center">
+                                        <div class="col justify-content-center align-items-center">
+                                            <h2 class="font-heading" id="HelpPageLetUsKnowTitle">@_loc[Model.PercentDriving]</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container-body">
+                                    <div class="row justify-content-center align-items-center">
+                                        <div class="col justify-content-center align-items-center">
+                                            <select class="form-select font-style-content" name="OffsetMyCarbonPageInputGroupDriving1Select" id="OffsetMyCarbonPageInputGroupDriving1Select" aria-label="% Driving" onclick="offsetMyCarbonPercentClick(2)">
+                                                <option class="font-style-content" value="1">10 %</option>
+                                                <option class="font-style-content" value="2">20 %</option>
+                                                <option class="font-style-content" value="3">30 %</option>
+                                                <option class="font-style-content" value="4">40 %</option>
+                                                <option class="font-style-content" selected value="5">50 %</option>
+                                                <option class="font-style-content" value="6">60 %</option>
+                                                <option class="font-style-content" value="7">70 %</option>
+                                                <option class="font-style-content" value="8">80 %</option>
+                                                <option class="font-style-content" value="9">90 %</option>
+                                                <option class="font-style-content" value="10">100 %</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-8" id="OffsetMyCarbonCycleWalkInputs">
+                            <div class="form-check">
+                                <input class="form-check-input d-none d-sm-none d-md-block d-lg-block d-xl-block" type="radio" name="flexRadioDefault" id="flexRadioPublicDrivelg" onclick="offsetMyCarbonFormControl(5)">
+                                <label class="form-check-label font-style-content d-none d-sm-none d-md-block d-lg-block d-xl-block" for="flexRadioPublicDrivelg">@_loc[Model.PublicDrive]</label>
+                                <input class="form-check-input d-block d-sm-block d-md-none d-lg-none d-xl-none" type="radio" name="flexRadioDefault" id="flexRadioPublicDrivesm" onclick="offsetMyCarbonFormControl(5)">
+                                <label class="form-check-label font-style-content-small d-block d-sm-block d-md-none d-lg-none d-xl-none" for="flexRadioPublicDrivesm">@_loc[Model.PublicDrive]</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-4" id="OffsetMyCarbonCycleWalkImages">
+                            <div class="row">
+                                <img src="~/images/busiconorange.png" class="d-none d-sm-none d-md-block d-lg-block d-xl-block" id="flexRadioPublicDrive_BusIcon" width="40" height="40" style="margin: 0px 10px 0px 0px;" alt="Bus Icon">
+                                <img src="~/images/cariconorange.png" class="d-none d-sm-none d-md-block d-lg-block d-xl-block" id="flexRadioPublicDrive_CarIcon" width="40" height="40" alt="Car Icon">
+                                <img src="~/images/busiconorange.png" class="d-block d-sm-block d-md-none d-lg-none d-xl-none" id="flexRadioPublicDrive_BusIconsm" width="20" height="20" style="margin: 0px 5px 0px 0px;" alt="Bus Icon">
+                                <img src="~/images/cariconorange.png" class="d-block d-sm-block d-md-none d-lg-none d-xl-none" id="flexRadioPublicDrive_CarIconsm" width="20" height="20" alt="Car Icon">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-10" id="OffsetMyCarbonCycleWalkInputs">
+                            <div class="hide" id="PercentSelectorPublicDrive">
+                                <br />
+                                <div class="container-body">
+                                    <div class="row justify-content-center align-items-center">
+                                        <div class="col justify-content-center align-items-center">
+                                            <h2 class="font-heading" id="HelpPageLetUsKnowTitle">@_loc[Model.PercentDriving]</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container-body">
+                                    <div class="row justify-content-center align-items-center">
+                                        <div class="col justify-content-center align-items-center">
+                                            <select class="form-select font-style-content" name="OffsetMyCarbonPageInputGroupDriving2Select" id="OffsetMyCarbonPageInputGroupDriving2Select" aria-label="% Driving" onclick="offsetMyCarbonPercentClick(3)">
+                                                <option class="font-style-content" value="1">10 %</option>
+                                                <option class="font-style-content" value="2">20 %</option>
+                                                <option class="font-style-content" value="3">30 %</option>
+                                                <option class="font-style-content" value="4">40 %</option>
+                                                <option class="font-style-content" selected value="5">50 %</option>
+                                                <option class="font-style-content" value="6">60 %</option>
+                                                <option class="font-style-content" value="7">70 %</option>
+                                                <option class="font-style-content" value="8">80 %</option>
+                                                <option class="font-style-content" value="9">90 %</option>
+                                                <option class="font-style-content" value="10">100 %</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-8" id="OffsetMyCarbonCycleWalkInputs">
+                            <div class="form-check">
+                                <input class="form-check-input d-none d-sm-none d-md-block d-lg-block d-xl-block" type="radio" name="flexRadioDefault" id="flexRadioDrivelg" onclick="offsetMyCarbonFormControl(6)">
+                                <label class="form-check-label font-style-content d-none d-sm-none d-md-block d-lg-block d-xl-block" for="flexRadioDrivelg">@_loc[Model.Drive]</label>
+                                <input class="form-check-input d-block d-sm-block d-md-none d-lg-none d-xl-none" type="radio" name="flexRadioDefault" id="flexRadioDrivesm" onclick="offsetMyCarbonFormControl(6)">
+                                <label class="form-check-label font-style-content-small d-block d-sm-block d-md-none d-lg-none d-xl-none" for="flexRadioDrivesm">@_loc[Model.Drive]</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-4" id="OffsetMyCarbonCycleWalkImages">
+                            <div class="row">
+                                <img src="~/images/cariconorange.png" class="d-none d-sm-none d-md-block d-lg-block d-xl-block" id="flexRadioDrive_CarIcon" width="40" height="40" alt="Car Icon">
+                                <img src="~/images/cariconorange.png" class="d-block d-sm-block d-md-none d-lg-none d-xl-none" id="flexRadioDrive_CarIconsm" width="20" height="20" alt="Car Icon">
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" asp-for="SelectedPercentValue" class="form-control" id="SelectedPercentValueField" />
+                    <input type="hidden" asp-for="SelectedRadio1" class="form-control" id="SelectedRadio1Field" />
+                </div>
+                <br />
+                <!-- YOUR NORMAL FLIGHT PROFILE -->
+                <div class="col">
+                    <div class="container-body">
+                        <div class="row justify-content-center align-items-center">
+                            <div class="col justify-content-center align-items-center">
+                                <h2 class="font-style-content-head" id="CarbonOffsetsPageHeading">2. @_loc[Model.FlightProfileTitle]</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="form-group" name="FlightFormGroup" id="FlightFormGroup">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-8" id="OffsetMyCarbonNeverFlyInputs">
+                            <div class="form-check">
+                                <input class="form-check-input d-none d-sm-none d-md-block d-lg-block d-xl-block" type="radio" name="flexRadioDefault" id="flexRadioCycleWalklg" onclick="offsetMyCarbonFormControl(7)">
+                                <label class="form-check-label font-style-content d-none d-sm-none d-md-block d-lg-block d-xl-block" for="flexRadioCycleWalklg">@_loc[Model.NeverFly]</label>
+                                <input class="form-check-input d-block d-sm-block d-md-none d-lg-none d-xl-none" type="radio" name="flexRadioDefault" id="flexRadioCycleWalksm" onclick="offsetMyCarbonFormControl(7)">
+                                <label class="form-check-label font-style-content-small d-block d-sm-block d-md-none d-lg-none d-xl-none" for="flexRadioCycleWalksm">@_loc[Model.NeverFly]</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-4" id="OffsetMyCarbonNeverFlyImages">
+                            <div class="row">
+                                <img src="~/images/cycleiconorange.png" class="d-none d-sm-none d-md-none d-lg-block d-xl-block" id="flexRadioCycleWalk_CycleIcon" width="40" height="40" style="margin:0px 10px 0px 0px;" align="middle" alt="Car Icon">
+                                <img src="~/images/walkiconorange.png" class="d-none d-sm-none d-md-none d-lg-block d-xl-block" id="flexRadioCycleWalk_WalkIcon" width="40" height="40" align="middle" alt="Walk Icon">
+                                <img src="~/images/cycleiconorange.png" class="d-block d-sm-block d-md-block d-lg-none d-xl-none" id="flexRadioCycleWalk_CycleIconsm" width="20" height="20" style="margin: 0px 5px 0px 0px;" align="middle" alt="Car Icon">
+                                <img src="~/images/walkiconorange.png" class="d-block d-sm-block d-md-block d-lg-none d-xl-none" id="flexRadioCycleWalk_WalkIconsm" width="20" height="20" align="middle" alt="Walk Icon">
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-8" id="OffsetMyCarbonShortHaulFlyInputs">
+                            <div class="form-check">
+                                <input class="form-check-input d-none d-sm-none d-md-block d-lg-block d-xl-block" type="radio" name="flexRadioDefault" id="flexRadioCycleWalkPubliclg" onclick="offsetMyCarbonFormControl(8)">
+                                <label class="form-check-label font-style-content d-none d-sm-none d-md-block d-lg-block d-xl-block" for="flexRadioCycleWalkPubliclg">@_loc[Model.ShortHaulFly]</label>
+                                <input class="form-check-input d-block d-sm-block d-md-none d-lg-none d-xl-none" type="radio" name="flexRadioDefault" id="flexRadioCycleWalkPublicsm" onclick="offsetMyCarbonFormControl(8)">
+                                <label class="form-check-label font-style-content-small d-block d-sm-block d-md-none d-lg-none d-xl-none" for="flexRadioCycleWalkPublicsm">@_loc[Model.ShortHaulFly]</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-4" id="OffsetMyCarbonShortHaulFlyImages">
+                            <div class="row">
+                                <img src="~/images/cycleiconorange.png" class="d-none d-sm-none d-md-block d-lg-block d-xl-block" id="flexRadioCycleWalkPublic_CycleIcon" width="40" height="40" style="margin: 0px 10px 0px 0px;" alt="Car Icon">
+                                <img src="~/images/walkiconorange.png" class="d-none d-sm-none d-md-block d-lg-block d-xl-block" id="flexRadioCycleWalkPublic_WalkIcon" width="40" height="40" style="margin: 0px 10px 0px 0px;" alt="Walk Icon">
+                                <img src="~/images/busiconorange.png" class="d-none d-sm-none d-md-block d-lg-block d-xl-block" id="flexRadioCycleWalkPublic_BusIcon" width="40" height="40" alt="Bus Icon">
+                                <img src="~/images/cycleiconorange.png" class="d-block d-sm-block d-md-none d-lg-none d-xl-none" id="flexRadioCycleWalkPublic_CycleIconsm" width="20" height="20" style="margin: 0px 5px 0px 0px;" alt="Car Icon">
+                                <img src="~/images/walkiconorange.png" class="d-block d-sm-block d-md-none d-lg-none d-xl-none" id="flexRadioCycleWalkPublic_WalkIconsm" width="20" height="20" style="margin: 0px 5px 0px 0px;" alt="Walk Icon">
+                                <img src="~/images/busiconorange.png" class="d-block d-sm-block d-md-none d-lg-none d-xl-none" id="flexRadioCycleWalkPublic_BusIconsm" width="20" height="20" alt="Bus Icon">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-10" id="OffsetMyCarbonShortHaulFlyInputs">
+                            <div>
+                                <br />
+                                <div class="container-body">
+                                    <div class="row justify-content-center align-items-center">
+                                        <div class="col justify-content-center align-items-center">
+                                            <h2 class="font-heading" id="QuantitySelectorShortHaulFlyTitle">@_loc[Model.ShortHaulFlyPerYear]</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container-body">
+                                    <div class="row justify-content-center align-items-center">
+                                        <div class="col justify-content-center align-items-center">
+                                            <select class="form-select font-style-content" name="OffsetMyCarbonPageInputGroupShortHaulFlySelect" id="OffsetMyCarbonPageInputGroupShortHaulFlySelect" aria-label="% Public Transport" onclick="offsetMyCarbonPercentClick(1)">
+                                                <option class="font-style-content" selected value="1">1 per year</option>
+                                                <option class="font-style-content" value="2">2 per year</option>
+                                                <option class="font-style-content" value="3">3 per year</option>
+                                                <option class="font-style-content" value="4">4 per year</option>
+                                                <option class="font-style-content" value="5">5 per year</option>
+                                                <option class="font-style-content" value="6">6 per year</option>
+                                                <option class="font-style-content" value="7">7 per year</option>
+                                                <option class="font-style-content" value="8">8 per year</option>
+                                                <option class="font-style-content" value="9">9 per year</option>
+                                                <option class="font-style-content" value="10">10 per year</option>
+                                                <option class="font-style-content" value="11">11 per year</option>
+                                                <option class="font-style-content" value="12">12 per year</option>
+                                                <option class="font-style-content" value="13">13 per year</option>
+                                                <option class="font-style-content" value="14">14 per year</option>
+                                                <option class="font-style-content" value="15">15 per year</option>
+                                                <option class="font-style-content" value="16">16 per year</option>
+                                                <option class="font-style-content" value="17">17 per year</option>
+                                                <option class="font-style-content" value="18">18 per year</option>
+                                                <option class="font-style-content" value="19">19 per year</option>
+                                                <option class="font-style-content" value="20">20 per year</option>
+                                                <option class="font-style-content" value="21">21 per year</option>
+                                                <option class="font-style-content" value="22">22 per year</option>
+                                                <option class="font-style-content" value="23">23 per year</option>
+                                                <option class="font-style-content" value="24">24 per year</option>
+                                                <option class="font-style-content" value="25">25 per year</option>
+                                                <option class="font-style-content" value="26">26 per year</option>
+                                                <option class="font-style-content" value="27">27 per year</option>
+                                                <option class="font-style-content" value="28">28 per year</option>
+                                                <option class="font-style-content" value="29">29 per year</option>
+                                                <option class="font-style-content" value="30">30 per year</option>
+                                                <option class="font-style-content" value="31">31 per year</option>
+                                                <option class="font-style-content" value="32">32 per year</option>
+                                                <option class="font-style-content" value="33">33 per year</option>
+                                                <option class="font-style-content" value="34">34 per year</option>
+                                                <option class="font-style-content" value="35">35 per year</option>
+                                                <option class="font-style-content" value="36">36 per year</option>
+                                                <option class="font-style-content" value="37">37 per year</option>
+                                                <option class="font-style-content" value="38">38 per year</option>
+                                                <option class="font-style-content" value="39">39 per year</option>
+                                                <option class="font-style-content" value="40">40 per year</option>
+                                                <option class="font-style-content" value="41">41 per year</option>
+                                                <option class="font-style-content" value="42">42 per year</option>
+                                                <option class="font-style-content" value="43">43 per year</option>
+                                                <option class="font-style-content" value="44">44 per year</option>
+                                                <option class="font-style-content" value="45">45 per year</option>
+                                                <option class="font-style-content" value="46">46 per year</option>
+                                                <option class="font-style-content" value="47">47 per year</option>
+                                                <option class="font-style-content" value="48">48 per year</option>
+                                                <option class="font-style-content" value="49">49 per year</option>
+                                                <option class="font-style-content" value="50">50 per year</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-8" id="OffsetMyCarbonMediumHaulFlyInputs">
+                            <div class="form-check">
+                                <input class="form-check-input d-none d-sm-none d-md-block d-lg-block d-xl-block" type="radio" name="flexRadioDefault" id="flexRadioPubliclg" onclick="offsetMyCarbonFormControl(9)">
+                                <label class="form-check-label font-style-content d-none d-sm-none d-md-block d-lg-block d-xl-block" for="flexRadioPubliclg">@_loc[Model.MediumHaulFly]</label>
+                                <input class="form-check-input d-block d-sm-block d-md-none d-lg-none d-xl-none" type="radio" name="flexRadioDefault" id="flexRadioPublicsm" onclick="offsetMyCarbonFormControl(9)">
+                                <label class="form-check-label font-style-content-small d-block d-sm-block d-md-none d-lg-none d-xl-none" for="flexRadioPublicsm">@_loc[Model.MediumHaulFly]</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-4" id="OffsetMyCarbonMediumHaulFlyImages">
+                            <div class="row">
+                                <img src="~/images/busiconorange.png" class="d-none d-sm-none d-md-block d-lg-block d-xl-block" id="flexRadioPublic_BusIcon" width="40" height="40" alt="Bus Icon">
+                                <img src="~/images/busiconorange.png" class="d-block d-sm-block d-md-none d-lg-none d-xl-none" id="flexRadioPublic_BusIconsm" width="20" height="20" alt="Bus Icon">
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-10" id="OffsetMyCarbonMediumHaulFlyInputs">
+                            <div class="" id="PercentSelectorMediumHaulFly">
+                                <br />
+                                <div class="container-body">
+                                    <div class="row justify-content-center align-items-center">
+                                        <div class="col justify-content-center align-items-center">
+                                            <h2 class="font-heading" id="HelpPageLetUsKnowTitle">@_loc[Model.MediumHaulFlyPerYear]</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container-body">
+                                    <div class="row justify-content-center align-items-center">
+                                        <div class="col justify-content-center align-items-center">
+                                            <select class="form-select font-style-content" name="OffsetMyCarbonPageInputGroupPublicSelect" id="OffsetMyCarbonPageInputGroupPublicSelect" aria-label="% Public Transport" onclick="offsetMyCarbonPercentClick(1)">
+                                                <option class="font-style-content" selected value="1">1 per year</option>
+                                                <option class="font-style-content" value="2">2 per year</option>
+                                                <option class="font-style-content" value="3">3 per year</option>
+                                                <option class="font-style-content" value="4">4 per year</option>
+                                                <option class="font-style-content" value="5">5 per year</option>
+                                                <option class="font-style-content" value="6">6 per year</option>
+                                                <option class="font-style-content" value="7">7 per year</option>
+                                                <option class="font-style-content" value="8">8 per year</option>
+                                                <option class="font-style-content" value="9">9 per year</option>
+                                                <option class="font-style-content" value="10">10 per year</option>
+                                                <option class="font-style-content" value="11">11 per year</option>
+                                                <option class="font-style-content" value="12">12 per year</option>
+                                                <option class="font-style-content" value="13">13 per year</option>
+                                                <option class="font-style-content" value="14">14 per year</option>
+                                                <option class="font-style-content" value="15">15 per year</option>
+                                                <option class="font-style-content" value="16">16 per year</option>
+                                                <option class="font-style-content" value="17">17 per year</option>
+                                                <option class="font-style-content" value="18">18 per year</option>
+                                                <option class="font-style-content" value="19">19 per year</option>
+                                                <option class="font-style-content" value="20">20 per year</option>
+                                                <option class="font-style-content" value="21">21 per year</option>
+                                                <option class="font-style-content" value="22">22 per year</option>
+                                                <option class="font-style-content" value="23">23 per year</option>
+                                                <option class="font-style-content" value="24">24 per year</option>
+                                                <option class="font-style-content" value="25">25 per year</option>
+                                                <option class="font-style-content" value="26">26 per year</option>
+                                                <option class="font-style-content" value="27">27 per year</option>
+                                                <option class="font-style-content" value="28">28 per year</option>
+                                                <option class="font-style-content" value="29">29 per year</option>
+                                                <option class="font-style-content" value="30">30 per year</option>
+                                                <option class="font-style-content" value="31">31 per year</option>
+                                                <option class="font-style-content" value="32">32 per year</option>
+                                                <option class="font-style-content" value="33">33 per year</option>
+                                                <option class="font-style-content" value="34">34 per year</option>
+                                                <option class="font-style-content" value="35">35 per year</option>
+                                                <option class="font-style-content" value="36">36 per year</option>
+                                                <option class="font-style-content" value="37">37 per year</option>
+                                                <option class="font-style-content" value="38">38 per year</option>
+                                                <option class="font-style-content" value="39">39 per year</option>
+                                                <option class="font-style-content" value="40">40 per year</option>
+                                                <option class="font-style-content" value="41">41 per year</option>
+                                                <option class="font-style-content" value="42">42 per year</option>
+                                                <option class="font-style-content" value="43">43 per year</option>
+                                                <option class="font-style-content" value="44">44 per year</option>
+                                                <option class="font-style-content" value="45">45 per year</option>
+                                                <option class="font-style-content" value="46">46 per year</option>
+                                                <option class="font-style-content" value="47">47 per year</option>
+                                                <option class="font-style-content" value="48">48 per year</option>
+                                                <option class="font-style-content" value="49">49 per year</option>
+                                                <option class="font-style-content" value="50">50 per year</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-8" id="OffsetMyCarbonCycleWalkInputs">
+                            <div class="form-check">
+                                <input class="form-check-input d-none d-sm-none d-md-block d-lg-block d-xl-block" type="radio" name="flexRadioDefault" id="flexRadioCycleWalkDrivelg" onclick="offsetMyCarbonFormControl(10)">
+                                <label class="form-check-label font-style-content d-none d-sm-none d-md-block d-lg-block d-xl-block" for="flexRadioCycleWalkDrivelg">@_loc[Model.LongHaulFly]</label>
+                                <input class="form-check-input d-block d-sm-block d-md-none d-lg-none d-xl-none" type="radio" name="flexRadioDefault" id="flexRadioCycleWalkDrivesm" onclick="offsetMyCarbonFormControl(10)">
+                                <label class="form-check-label font-style-content-small d-block d-sm-block d-md-none d-lg-none d-xl-none" for="flexRadioCycleWalkDrivesm">@_loc[Model.LongHaulFly]</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-4" id="OffsetMyCarbonCycleWalkImages">
+                            <div class="row">
+                                <img src="~/images/cycleiconorange.png" class="d-none d-sm-none d-md-block d-lg-block d-xl-block" id="flexRadioCycleWalkDrive_CycleIcon" width="40" height="40" style="margin: 0px 10px 0px 0px;" alt="Car Icon">
+                                <img src="~/images/walkiconorange.png" class="d-none d-sm-none d-md-block d-lg-block d-xl-block" id="flexRadioCycleWalkDrive_WalkIcon" width="40" height="40" style="margin: 0px 10px 0px 0px;" alt="Walk Icon">
+                                <img src="~/images/cariconorange.png" class="d-none d-sm-none d-md-block d-lg-block d-xl-block" id="flexRadioCycleWalkDrive_CarIcon" width="40" height="40" alt="Car Icon">
+                                <img src="~/images/cycleiconorange.png" class="d-block d-sm-block d-md-none d-lg-none d-xl-none" id="flexRadioCycleWalkDrive_CycleIconsm" width="20" height="20" style="margin: 0px 5px 0px 0px;" alt="Car Icon">
+                                <img src="~/images/walkiconorange.png" class="d-block d-sm-block d-md-none d-lg-none d-xl-none" id="flexRadioCycleWalkDrive_WalkIconsm" width="20" height="20" style="margin: 0px 5px 0px 0px;" alt="Walk Icon">
+                                <img src="~/images/cariconorange.png" class="d-block d-sm-block d-md-none d-lg-none d-xl-none" id="flexRadioCycleWalkDrive_CarIconsm" width="20" height="20" alt="Car Icon">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-10" id="OffsetMyCarbonCycleWalkInputs">
+                            <div class="" id="PercentSelectorCycleWalkDrive">
+                                <br />
+                                <div class="container-body">
+                                    <div class="row justify-content-center align-items-center">
+                                        <div class="col justify-content-center align-items-center">
+                                            <h2 class="font-heading" id="HelpPageLetUsKnowTitle">@_loc[Model.LongHaulFlyPerYear]</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container-body">
+                                    <div class="row justify-content-center align-items-center">
+                                        <div class="col justify-content-center align-items-center">
+                                            <select class="form-select font-style-content" name="OffsetMyCarbonPageInputGroupDriving1Select" id="OffsetMyCarbonPageInputGroupDriving1Select" aria-label="% Driving" onclick="offsetMyCarbonPercentClick(2)">
+                                                <option class="font-style-content" selected value="1">1 per year</option>
+                                                <option class="font-style-content" value="2">2 per year</option>
+                                                <option class="font-style-content" value="3">3 per year</option>
+                                                <option class="font-style-content" value="4">4 per year</option>
+                                                <option class="font-style-content" value="5">5 per year</option>
+                                                <option class="font-style-content" value="6">6 per year</option>
+                                                <option class="font-style-content" value="7">7 per year</option>
+                                                <option class="font-style-content" value="8">8 per year</option>
+                                                <option class="font-style-content" value="9">9 per year</option>
+                                                <option class="font-style-content" value="10">10 per year</option>
+                                                <option class="font-style-content" value="11">11 per year</option>
+                                                <option class="font-style-content" value="12">12 per year</option>
+                                                <option class="font-style-content" value="13">13 per year</option>
+                                                <option class="font-style-content" value="14">14 per year</option>
+                                                <option class="font-style-content" value="15">15 per year</option>
+                                                <option class="font-style-content" value="16">16 per year</option>
+                                                <option class="font-style-content" value="17">17 per year</option>
+                                                <option class="font-style-content" value="18">18 per year</option>
+                                                <option class="font-style-content" value="19">19 per year</option>
+                                                <option class="font-style-content" value="20">20 per year</option>
+                                                <option class="font-style-content" value="21">21 per year</option>
+                                                <option class="font-style-content" value="22">22 per year</option>
+                                                <option class="font-style-content" value="23">23 per year</option>
+                                                <option class="font-style-content" value="24">24 per year</option>
+                                                <option class="font-style-content" value="25">25 per year</option>
+                                                <option class="font-style-content" value="26">26 per year</option>
+                                                <option class="font-style-content" value="27">27 per year</option>
+                                                <option class="font-style-content" value="28">28 per year</option>
+                                                <option class="font-style-content" value="29">29 per year</option>
+                                                <option class="font-style-content" value="30">30 per year</option>
+                                                <option class="font-style-content" value="31">31 per year</option>
+                                                <option class="font-style-content" value="32">32 per year</option>
+                                                <option class="font-style-content" value="33">33 per year</option>
+                                                <option class="font-style-content" value="34">34 per year</option>
+                                                <option class="font-style-content" value="35">35 per year</option>
+                                                <option class="font-style-content" value="36">36 per year</option>
+                                                <option class="font-style-content" value="37">37 per year</option>
+                                                <option class="font-style-content" value="38">38 per year</option>
+                                                <option class="font-style-content" value="39">39 per year</option>
+                                                <option class="font-style-content" value="40">40 per year</option>
+                                                <option class="font-style-content" value="41">41 per year</option>
+                                                <option class="font-style-content" value="42">42 per year</option>
+                                                <option class="font-style-content" value="43">43 per year</option>
+                                                <option class="font-style-content" value="44">44 per year</option>
+                                                <option class="font-style-content" value="45">45 per year</option>
+                                                <option class="font-style-content" value="46">46 per year</option>
+                                                <option class="font-style-content" value="47">47 per year</option>
+                                                <option class="font-style-content" value="48">48 per year</option>
+                                                <option class="font-style-content" value="49">49 per year</option>
+                                                <option class="font-style-content" value="50">50 per year</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <input type="" asp-for="SelectedPercentValue" class="form-control" id="SelectedPercentValueField" />
+                    <input type="" asp-for="SelectedRadio1" class="form-control" id="SelectedRadio1Field" />
+                </div>
+                <div class="col">
+                    <div class="container-body">
+                        <div class="row justify-content-center align-items-center">
+                            <button type="submit" class="btn btn-outline-success button-large" id="OffsetMyCarbonNextButton">@_loc[Model.NextButton]</button>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </form>
+        </div>
+    </div>
+    <br />
+    <div class="col">
+        <div class="container-body">
+            <div class="row justify-content-center align-items-center">
+                <a button type="button" class="btn btn-outline-success button-title button-large" id="OffsetMyCarbonGoBackButton" asp-controller="CarbonOffsets" asp-action="CarbonOffsets" asp-route-culture="@CultureInfo.CurrentCulture.Name">@_loc[Model.GoBackButton]</a>
+            </div>
+        </div>
+    </div>
+    <br />
+</body>
+@section Scripts{
+    <script src="~/js/offsetMyCarbonPageComingSoonModal.js"></script>
+    <script src="~/js/nonmenuactive.js"></script>
+    <script src="~/js/OffsetMyCarbonFormControl.js"></script>
+    <script src="~/js/OffsetMyCarbonPercentClick.js"></script>
+    <script src="~/js/DisableEnableLinks.js"></script>
+    <script src="~/js/HomeDisableEnableLinks.js"></script>
+}

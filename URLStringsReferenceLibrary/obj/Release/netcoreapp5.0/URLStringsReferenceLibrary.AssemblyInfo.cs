@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("URLStringsReferenceLibrary")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a157344df58b204c505f5cdb6dd2f011c2ff5b73")]
 [assembly: System.Reflection.AssemblyProductAttribute("URLStringsReferenceLibrary")]
 [assembly: System.Reflection.AssemblyTitleAttribute("URLStringsReferenceLibrary")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

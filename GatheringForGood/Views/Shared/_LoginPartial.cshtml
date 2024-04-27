@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using GatheringForGood.Data
+@using System.Globalization
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <a class="nav-link normal-item" asp-area="Identity" asp-page="/Account/Manage/Index" asp-route-culture="@CultureInfo.CurrentCulture.Name" title="Manage" id="_LoginPartialLoggedInUserEmail" onclick="gtag('event','click',{'event_category':'Click','event_label':'Navlink-Username'});">@User.Identity.Name</a>
+        </li>
+        <li class="nav-item justify-content-center align-items-center">
+            <form class="form-inline justify-content-center align-items-center" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" asp-route-culture="@CultureInfo.CurrentCulture.Name">
+                <button type="submit" class="nav-link btn btn-link font-style normal-item justify-content-center align-items-center" id="_LoginPartialLogoutButton" onclick="gtag('event','click',{'event_category':'Click','event_label':'Navlink-Logout'});">@_loc["Logout"]</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link normal-item" id="_LoginPartialRegister" asp-area="Identity" asp-page="/Account/Register" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'Navlink-Register'});">@_loc["Register"]</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link normal-item" id="_LoginPartialLogin" asp-area="Identity" asp-page="/Account/Login" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'Navlink-Login'});">@_loc["Login"]</a>
+        </li>
+    }
+</ul>
+

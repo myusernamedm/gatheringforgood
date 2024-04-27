@@ -1,0 +1,190 @@
+﻿<div class="row justify-content-center align-items-center">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-8" id="Purchase1Tree">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="radioTreePurchase" id="radioPurchase1Tree" onclick="changePurchaseType(1)" checked>
+            <label class="form-check-label font-heading-not-bold" for="radioPurchase1Tree" id="radioPurchase1TreeLabel">@_loc[Model.Plant1Tree]</label>
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-2" id="Purchase1TreeImage">
+        <div class="row">
+            <img src="@Model.OneTreeIconImageUrl" class="" id="radioTreePurchase_1Icon" width="40" height="40" style="margin: 5px" align="middle" alt="Plant 1 Tree Icon">
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-2" id="Purchase1TreeImage">
+        <div class="row">
+            <a href="javascript:void(0)" class="link-style d-none d-sm-none d-md-block d-lg-block d-xl-block" id="Purchase1TreePrice" data-toggle="popover" data-trigger="hover" title="@_loc[Model.TreePlantedTooltipTitle]" data-content="@_loc[Model.Plant1TreeTooltipText]">@_loc[Model.Plant1TreePrice]</a>
+            <a href="javascript:void(0)" class="link-style d-block d-sm-block d-md-none d-lg-none d-xl-none" id="Purchase1TreePrice" data-toggle="popover" title="@_loc[Model.TreePlantedTooltipTitle]" data-content="@_loc[Model.Plant1TreeTooltipText]">@_loc[Model.Plant1TreePrice]</a>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center align-items-center">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-8" id="Purchase1TreePM">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="radioTreePurchase" id="radioPurchase1TreePM" onclick="changePurchaseType(2)">
+            <label class="form-check-label font-heading-not-bold" for="radioPurchase1TreePM" id="radioPurchase1TreePMLabel">@_loc[Model.Plant1TreePM]</label>
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-2" id="Purchase1TreePMImage">
+        <div class="row">
+            <img src="@Model.OneTreeIconImageUrl" class="" id="radioTreePurchase_1PMIcon" width="40" height="40" style="margin: 5px" align="middle" alt="Plant 1 Tree Per Month Icon">
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-2" id="Purchase1TreeImage">
+        <div class="row">
+            <a href="javascript:void(0)" class="link-style d-none d-sm-none d-md-block d-lg-block d-xl-block" id="Purchase1PMTreePrice" data-toggle="popover" data-trigger="hover" title="@_loc[Model.TreePlantedTooltipTitle]" data-content="@_loc[Model.Plant1TreeTooltipText]">@_loc[Model.Plant1TreePMPrice]</a>
+            <a href="javascript:void(0)" class="link-style d-block d-sm-block d-md-none d-lg-none d-xl-none" id="Purchase1PMTreePrice" data-toggle="popover" title="@_loc[Model.TreePlantedTooltipTitle]" data-content="@_loc[Model.Plant1TreeTooltipText]">@_loc[Model.Plant1TreePMPrice]</a>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center align-items-center">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-8" id="Purchase2Tree">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="radioTreePurchase" id="radioPurchase2Tree" onclick="changePurchaseType(3)">
+            <label class="form-check-label font-heading-not-bold" for="radioPurchase2Tree" id="radioPurchase2TreeLabel">@_loc[Model.Plant2Tree]</label>
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-2" id="Purchase2TreeImage">
+        <div class="row">
+            <img src="@Model.TwoTreeIconImageUrl" class="" id="radioTreePurchase_2Icon" width="46" height="40" style="margin: 5px" align="middle" alt="Plant 2 Trees Icon">
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-2" id="Purchase1TreeImage">
+        <div class="row">
+            <a href="javascript:void(0)" class="link-style d-none d-sm-none d-md-block d-lg-block d-xl-block" id="Purchase2TreePrice" data-toggle="popover" data-trigger="hover" title="@_loc[Model.TreePlantedTooltipTitle]" data-content="@_loc[Model.Plant2TreeTooltipText]">@_loc[Model.Plant2TreePrice]</a>
+            <a href="javascript:void(0)" class="link-style d-block d-sm-block d-md-none d-lg-none d-xl-none" id="Purchase2TreePrice" data-toggle="popover" title="@_loc[Model.TreePlantedTooltipTitle]" data-content="@_loc[Model.Plant2TreeTooltipText]">@_loc[Model.Plant2TreePrice]</a>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center align-items-center">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-8" id="Purchase2TreePM">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="radioTreePurchase" id="radioPurchase2TreePM" onclick="changePurchaseType(4)">
+            <label class="form-check-label font-heading-not-bold" for="radioPurchase2TreePM" id="radioPurchase2TreePMLabel">@_loc[Model.Plant2TreePM]</label>
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-2" id="Purchase2TreePMImage">
+        <div class="row">
+            <img src="@Model.TwoTreeIconImageUrl" class="" id="radioTreePurchase_2PMIcon" width="46" height="40" style="margin: 5px" align="middle" alt="Plant 2 Trees Per Month Icon">
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-2" id="Purchase1TreeImage">
+        <div class="row">
+            <a href="javascript:void(0)" class="link-style d-none d-sm-none d-md-block d-lg-block d-xl-block" id="Purchase2PMTreePrice" data-toggle="popover" data-trigger="hover" title="@_loc[Model.TreePlantedTooltipTitle]" data-content="@_loc[Model.Plant2TreeTooltipText]">@_loc[Model.Plant2TreePMPrice]</a>
+            <a href="javascript:void(0)" class="link-style d-block d-sm-block d-md-none d-lg-none d-xl-none" id="Purchase2PMTreePrice" data-toggle="popover" title="@_loc[Model.TreePlantedTooltipTitle]" data-content="@_loc[Model.Plant2TreeTooltipText]">@_loc[Model.Plant2TreePMPrice]</a>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center align-items-center">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-8" id="Purchase5Tree">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="radioTreePurchase" id="radioPurchase5Tree" onclick="changePurchaseType(5)">
+            <label class="form-check-label font-heading-not-bold" for="radioPurchase5Tree" id="radioPurchase5TreeLabel">@_loc[Model.Plant5Tree]</label>
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-2" id="Purchase5TreeImage">
+        <div class="row">
+            <img src="@Model.ThreeTreeIconImageUrl" class="" id="radioTreePurchase_5Icon" width="51" height="40" style="margin: 5px" align="middle" alt="Plant 5 Trees Icon">
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-2" id="Purchase1TreeImage">
+        <div class="row">
+            <a href="javascript:void(0)" class="link-style d-none d-sm-none d-md-block d-lg-block d-xl-block" id="Purchase5TreePrice" data-toggle="popover" data-trigger="hover" title="@_loc[Model.TreePlantedTooltipTitle]" data-content="@_loc[Model.Plant5TreeTooltipText]">@_loc[Model.Plant5TreePrice]</a>
+            <a href="javascript:void(0)" class="link-style d-block d-sm-block d-md-none d-lg-none d-xl-none" id="Purchase5TreePrice" data-toggle="popover" title="@_loc[Model.TreePlantedTooltipTitle]" data-content="@_loc[Model.Plant5TreeTooltipText]">@_loc[Model.Plant5TreePrice]</a>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center align-items-center">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-8" id="Purchase5TreePM">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="radioTreePurchase" id="radioPurchase5TreePM" onclick="changePurchaseType(6)">
+            <label class="form-check-label font-heading-not-bold" for="radioPurchase5TreePM" id="radioPurchase5TreePMLabel">@_loc[Model.Plant5TreePM]</label>
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-2" id="Purchase5TreePMImage">
+        <div class="row">
+            <img src="@Model.ThreeTreeIconImageUrl" class="" id="radioTreePurchase_5PMIcon" width="51" height="40" style="margin: 5px" align="middle" alt="Plant 5 Trees Per Month Icon">
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-2" id="Purchase1TreeImage">
+        <div class="row">
+            <a href="javascript:void(0)" class="link-style d-none d-sm-none d-md-block d-lg-block d-xl-block" id="Purchase5PMTreePrice" data-toggle="popover" data-trigger="hover" title="@_loc[Model.TreePlantedTooltipTitle]" data-content="@_loc[Model.Plant5TreeTooltipText]">@_loc[Model.Plant5TreePMPrice]</a>
+            <a href="javascript:void(0)" class="link-style d-block d-sm-block d-md-none d-lg-none d-xl-none" id="Purchase5PMTreePrice" data-toggle="popover" title="@_loc[Model.TreePlantedTooltipTitle]" data-content="@_loc[Model.Plant5TreeTooltipText]">@_loc[Model.Plant5TreePMPrice]</a>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center align-items-center">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-8" id="Purchase10Tree">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="radioTreePurchase" id="radioPurchase10Tree" onclick="changePurchaseType(7)">
+            <label class="form-check-label font-heading-not-bold" for="radioPurchase10Tree" id="radioPurchase10TreeLabel">@_loc[Model.Plant10Tree]</label>
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-2" id="Purchase10TreeImage">
+        <div class="row">
+            <img src="@Model.ThreeTreeIconImageUrl" class="" id="radioTreePurchase_10Icon" width="51" height="40" style="margin: 5px" align="middle" alt="Plant 10 Trees Icon">
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-2" id="Purchase1TreeImage">
+        <div class="row">
+            <a href="javascript:void(0)" class="link-style d-none d-sm-none d-md-block d-lg-block d-xl-block" id="Purchase10TreePrice" data-toggle="popover" data-trigger="hover" title="@_loc[Model.TreePlantedTooltipTitle]" data-content="@_loc[Model.Plant10TreeTooltipText]">@_loc[Model.Plant10TreePrice]</a>
+            <a href="javascript:void(0)" class="link-style d-block d-sm-block d-md-none d-lg-none d-xl-none" id="Purchase10TreePrice" data-toggle="popover" title="@_loc[Model.TreePlantedTooltipTitle]" data-content="@_loc[Model.Plant10TreeTooltipText]">@_loc[Model.Plant10TreePrice]</a>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center align-items-center">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-8" id="Purchase10TreePM">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="radioTreePurchase" id="radioPurchase10TreePM" onclick="changePurchaseType(8)">
+            <label class="form-check-label font-heading-not-bold" for="radioPurchase10TreePM" id="radioPurchase10TreePMLabel">@_loc[Model.Plant10TreePM]</label>
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-2" id="Purchase10TreePMImage">
+        <div class="row">
+            <img src="@Model.ThreeTreeIconImageUrl" class="" id="radioTreePurchase_10PMIcon" width="51" height="40" style="margin: 5px" align="middle" alt="Plant 10 Trees Per Month Icon">
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-2" id="Purchase1TreeImage">
+        <div class="row">
+            <a href="javascript:void(0)" class="link-style d-none d-sm-none d-md-block d-lg-block d-xl-block" id="Purchase10PMTreePrice" data-toggle="popover" data-trigger="hover" title="@_loc[Model.TreePlantedTooltipTitle]" data-content="@_loc[Model.Plant10TreeTooltipText]">@_loc[Model.Plant10TreePMPrice]</a>
+            <a href="javascript:void(0)" class="link-style d-block d-sm-block d-md-none d-lg-none d-xl-none" id="Purchase10PMTreePrice" data-toggle="popover" title="@_loc[Model.TreePlantedTooltipTitle]" data-content="@_loc[Model.Plant10TreeTooltipText]">@_loc[Model.Plant10TreePMPrice]</a>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center align-items-center">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-8" id="Purchase20Tree">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="radioTreePurchase" id="radioPurchase20Tree" onclick="changePurchaseType(9)">
+            <label class="form-check-label font-heading-not-bold" for="radioPurchase20Tree" id="radioPurchase20TreeLabel">@_loc[Model.Plant20Tree]</label>
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-2" id="Purchase20TreeImage">
+        <div class="row">
+            <img src="@Model.FiveTreeIconImageUrl" class="" id="radioTreePurchase_20Icon" width="61" height="40" style="margin: 5px" align="middle" alt="Plant 20 Trees Icon">
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-2" id="Purchase1TreeImage">
+        <div class="row">
+            <a href="javascript:void(0)" class="link-style d-none d-sm-none d-md-block d-lg-block d-xl-block" id="Purchase20TreePrice" data-toggle="popover" data-trigger="hover" title="@_loc[Model.TreePlantedTooltipTitle]" data-content="@_loc[Model.Plant20TreeTooltipText]">@_loc[Model.Plant20TreePrice]</a>
+            <a href="javascript:void(0)" class="link-style d-block d-sm-block d-md-none d-lg-none d-xl-none" id="Purchase20TreePrice" data-toggle="popover" title="@_loc[Model.TreePlantedTooltipTitle]" data-content="@_loc[Model.Plant20TreeTooltipText]">@_loc[Model.Plant20TreePrice]</a>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center align-items-center">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-8" id="Purchase20TreePM">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="radioTreePurchase" id="radioPurchase20TreePM" onclick="changePurchaseType(10)">
+            <label class="form-check-label font-heading-not-bold" for="radioPurchase20TreePM" id="radioPurchase20TreePMLabel">@_loc[Model.Plant20TreePM]</label>
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-2" id="Purchase20TreePMImage">
+        <div class="row">
+            <img src="@Model.FiveTreeIconImageUrl" class="" id="radioTreePurchase_20PMIcon" width="61" height="40" style="margin: 5px" align="middle" alt="Plant 20 Trees Per Month Icon">
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-2" id="Purchase1TreeImage">
+        <div class="row">
+            <a href="javascript:void(0)" class="link-style d-none d-sm-none d-md-block d-lg-block d-xl-block" id="Purchase20PMTreePrice" data-toggle="popover" data-trigger="hover" title="@_loc[Model.TreePlantedTooltipTitle]" data-content="@_loc[Model.Plant20TreeTooltipText]">@_loc[Model.Plant20TreePMPrice]</a>
+            <a href="javascript:void(0)" class="link-style d-block d-sm-block d-md-none d-lg-none d-xl-none" id="Purchase20PMTreePrice" data-toggle="popover" title="@_loc[Model.TreePlantedTooltipTitle]" data-content="@_loc[Model.Plant20TreeTooltipText]">@_loc[Model.Plant20TreePMPrice]</a>
+        </div>
+    </div>
+</div>

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LocSourceNameReferenceLibrary")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1c2ba0c91553eefc92d2ab1e3c1d6bf31dacdfde")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a157344df58b204c505f5cdb6dd2f011c2ff5b73")]
 [assembly: System.Reflection.AssemblyProductAttribute("LocSourceNameReferenceLibrary")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LocSourceNameReferenceLibrary")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

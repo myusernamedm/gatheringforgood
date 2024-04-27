@@ -1,0 +1,407 @@
+﻿@model ArticlesViewModel
+@using Microsoft.AspNetCore.Identity
+@using GatheringForGood.Data
+@using System.Globalization
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = _loc[Model.PageTabTitle];
+}
+@section meta_head_tags{
+    <meta name='description' content="GatheringForGood Articles - Bringing people together to help save the environment and reduce the impact of climate change. Create your first article today!" />
+    <meta property='og:locale' content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property='og:title' content="GatheringForGood Articles - The place where ideas and expertise come together to solve the world's problems. Create your first article today!" />
+    <meta property='og:description' content="GatheringForGood Articles - Bringing people together to help save the environment and reduce the impact of climate change. Create your first article today!" />
+    <meta property='og:url' content="https://gatheringforgood.com/en/Articles/Articles" />
+    <meta property='og:site_name' content="gatheringforgood" />
+    <meta property='og:image' content="http://www.gatheringforgood.com/images/shareimagearticles.jpg" />
+    <meta property='og:image:width' content="1200" />
+    <meta property='og:image:height' content="600" />
+    <meta property='og:image:alt' content="gatheringforgood sharing image" />
+    <meta property="og:author" content="gatheringforgood">
+    <link rel="preload" as="image" href="@Model.GetEarthHandsReducedImageUrl" imagesrcset="@Model.GetEarthHandsReduced400ImageUrl 2.5x, @Model.GetEarthHandsReduced800ImageUrl 2x, @Model.GetEarthHandsReduced1200ImageUrl 1x, @Model.GetEarthHandsReduced1600ImageUrl 0.5x" sizes="100vw">
+}
+@section header_image{
+    <div class="bg-img-non-home" id="ArticlesPageBanner">
+        <nav class="navbar navbar-expand-lg navbar-light" id="main-navbar-articles-page">
+            <div class="container">
+                <a class="navbar-brand mt-20" onclick="changeactive('Home'); gtag('event','click',{'event_category':'Click','event_label':'ArticlesPage-GoToHomeLogo'});" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/circle_logo.webp" id="_ArticlesPageLogoImg" width="40" height="40" style="margin:0px 20px;" alt="Logo Image">
+                </a>
+                <button class="navbar-toggler" type="button" id="_ArticlesPageNavBarToggler" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item" onclick="changeactive('Home')">
+                            <a class="nav-link normal-item" id="_ArticlesPageHomeNavLink" asp-area="" asp-controller="Home" asp-action="Index" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'Articles-NavLink-Home'});">@_loc[Model.NavBarHome]</a>
+                        </li>
+                        <li class="nav-item" onclick="changeactive('Articles')">
+                            <a class="nav-link normal-item" id="_ArticlesPageArticlesNavLink" asp-area="" asp-controller="Articles" asp-action="Articles" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'Articles-NavLink-Articles'});"><p id="ArticlesPage-Articles-NavLink-Para" onclick="DisableEnableLinks('ArticlesPage-Articles-NavLink-Para', true, 'Articles');">@_loc[Model.Articles]</p></a>
+                        </li>
+                        <li class="nav-item" onclick="changeactive('About')">
+                            <a class="nav-link normal-item" id="_ArticlesPageAboutNavLink" asp-area="" asp-controller="About" asp-action="About" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'Articles-NavLink-About'});">@_loc[Model.NavBarAbout]</a>
+                        </li>
+                        <li class="nav-item" onclick="changeactive('Help')">
+                            <a class="nav-link normal-item" id="_ArticlesPageHelpNavLink" asp-area="" asp-controller="Help" asp-action="Help" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'Articles-NavLink-Help'});">@_loc[Model.NavBarHelpCenter]</a>
+                        </li>
+                        <partial name="_LoginPartial" />
+                    </ul>
+                </div>
+            </div>
+        </nav>
+}
+@section header_content{
+    <div class="container-title">
+        <div class="block-title">
+            <br>
+            @if (!SignInManager.IsSignedIn(User))
+            {
+                <a button type="button" class="btn btn-success button-title" id="ArticlesPageMakeDiffBtn" asp-area="Identity" asp-page="/Account/Register" asp-route-culture="@CultureInfo.CurrentCulture.Name">@_loc[Model.ButtonText]</a>
+            }
+            <h1 class="block-subtitle-text" id="ArticlesPageSubtitle" localize-content>@_loc[Model.Subtitle]</h1>
+            <h2 class="block-title-text-non-home" id="ArticlesPageTitle" localize-content>@_loc[Model.Title]</h2>
+        </div>
+    </div>
+}
+</div>
+<body class="body-bg-img">
+    <div class="modal fade" id="articlesPageComingSoonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content comingsoon-bg-img">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="ComingSoonModalTitle">Modal Error!1</h3>
+                    <button type="button" id="ComingSoonModalHeaderCloseButton" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="col justify-content-center align-items-center">
+                    <h4 class="modal-body" id="articlesPageLearnMoreModalPara">Modal Error!2</h4>
+                </div>
+                <br />
+                <div class="form-group thumb-block">
+                    <form action="@Url.Action("SaveUserEntry","Articles")" method="post">
+                        <label class="modal-body1 col-form-label" id="articlesPageComingSoonModalFormLabel">Modal Error!3</label>
+                        <br />
+                        <textarea class="form-control" name="newsfeedUserEntry" id="newsfeedUserEntry" type="text"></textarea>
+                        <div class="modal-footer">
+                            <button type="submit" id="ComingSoonModalFooterSubmitButton" class="btn btn-success" data-dismiss="articlesPageComingSoonModal" onclick="gtag('event','click',{'event_category':'Click','event_label':'Articles-Button-ComingSoonModalSubmit'});">@_loc[Model.Submit]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col justify-content-center align-items-center">
+                <a href="@_loc[Model.ArticlespageShare]" data-size="small"><img src="@Model.IconTwitter" id="ArticlespageTwitterShareIconImage" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Twitter Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'Articles-Button-TwitterShareIcon'});"></a>
+            </div>
+            <div class="col justify-content-center align-items-center">
+                <div data-href="" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.gatheringforgood.com%2Fen%2FArticles%2FArticles%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><img src="@Model.IconFacebook" id="ArticlespageFBShareIconImage" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Facebook Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'Articles-Button-FacebookShareIcon'});"></a></div>
+            </div>
+            <div class="col justify-content-center align-items-center">
+                <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.gatheringforgood.com/en/Articles/Articles&title=Make A Difference&summary=gatheringforgood.com&source=GatheringForGood" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=400,height=500,toolbar=1,resizable=0'); return false;" class="fb-xfbml-parse-ignore"><img src="@Model.IconLinkedin" id="ArticlespageLinkedinShareIconImage" width="30" height="30" style=" margin: 0px 10px 40px 0px;" alt="Linkedin Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'Articles-Button-LinkedinShareIcon'});"></a>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="row justify-content-center align-items-center">
+                <a button type="button" class="btn btn-success button-title" id="ArticlesPageCreateArticleBtn" asp-area="" asp-controller="CreateArticle" asp-action="CreateArticle" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'ArticlesPage-Button-CreateArticle'});">@_loc[Model.CreateArticleButton]</a>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col justify-content-center align-items-center" id="ArticlesStatusMessage">
+                <partial name="../../Areas/Identity/Pages/Account/Manage/_StatusMessage" model="Model.StatusMessage" />
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="container d-none d-sm-none d-md-block d-lg-block d-xl-block" style="margin: 20px">
+        <div class="row justify-content-center align-content-center">
+            <form asp-action="SearchArticles" method="post" id="SearchOptionForm">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="SearchOption" class="font-heading" id="SearchOptionHeading">@_loc[Model.SearchArticlesHeading]</label>
+                    <div class="input-group">
+                        <select class="form-control" asp-items="@Model.ListOfSearchOptions" name="inputGroupSearchSelect" id="inputGroupSearchSelect" onkeypress="populateHiddenSearchField()" onkeyup="populateHiddenSearchField()" onchange="populateHiddenSearchField()" onkeydown="populateHiddenSearchField()" onclick="populateHiddenSearchField(); gtag('event','click',{'event_category':'Click','event_label':'ArticlesPage-DropDown-SelectSearchOption'});">
+                            <option class="font-style-content-black" selected>@_loc[Model.SearchUsing] ...</option>
+                        </select>
+                        <input style="margin: 0px 0px 0px 20px" asp-for="SearchText" class="form-control" id="SearchTextField" />
+                        <button type="submit" style="margin: 0px 0px 0px 20px" id="SearchSubmitButton" class="btn btn-success" onclick="gtag('event','click',{'event_category':'Click','event_label':'ArticlesPage-Button-Search'});">@_loc[Model.SearchButtonText]</button>
+                    </div>
+                    <span asp-validation-for="SearchOption" class="font-danger" id="SearchOptionValidation"></span>
+                    <span asp-validation-for="SearchText" class="font-danger" id="SearchTextValidation"></span>
+                    <input type="hidden" asp-for="SearchOption" autocomplete="off" class="form-control" id="SearchOptionHiddenInputField" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="container d-block d-sm-block d-md-none d-lg-none d-xl-none">
+        <div class="row justify-content-center align-items-center">
+            <div class="col">
+                <form asp-action="SearchArticles" method="post" id="SearchOptionForm">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="SearchOption" class="font-heading" id="SearchOptionHeading1">@_loc[Model.SearchArticlesHeading]</label>
+                        <div class="input-group">
+                            <select class="form-control" asp-items="@Model.ListOfSearchOptions" name="inputGroupSearchSelect" id="inputGroupSearchSelect1" onkeypress="populateHiddenSearchField()" onkeyup="populateHiddenSearchField()" onchange="populateHiddenSearchField()" onkeydown="populateHiddenSearchField()" onclick="populateHiddenSearchField(); gtag('event','click',{'event_category':'Click','event_label':'ArticlesPage-DropDown-SelectSearchOption'});">
+                                <option class="font-style-content-black" selected>@_loc[Model.SearchUsing] ...</option>
+                            </select>
+                        </div>
+                        <span asp-validation-for="SearchOption" class="font-danger" id="SearchOptionValidation"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input asp-for="SearchText" class="form-control" id="SearchTextField" />
+                            <span asp-validation-for="SearchText" class="font-danger" id="SearchTextValidation"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="hidden" asp-for="SearchOption" autocomplete="off" class="form-control" id="SearchOptionHiddenInputField1" />
+                        </div>
+                    </div>
+                    <div class="form-group" style="text-align: center">
+                        <p>
+                            <button type="submit" id="SearchSubmitButton1" class="btn btn-success" onclick="gtag('event','click',{'event_category':'Click','event_label':'ArticlesPage-Button-Search'});">@_loc[Model.SearchButtonText]</button>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="container-body">
+        <div class="col col-xl-9">
+            <div class="row">
+                @for (int i = 0; i < Model.MainArticleList.Count(); i++)
+                {
+                    var item = Model.MainArticleList[i];
+
+                    @if (item.ShowArticleRef == "True")
+                    {
+
+                        @if (item.UserIdRef != "none")
+                        {
+                            var user = item.UserIdRef.ToString();
+                            ApplicationDbContext _context = new ApplicationDbContext();
+                            var userDetails = _context.Users.Find(user);
+                            var authorFirstName = "Anonymous";
+                            var authorLastName = "";
+
+                            @if (item.AuthorFirstNameRef != "none" && item.AuthorLastNameRef != "none")
+                            {
+                                authorFirstName = item.AuthorFirstNameRef;
+                                authorLastName = item.AuthorLastNameRef;
+                            }
+                            else if (item.AuthorFirstNameRef != "none")
+                            {
+                                authorFirstName = item.AuthorFirstNameRef;
+                            }
+                            else if (userDetails != null)
+                            {
+                                if (userDetails.FirstName == "" || userDetails.FirstName == null || userDetails.LastName == "" || userDetails.LastName == null)
+                                {
+                                    authorFirstName = "Anonymous";
+                                    authorLastName = "";
+                                }
+                                else
+                                {
+                                    authorFirstName = userDetails.FirstName.ToString();
+                                    authorLastName = userDetails.LastName.ToString();
+                                }
+                            }
+
+                            if (item.HREFRef == "none")
+                            {
+                                var formedUrl = "../UserArticle/UserArticle/" + item.UniqueRef;
+                                var currentUrl = Url.PageLink();
+                                var lastValue = currentUrl.Substring(currentUrl.LastIndexOf('/') + 1);
+                                if (lastValue == "TreesPlantedSuccess" || lastValue == "TreesPlantedFailure")
+                                {
+                                    formedUrl = "../../UserArticle/UserArticle/" + item.UniqueRef;
+                                }
+
+                                <div class="col m-2">
+                                    <div class="row h-100 align-content-center justify-content-center">
+                                        <div class="card border-success" style="max-width: 18rem; min-width: 18rem;">
+                                            <a class="link-style" id="CardDynamicLink" href="@formedUrl" onclick="gtag('event','click',{'event_category':'Click','event_label':'Articles-Link-CardWithRazorLink'});">
+                                                @if (item.TitleImgRef != "none")
+                                                {
+                                                    <div class="embed-responsive embed-responsive-16by9">
+                                                        <img class="card-img-top embed-responsive-item" id="CardDynamicImage" src="@Html.DisplayFor(modelItem => item.TitleImgRef)" alt="Card image cap">
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="embed-responsive embed-responsive-16by9">
+                                                        <iframe class="embed-responsive-item" src="@Html.DisplayFor(modelItem => item.TitleVidRef)" id="CardDynamicVideo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen onclick="gtag('event','click',{'event_category':'Click','event_label':'Articles-Link-Video'});"></iframe>
+                                                    </div>
+                                                }
+                                                <div class="card-body">
+                                                    @if (item.FeaturedRef == "True" && item.TreePlantedRef != "True")
+                                                    {
+                                                        <div>
+                                                            <img id="FeaturedArticleImage" width="120" height="18" style="margin-bottom: 6px" src="@Model.FeaturedArticleUrl" onclick="tooltip()" data-toggle="popover" data-trigger="hover" title="@_loc[Model.FeaturedTitle]" data-content="@_loc[Model.FeaturedText]" alt="Featured Article Icon">
+                                                        </div>
+                                                    }
+                                                    @if (item.TreePlantedRef == "True" && item.FeaturedRef != "True")
+                                                    {
+                                                        <div>
+                                                            <img id="TreePlantedArticleImage" width="20" height="20" style="margin-bottom: 6px" src="@Model.TreePlantedUrl" onclick="tooltip()" data-toggle="popover" data-trigger="hover" title="@_loc[Model.TreePurchaseTitle]" data-content="@_loc[Model.TreePurchaseText]" alt="Tree Planted Icon">
+                                                        </div>
+                                                    }
+                                                    @if (item.FeaturedRef == "True" && item.TreePlantedRef == "True")
+                                                    {
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <img id="FeaturedArticleImage" width="120" height="18" style="margin-bottom: 6px" src="@Model.FeaturedArticleUrl" onclick="tooltip()" data-toggle="popover" data-trigger="hover" title="@_loc[Model.FeaturedTitle]" data-content="@_loc[Model.FeaturedText]" alt="Featured Article Icon">
+                                                            </div>
+                                                            <div class="col">
+                                                                <img id="TreePlantedArticleImage" width="20" height="20" style="margin-bottom: 6px" src="@Model.TreePlantedUrl" onclick="tooltip()" data-toggle="popover" data-trigger="hover" title="@_loc[Model.TreePurchaseTitle]" data-content="@_loc[Model.TreePurchaseText]" alt="Tree Planted Icon">
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    <h5 class="card-title" id="CardDynamicTitle">@Html.DisplayFor(modelItem => item.TitleRef)</h5>
+                                                    <p class="font-style-content-small-black" id="CardDynamicAuthor">@_loc[Model.Author]: @authorFirstName @authorLastName</p>
+                                                    <p class="font-style-content-small" style="font-weight: normal;" id="CardDynamicSnippet">@Html.DisplayFor(modelItem => item.SnippetRef)</p>
+                                                </div>
+                                            </a>
+                                            <div class="card-footer" id="CardDynamicFooter">
+                                                <div class="col">
+                                                    <div class="row">
+                                                        <p class="text-muted font-small" style="font-weight: normal;">@Html.DisplayFor(modelItem => item.PostedRef) <strong>|</strong> @_loc[Model.Views]: @Html.DisplayFor(modelItem => item.ArticleViewsRef)</p>
+                                                    </div>
+                                                    <div class="row justify-content-center align-items-center">
+                                                        <div class="col justify-content-center align-items-center" style="text-align: center">
+                                                            <a href="javascript:void(0)" class="icon-for-disable" data-toggle="popover" data-trigger="hover" data-content="@_loc[Model.LikeTooltip]" id="ArticlesPageLikeIconLink @i"><img src="@Model.LikeIconUrl" id="ArticlesPageLikeIconImage" width="30" height="30" style=" margin: 0px 0px 5px 0px;" alt="Like Icon" onclick="updateLikes(1, '@item.UniqueRef'); gtag('event','click',{'event_category':'Click','event_label':'ArticlesPage-Icon-Like'});" /></a>
+                                                            <p class="font-info-green" id="LikeIconCount_@item.UniqueRef _1" style=" margin: 0px 0px 0px 0px;">@item.LikesRef</p>
+                                                        </div>
+                                                        <div class="col justify-content-center align-items-center" style="text-align: center">
+                                                            <a href="javascript:void(0)" class="icon-for-disable" data-toggle="popover" data-trigger="hover" data-content="@_loc[Model.DislikeTooltip]" id="ArticlesPageDislikeIconLink @i"><img src="@Model.DislikeIconUrl" id="ArticlesPageDislikeIconImage" width="30" height="30" style=" margin: 0px 0px 5px 0px;" alt="Dislike Icon" onclick="updateLikes(2, '@item.UniqueRef'); gtag('event','click',{'event_category':'Click','event_label':'ArticlesPage-Icon-Dislike'});" /></a>
+                                                            <p class="font-info-green" id="DislikeIconCount_@item.UniqueRef _2" style=" margin: 0px 0px 0px 0px;">@item.DislikesRef</p>
+                                                        </div>
+                                                        <div class="col justify-content-center align-items-center" style="text-align: center">
+                                                            <a href="javascript:void(0)" class="icon-for-disable" data-toggle="popover" data-trigger="hover" data-content="@_loc[Model.SupportTooltip]" id="ArticlesPageSupportIconLink @i"><img src="@Model.SupportIconUrl" id="ArticlesPageSupportIconImage" width="30" height="30" style=" margin: 0px 0px 5px 0px;" alt="Support Icon" onclick="updateLikes(3, '@item.UniqueRef'); gtag('event','click',{'event_category':'Click','event_label':'ArticlesPage-Icon-Support'});" /></a>
+                                                            <p class="font-info-green" id="SupportIconCount_@item.UniqueRef _3" style=" margin: 0px 0px 0px 0px;">@item.SupportRef</p>
+                                                        </div>
+                                                        <div class="col justify-content-center align-items-center" style="text-align: center">
+                                                            <a href="javascript:void(0)" class="icon-for-disable" data-toggle="popover" data-trigger="hover" data-content="@_loc[Model.QuestionableTooltip]" id="ArticlesPageQuestionIconLink @i"><img src="@Model.QuestionableIconUrl" id="ArticlesPageQuestionIconImage" width="30" height="30" style=" margin: 0px 0px 5px 0px;" alt="Questionable Icon" onclick="updateLikes(4, '@item.UniqueRef'); gtag('event','click',{'event_category':'Click','event_label':'ArticlesPage-Icon-Question'});" /></a>
+                                                            <p class="font-info-green" id="QuestionIconCount_@item.UniqueRef _4" style=" margin: 0px 0px 0px 0px;">@item.QuestionableRef</p>
+                                                        </div>
+                                                        <div class="col justify-content-center align-items-center" style="text-align: center">
+                                                            <a href="javascript:void(0)" class="icon-for-disable" data-toggle="popover" data-trigger="hover" data-content="@_loc[Model.ShockedTooltip]" id="ArticlesPageShockedIconLink @i"><img src="@Model.ShockedIconUrl" id="ArticlesPageShockedIconImage" width="30" height="30" style=" margin: 0px 0px 5px 0px;" alt="Shocked Icon" onclick="updateLikes(5, '@item.UniqueRef'); gtag('event','click',{'event_category':'Click','event_label':'ArticlesPage-Icon-Shocked'});" /></a>
+                                                            <p class="font-info-green" id="ShockedIconCount_@item.UniqueRef _5" style=" margin: 0px 0px 0px 0px;">@item.ShockedRef</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col m-2">
+                                    <div class="row h-100 align-content-center justify-content-center">
+                                        <div class="card border-success" style="max-width: 18rem; min-width: 18rem;">
+                                            @if (item.TitleImgRef != "none")
+                                            {
+                                                <div class="embed-responsive embed-responsive-16by9">
+                                                    <img class="card-img-top embed-responsive-item" id="CardDynamicImage" src="@Html.DisplayFor(modelItem => item.TitleImgRef)" alt="Card image cap">
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="embed-responsive embed-responsive-16by9">
+                                                    <iframe class="embed-responsive-item" src="@Html.DisplayFor(modelItem => item.TitleVidRef)" id="CardDynamicVideo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen onclick="gtag('event','click',{'event_category':'Click','event_label':'Articles-Link-Video'});"></iframe>
+                                                </div>
+                                            }
+                                            <div class="card-body">
+                                                <a href="@item.HREFRef" target="_blank" class="link-style" id="CardDynamicHREFLink" onclick="gtag('event','click',{'event_category':'Click','event_label':'Articles-Link-CardWithHREFLink'});">
+                                                    @if (item.FeaturedRef == "True" && item.TreePlantedRef != "True")
+                                                    {
+                                                        <div>
+                                                            <img id="FeaturedArticleImage" width="120" height="18" style="margin-bottom: 6px" src="@Model.FeaturedArticleUrl" onclick="tooltip()" data-toggle="popover" data-trigger="hover" title="@_loc[Model.FeaturedTitle]" data-content="@_loc[Model.FeaturedText]" alt="Featured Article Icon">
+                                                        </div>
+                                                    }
+                                                    @if (item.TreePlantedRef == "True" && item.FeaturedRef != "True")
+                                                    {
+                                                        <div>
+                                                            <img id="TreePlantedArticleImage" width="20" height="20" style="margin-bottom: 6px" src="@Model.TreePlantedUrl" onclick="tooltip()" data-toggle="popover" data-trigger="hover" title="@_loc[Model.TreePurchaseTitle]" data-content="@_loc[Model.TreePurchaseText]" alt="Tree Planted Icon">
+                                                        </div>
+                                                    }
+                                                    @if (item.FeaturedRef == "True" && item.TreePlantedRef == "True")
+                                                    {
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <img id="FeaturedArticleImage" width="120" height="18" style="margin-bottom: 6px" src="@Model.FeaturedArticleUrl" onclick="tooltip()" data-toggle="popover" data-trigger="hover" title="@_loc[Model.FeaturedTitle]" data-content="@_loc[Model.FeaturedText]" alt="Featured Article Icon">
+                                                            </div>
+                                                            <div class="col">
+                                                                <img id="TreePlantedArticleImage" width="20" height="20" style="margin-bottom: 6px" src="@Model.TreePlantedUrl" onclick="tooltip()" data-toggle="popover" data-trigger="hover" title="@_loc[Model.TreePurchaseTitle]" data-content="@_loc[Model.TreePurchaseText]" alt="Tree Planted Icon">
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    <h5 class="card-title" id="CardDynamicTitle">@Html.DisplayFor(modelItem => item.TitleRef)</h5>
+                                                    <p class="font-style-content-small-black" id="CardDynamicAuthor">@_loc[Model.Author]: @authorFirstName @authorLastName</p>
+                                                    <p class="font-style-content-small" style="font-weight: normal;" id="CardDynamicSnippet">@Html.DisplayFor(modelItem => item.SnippetRef)</p>
+                                                </a>
+                                            </div>
+                                            <div class="card-footer" id="CardDynamicFooter">
+                                                <div class="col">
+                                                    <div class="row">
+                                                        <p class="text-muted font-small" style="font-weight: normal;">@Html.DisplayFor(modelItem => item.PostedRef)</p>
+                                                    </div>
+                                                    <div class="row justify-content-center align-items-center">
+                                                        <div class="col justify-content-center align-items-center" style="text-align: center">
+                                                            <a href="javascript:void(0)" class="icon-for-disable" data-toggle="popover" data-trigger="hover" data-content="@_loc[Model.LikeTooltip]" id="ArticlesPageLikeIconLink @i"><img src="@Model.LikeIconUrl" id="ArticlesPageLikeIconImage" width="30" height="30" style=" margin: 0px 0px 5px 0px;" alt="Like Icon" onclick="updateLikes(1, '@item.UniqueRef'); gtag('event','click',{'event_category':'Click','event_label':'ArticlesPage-Icon-Like'});" /></a>
+                                                            <p class="font-info-green" id="LikeIconCount_@item.UniqueRef _1" style=" margin: 0px 0px 0px 0px;">@item.LikesRef</p>
+                                                        </div>
+                                                        <div class="col justify-content-center align-items-center" style="text-align: center">
+                                                            <a href="javascript:void(0)" class="icon-for-disable" data-toggle="popover" data-trigger="hover" data-content="@_loc[Model.DislikeTooltip]" id="ArticlesPageDislikeIconLink @i"><img src="@Model.DislikeIconUrl" id="ArticlesPageDislikeIconImage" width="30" height="30" style=" margin: 0px 0px 5px 0px;" alt="Dislike Icon" onclick="updateLikes(2, '@item.UniqueRef'); gtag('event','click',{'event_category':'Click','event_label':'ArticlesPage-Icon-Dislike'});" /></a>
+                                                            <p class="font-info-green" id="DislikeIconCount_@item.UniqueRef _2" style=" margin: 0px 0px 0px 0px;">@item.DislikesRef</p>
+                                                        </div>
+                                                        <div class="col justify-content-center align-items-center" style="text-align: center">
+                                                            <a href="javascript:void(0)" class="icon-for-disable" data-toggle="popover" data-trigger="hover" data-content="@_loc[Model.SupportTooltip]" id="ArticlesPageSupportIconLink @i"><img src="@Model.SupportIconUrl" id="ArticlesPageSupportIconImage" width="30" height="30" style=" margin: 0px 0px 5px 0px;" alt="Support Icon" onclick="updateLikes(3, '@item.UniqueRef'); gtag('event','click',{'event_category':'Click','event_label':'ArticlesPage-Icon-Support'});" /></a>
+                                                            <p class="font-info-green" id="SupportIconCount_@item.UniqueRef _3" style=" margin: 0px 0px 0px 0px;">@item.SupportRef</p>
+                                                        </div>
+                                                        <div class="col justify-content-center align-items-center" style="text-align: center">
+                                                            <a href="javascript:void(0)" class="icon-for-disable" data-toggle="popover" data-trigger="hover" data-content="@_loc[Model.QuestionableTooltip]" id="ArticlesPageQuestionIconLink @i"><img src="@Model.QuestionableIconUrl" id="ArticlesPageQuestionIconImage" width="30" height="30" style=" margin: 0px 0px 5px 0px;" alt="Questionable Icon" onclick="updateLikes(4, '@item.UniqueRef'); gtag('event','click',{'event_category':'Click','event_label':'ArticlesPage-Icon-Question'});" /></a>
+                                                            <p class="font-info-green" id="QuestionIconCount_@item.UniqueRef _4" style=" margin: 0px 0px 0px 0px;">@item.QuestionableRef</p>
+                                                        </div>
+                                                        <div class="col justify-content-center align-items-center" style="text-align: center">
+                                                            <a href="javascript:void(0)" class="icon-for-disable" data-toggle="popover" data-trigger="hover" data-content="@_loc[Model.ShockedTooltip]" id="ArticlesPageShockedIconLink @i"><img src="@Model.ShockedIconUrl" id="ArticlesPageShockedIconImage" width="30" height="30" style=" margin: 0px 0px 5px 0px;" alt="Shocked Icon" onclick="updateLikes(5, '@item.UniqueRef'); gtag('event','click',{'event_category':'Click','event_label':'ArticlesPage-Icon-Shocked'});" /></a>
+                                                            <p class="font-info-green" id="ShockedIconCount_@item.UniqueRef _5" style=" margin: 0px 0px 0px 0px;">@item.ShockedRef</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <br />
+</body>
+@section Scripts{
+    <script src="~/js/articlesPageComingSoonModal.js"></script>
+    <script src="~/js/DisableEnableLinks.js"></script>
+    <script src="~/js/Articles_DisableSearchButton.js"></script>
+    <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+    <script src="~/js/Articles_PopulateHiddenSearchField.js"></script>
+    <script src="~/js/UserArticle_ShowPopover.js"></script>
+    <script src="~/js/Articles_UpdateLikes.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+}

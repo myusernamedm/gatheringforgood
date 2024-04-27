@@ -1,0 +1,138 @@
+﻿@page
+@model EmailModel
+@using LazZiya.ExpressLocalization
+@using System.Globalization
+@inject ISharedCultureLocalizer _loc
+@{
+    ViewData["Title"] = _loc[Model.PageTabTitle];
+}
+@section meta_head_tags{
+    <meta name='description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:locale' content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property='og:title' content="GatheringForGood - The place where ideas and expertise come together to solve the world's problems." />
+    <meta property='og:description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:url' content="https://gatheringforgood.com" />
+    <meta property='og:site_name' content="gatheringforgood" />
+    <meta property='og:image' content="http://www.gatheringforgood.com/images/shareimage.jpg" />
+    <meta property='og:image:width' content="1200" />
+    <meta property='og:image:height' content="600" />
+    <meta property='og:image:alt' content="gatheringforgood sharing image" />
+    <meta property="og:author" content="gatheringforgood">
+    <link rel="preload" as="image" href="@Model.GetEarthHandsReducedImageUrl" imagesrcset="@Model.GetEarthHandsReduced400ImageUrl 2.5x, @Model.GetEarthHandsReduced800ImageUrl 2x, @Model.GetEarthHandsReduced1200ImageUrl 1x, @Model.GetEarthHandsReduced1600ImageUrl 0.5x" sizes="100vw">
+}
+@section header_image{
+    <div class="bg-img-non-home" id="EmailManagePageBanner">
+        <nav class="navbar navbar-expand-lg navbar-light" id="main-navbar-emailmanage-page">
+            <div class="container">
+                <a class="navbar-brand mt-20" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/circle_logo.webp" id="_EmailManagePageLogoImg" width="40" height="40" style="margin:0px 20px;" alt="Logo Image" onclick="gtag('event','click',{'event_category':'Click','event_label':'EmailPage-GoToHomeLogo'});">
+                </a>
+                <button class="navbar-toggler" type="button" id="_EmailManagePageNavBarToggler" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link normal-item" id="_EmailManagePageHomeNavLink" asp-area="" asp-controller="Home" asp-action="Index" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'EmailPage-NavLink-Home'});">@_loc[Model.NavBarHome]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link normal-item" id="_EmailManagePageArticlesNavLink" asp-area="" asp-controller="Articles" asp-action="Articles" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'EmailPage-NavLink-Articles'});"><p id="Email-Articles-NavLink-Para" onclick="DisableLinks('Email-Articles-NavLink-Para', true, 'Email');">@_loc[Model.Articles]</p></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link normal-item" id="_EmailManagePageAboutNavLink" asp-area="" asp-controller="About" asp-action="About" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'EmailPage-NavLink-About'});">@_loc[Model.NavBarAbout]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link normal-item" id="_EmailManagePageHelpNavLink" asp-area="" asp-controller="Help" asp-action="Help" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'EmailPage-NavLink-Help'});">@_loc[Model.NavBarHelpCenter]</a>
+                        </li>
+                        <partial name="_LoginPartial" />
+                    </ul>
+                </div>
+            </div>
+        </nav>
+}
+@section header_content{
+    <div class="container-title">
+        <div class="block-title">
+            <br>
+            <h1 class="block-subtitle-text" id="EmailManagePageSubtitle">@_loc[Model.SubTitle]</h1>
+            <h2 class="block-title-text-non-home" id="EmailManagePageTitle">@_loc[Model.Title]</h2>
+        </div>
+    </div>
+}
+</div>
+<body class="body-bg-img">
+    <div class="modal fade" id="emailManagePageComingSoonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content comingsoon-bg-img">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="ComingSoonModalTitle">Modal Error!1</h3>
+                    <button type="button" id="ComingSoonModalHeaderCloseButton" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="col justify-content-center align-items-center">
+                    <h4 class="modal-body" id="emailManagePageLearnMoreModalPara">Modal Error!2</h4>
+                </div>
+                <br />
+                <div class="form-group thumb-block">
+                    <form asp-page="Email" asp-page-handler="SaveUserEntry" method="post">
+                        <label class="modal-body1 col-form-label" id="emailManagePageComingSoonModalFormLabel">Modal Error!3</label>
+                        <br />
+                        <textarea class="form-control" name="newsfeedUserEntry" id="newsfeedUserEntry" type="text"></textarea>
+                        <div class="modal-footer">
+                            <button type="submit" id="ComingSoonModalFooterSubmitButton" class="btn btn-success" data-dismiss="emailManagePageComingSoonModal" onclick="gtag('event','click',{'event_category':'Click','event_label':'EmailPage-Button-ComingSoonModalSubmit'});">@_loc[Model.Submit]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-body justify-content-center align-items-center">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-12  justify-content-center align-items-center">
+                <form id="emailmanage-email-form" method="post">
+                    <div class="container-body  justify-content-center align-items-center">
+                        <div class="row justify-content-center align-items-center">
+                            <div class="col-lg-9 font-style-content">
+                                <div class="form-group justify-content-center align-items-center">
+                                    <label class="font-heading" id="_EmailManagePageEmailHeading" asp-for="Email">@_loc[Model.EmailHeading]</label>
+                                    @if (Model.IsEmailConfirmed)
+                                    {
+                                        <div class="input-group">
+                                            <input id="_EmailManagePageEmailField" asp-for="Email" class="form-control" disabled />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text text-success font-weight-bold">✓</span>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Email" class="form-control" disabled />
+                                        <br />
+                                        <button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="btn btn-outline-success button-title" onclick="gtag('event','click',{'event_category':'Click','event_label':'EmailPage-Button-SendVerificationEmail'});">@_loc[Model.SendVerificationEmailButtonText]</button>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-lg-9 font-style-content">
+                                <div class="form-group justify-content-center align-items-center">
+                                    <label class="font-heading" id="_EmailManagePageNewEmailHeading" asp-for="Input.NewEmail">@_loc[Model.NewEmailHeading]</label>
+                                    <input asp-for="Input.NewEmail" class="form-control" id="_EmailManagePageNewEmailField" />
+                                    <span asp-validation-for="Input.NewEmail" class="font-danger" id="ManageEmailValidationLabel"></span>
+                                    <br />
+                                    <button id="_EmailManagePageChangeEmailButton" type="submit" asp-page-handler="ChangeEmail" class="btn btn-success button-title" onclick="gtag('event','click',{'event_category':'Click','event_label':'EmailPage-Button-ChangeEmailSubmit'});">@_loc[Model.ChangeEmailButtonText]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+@section Scripts {
+    <script src="~/js/emailManagePageComingSoonModal.js"></script>
+    <script src="~/js/HomeDisableEnableLinks.js"></script>
+    <script src="~/js/DisableEnableLinks.js"></script>
+    <script src="~/js/MyArticles_DisableSubMenuButtons.js"></script>
+}

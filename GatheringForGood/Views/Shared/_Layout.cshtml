@@ -1,0 +1,95 @@
+﻿@using LazZiya.ExpressLocalization
+@using System.Globalization 
+@inject ISharedCultureLocalizer _loc
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RD37T8JPR5"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-RD37T8JPR5');
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=8" />
+    @RenderSection("meta_head_tags", required: true)
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - @_loc["GatheringForGood"]</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <link rel="stylesheet" href="~/css/style.css" />
+    @if (System.Globalization.CultureInfo.CurrentCulture.TextInfo.IsRightToLeft)
+    {
+        <link rel="stylesheet" href="~/css/rtl.css" />
+    }
+
+</head>
+@{
+    var culture = System.Globalization.CultureInfo.CurrentCulture.Name;
+}
+<body>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v12.0" nonce="pnPysTKj"></script>
+    <header>
+        @RenderSection("header_image", required: false)
+
+        @RenderSection("header_content", required: false)
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="navbar-light footer-padding">
+        <div class="container">
+            <div class="container-body">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col justify-content-center align-items-center">
+                        <a href="@_loc[Model.HomepageShare]" data-size="small"><img src="@Model.IconTwitter" id="FooterTwitterShareIconImage" width="15" height="15" style=" margin: 0px 10px 40px 0px;" alt="Twitter Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'Footer-Button-TwitterShareIcon'});"></a>
+                    </div>
+                    <div class="col justify-content-center align-items-center">
+                        <div data-href="" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.gatheringforgood.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><img src="@Model.IconFacebook" id="FooterFBShareIconImage" width="15" height="15" style=" margin: 0px 10px 40px 0px;" alt="Facebook Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'Footer-Button-FacebookShareIcon'});"></a></div>
+                    </div>
+                    <div class="col justify-content-center align-items-center">
+                        <div><a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.gatheringforgood.com/&title=Make A Difference&summary=gatheringforgood.com&source=GatheringForGood" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=400,height=500,toolbar=1,resizable=0'); return false;" class="fb-xfbml-parse-ignore"><img src="@Model.IconLinkedin" id="FooterLinkedinShareIconImage" width="15" height="15" style=" margin: 0px 10px 40px 0px;" alt="Linkedin Share Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'Footer-Button-LinkedinShareIcon'});"></a></div>
+                    </div>
+                </div>
+                </div>
+                <div class="row navfooter justify-content-center" id="nav-footer">
+                    <div class="col">
+                        <ul>
+                            <li id="_LayoutCopyrightFooterLabel">&copy; gatheringforgood 2021</li>
+                            <li><a class="link-style-footer" id="_LayoutRegisterFooterLink" asp-area="Identity" asp-page="/Account/Register" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'Footer-Link-Register'});">@_loc[Model.NavBarRegister]</a></li>
+                            <li><a class="link-style-footer" id="_LayoutAboutFooterLink" asp-area="" asp-controller="About" asp-action="About" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'Footer-Link-About'});">@_loc[Model.AboutUs]</a></li>
+                            <li><a class="link-style-footer" id="_LayoutArticlesFooterLink" asp-area="" asp-controller="Articles" asp-action="Articles" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'Footer-Link-Articles'});">@_loc[Model.Articles]</a></li>
+                            <li><a class="link-style-footer" id="_LayoutPrivacyFooterLink" asp-area="" asp-controller="Privacy" asp-action="Privacy" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'Footer-Link-Privacy'});">@_loc[Model.PrivacyNotice]</a></li>
+                            <li><a class="link-style-footer" id="_LayoutCookiesFooterLink" asp-area="" asp-controller="TermsAndConditions" asp-action="TermsAndConditions" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'Footer-Link-TandC'});">@_loc[Model.CookiesNotice]</a></li>
+                            <li><a class="link-style-footer" id="_LayoutUpdatesFooterLink" asp-area="" asp-controller="Updates" asp-action="Updates" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'Footer-Link-Updates'});">@_loc[Model.Updates]</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+</footer>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

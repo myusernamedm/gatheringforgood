@@ -1,0 +1,207 @@
+﻿@page
+@model RegisterModel
+@using LazZiya.ExpressLocalization
+@using System.Globalization
+@inject ISharedCultureLocalizer _loc
+@{
+    ViewData["Title"] = _loc[Model.PageTabTitle];
+    var culture = System.Globalization.CultureInfo.CurrentCulture.Name;
+}
+@section meta_head_tags{
+    <meta name='description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:locale' content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property='og:title' content="GatheringForGood - The place where ideas and expertise come together to solve the world's problems." />
+    <meta property='og:description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:url' content="https://gatheringforgood.com/en/Identity/Account/Register" />
+    <meta property='og:site_name' content="gatheringforgood" />
+    <meta property='og:image' content="http://www.gatheringforgood.com/images/shareimage.jpg" />
+    <meta property='og:image:width' content="1200" />
+    <meta property='og:image:height' content="600" />
+    <meta property='og:image:alt' content="gatheringforgood sharing image" />
+    <meta property="og:author" content="gatheringforgood">
+    <link rel="preload" as="image" href="@Model.GetEarthHandsReducedImageUrl" imagesrcset="@Model.GetEarthHandsReduced400ImageUrl 2.5x, @Model.GetEarthHandsReduced800ImageUrl 2x, @Model.GetEarthHandsReduced1200ImageUrl 1x, @Model.GetEarthHandsReduced1600ImageUrl 0.5x" sizes="100vw">
+}
+@section header_image{
+    <div class="bg-img-non-home" id="RegisterPageBanner">
+        <nav class="navbar navbar-expand-lg navbar-light" id="main-navbar-register-page">
+            <div class="container">
+                <a class="navbar-brand mt-20" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/circle_logo.webp" id="_RegisterPageLogoImg" width="40" height="40" style="margin:0px 20px;" alt="Logo Image" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterPage-GoToHomeLogo'});">
+                </a>
+                <button class="navbar-toggler" type="button" id="_RegisterPageNavBarToggler" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" id="_RegisterPageHomeNavLink" asp-area="" asp-controller="Home" asp-action="Index" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterPage-NavLink-Home'});">@_loc[Model.NavBarHome]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="_RegisterPageArticlesNavLink" asp-area="" asp-controller="Articles" asp-action="Articles" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterPage-NavLink-Articles'});"><p id="RegisterPage-Articles-NavLink-Para" onclick="DisableLinks('RegisterPage-Articles-NavLink-Para', true, 'RegisterPage');">@_loc[Model.Articles]</p></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="_RegisterPageAboutNavLink" asp-area="" asp-controller="About" asp-action="About" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterPage-NavLink-About'});">@_loc[Model.NavBarAbout]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="_RegisterPageHelpNavLink" asp-area="" asp-controller="Help" asp-action="Help" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterPage-NavLink-Help'});">@_loc[Model.NavBarHelpCenter]</a>
+                        </li>
+                        <partial name="_LoginPartial" />
+                    </ul>
+                </div>
+            </div>
+        </nav>
+}
+@section header_content{
+    <div class="container-title">
+        <div class="block-title">
+            <br>
+            <h1 class="block-subtitle-text" id="RegisterPageSubtitle">@_loc[Model.SubTitle]</h1>
+            <h2 class="block-title-text-non-home" id="RegisterPageTitle">@_loc[Model.Title]</h2>
+        </div>
+    </div>
+}
+</div>
+<body class="body-bg-img">
+    <div class="modal fade" id="registerPageComingSoonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content comingsoon-bg-img">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="ComingSoonModalTitle">Modal Error!1</h3>
+                    <button type="button" id="ComingSoonModalHeaderCloseButton" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="col justify-content-center align-items-center">
+                    <h4 class="modal-body" id="registerPageLearnMoreModalPara">Modal Error!2</h4>
+                </div>
+                <br />
+                <div class="form-group thumb-block">
+                    <form asp-page="Register" asp-page-handler="SaveUserEntry" method="post">
+                        <label class="modal-body1 col-form-label" id="registerPageComingSoonModalFormLabel">Modal Error!3</label>
+                        <br />
+                        <textarea class="form-control" name="newsfeedUserEntry" id="newsfeedUserEntry" type="text"></textarea>
+                        <div class="modal-footer">
+                            <button type="submit" id="ComingSoonModalFooterSubmitButton" class="btn btn-success" data-dismiss="registerPageComingSoonModal" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterPage-Button-ComingSoonModalSubmit'});">@_loc[Model.Submit]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col">
+                <br />
+                <h2 class="font-style-content-head" id="CreateNewAccountHeading">@_loc[Model.Heading]</h2>
+                <hr />
+            </div>
+        </div>
+        <br />
+    </div>
+    <div class="container">
+        <!--Change back to container-body when enabling 3rd party registration below-->
+        <div class="row justify-content-center align-items-center">
+            <div class="col-sm-auto col-md-auto col-lg-auto col-xl-auto">
+                <!--Change back to col-md-4 when enabling 3rd party registration below-->
+                <form asp-route-returnUrl="@Model.ReturnUrl" method="post" id="RegisterForm" name="RegisterForm">
+                    <div asp-validation-summary="ModelOnly" class="font-danger"></div>
+                    <div class="form-group">
+                        <label class="font-heading" asp-for="Input.Email" id="RegistrationEmailHeading">@_loc[Model.EmailHeading]</label>
+                        <input asp-for="Input.Email" autocomplete="off" class="form-control" id="RegistrationEmailInputField" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterPage-Field-EmailField'});" />
+                        <span asp-validation-for="Input.Email" class="font-danger" id="RegistrationEmailValidationLabel"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="font-heading" asp-for="Input.Password" id="RegistrationPasswordHeading">@_loc[Model.PasswordHeading]</label>
+                        <div class="info-padding" id="RegistrationPasswordInfoIcon">
+                            <svg xmlns="http://www.w3.org/2000/svg" onclick="tooltip()" width="16" height="16" fill="green" class="bi bi-info-circle" viewBox="0 0 16 16" data-toggle="popover" style="margin-right:10px" title="@_loc[Model.PasswordHeading]" data-content="@_loc[Model.PasswordRequirements]">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                            </svg>
+                        </div>
+                        <input asp-for="Input.Password" autocomplete="off" class="form-control" id="RegistrationPasswordInputField" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterPage-Field-PasswordField'});" />
+                        <span asp-validation-for="Input.Password" class="font-danger" id="RegistrationPasswordValidationLabel"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="font-heading" asp-for="Input.ConfirmPassword" id="RegistrationConfirmPasswordHeading">@_loc[Model.ConfirmPassword]</label>
+                        <input asp-for="Input.ConfirmPassword" autocomplete="off" class="form-control" id="RegistrationConfirmPasswordInputField" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterPage-Field-ConfirmPasswordField'});" />
+                        <span asp-validation-for="Input.ConfirmPassword" class="font-danger" id="RegistrationConfirmPasswordValidationLabel"></span>
+                    </div>
+                    <div class="form-group" style="text-align: center">
+                        <a class="link-style font-heading-links" asp-for="TOSAgree" id="RegisterTandCHeading" asp-controller="TermsAndConditions" asp-action="TermsAndConditions" asp-route-culture="@CultureInfo.CurrentCulture.Name">@_loc[Model.TandCHeading]</a>
+                        <br />
+                        <input asp-for="Input.TOSAgree" type="checkbox" id="Input_TOSAgree" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterPage-Button-TandCCheckChanged'});" />
+                        <span asp-validation-for="Input.TOSAgree" class="font-danger" id="RegisterTandCValidation"></span>
+                    </div>
+                    <div class="form-group" style="text-align: center">
+                        <p class="font-heading" id="RegisterMarketingHeading">@_loc[Model.MarketingHeading]</p>
+                        <input asp-for="Input.MarketingComms" type="checkbox" id="Input_MarketingComms" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterPage-Button-MarketingCommsCheckChanged'});" />
+                    </div>
+                    <div class="form-group" style="text-align: center">
+                        <p class="font-heading" id="RegisterHelpOthersHeading">@_loc[Model.HelpOthers]</p>
+                        <input asp-for="Input.HelpOthersCheckbox" type="checkbox" id="Input_HelpOthersCheckbox" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterPage-Button-HelpOthersCheckChanged'});" />
+                    </div>
+                    <div class="form-group" style="text-align: center">
+                        <p class="font-heading" id="RegisterFeatureUpdatesHeading">@_loc[Model.FeatureUpdates]</p>
+                        <input asp-for="Input.FeatureUpdatesCheckbox" type="checkbox" id="Input_FeatureUpdatesCheckbox" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterPage-Button-FeatureUpdatesCheckChanged'});" />
+                    </div>
+                    <div class="form-group" style="text-align: center">
+                        <p class="font-heading" id="RegisterArticlesPostsHeading">@_loc[Model.ArticlesPosts]</p>
+                        <input asp-for="Input.ArticlesPostsCheckbox" type="checkbox" id="Input_ArticlesPostsCheckbox" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterPage-Button-NewArticlesCheckChanged'});" />
+                    </div>
+                    <div class="form-group" style="text-align: center">
+                        <p class="font-heading" id="RegisterProductNewsHeading">@_loc[Model.ProductNews]</p>
+                        <input asp-for="Input.ProductNewsCheckbox" type="checkbox" id="Input_ProductNewsCheckbox" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterPage-Button-ProductUpdatesCheckChanged'});" />
+                    </div>
+                    <br />
+                    <div class="form-group" style="text-align: center">
+                        <button type="submit" class="btn btn-success button-title" id="RegisterButton" onclick="gtag('event','click',{'event_category':'Click','event_label':'RegisterPage-Button-RegisterSubmit'});">@_loc[Model.RegisterButtonName]</button>
+                    </div>
+                </form>
+                <br />
+            </div>
+            <!--
+            <div class="col-md-4 col-md-offset-2">
+                <section>
+                    <h4 class="font-heading" id="RegisterUseAnotherService">@_loc[Model.ServiceHeading]</h4>
+                    <hr />
+                    @{
+                        if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                        {
+                            <div>
+                                <p>
+                                    There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                                    for details on setting up this ASP.NET application to support logging in via external services.
+                                </p>
+                            </div>
+                        }
+                        else
+                        {
+                            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                <div>
+                                    <p>
+                                        @foreach (var provider in Model.ExternalLogins)
+                                        {
+                                            <button type="submit" class="btn btn-outline-success button-title" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                        }
+                                    </p>
+                                </div>
+                            </form>
+                        }
+                    }
+                </section>
+            </div>
+                -->
+        </div>
+    </div>
+</body>
+@section Scripts {
+    <script src="~/js/registeractive.js"></script>
+    <script src="~/js/showpopover.js"></script>
+    <script src="~/js/hidepopover.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/registerPageComingSoonModal.js"></script>
+    <script src="~/js/HomeDisableEnableLinks.js"></script>
+    <script src="~/js/DisableEnableLinks.js"></script>
+    <script src="~/js/Register_DisableButtons.js"></script>
+}

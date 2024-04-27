@@ -1,0 +1,21 @@
+﻿@using System.Globalization
+@inject SignInManager<ApplicationUser> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+    var culture = System.Globalization.CultureInfo.CurrentCulture.Name;
+}
+<ul class="nav nav-pills flex-column">
+    <li class="nav-item"><a class="nav-link link-style @ManageNavPages.IndexNavClass(ViewContext)" asp-route-culture="@CultureInfo.CurrentCulture.Name" id="_ManageNavProfile" asp-page="./Index" onclick="gtag('event','click',{'event_category':'Click','event_label':'AccountManageNavSidebar-Link-Profile'});" localize-content>Profile</a></li>
+    <li class="nav-item"><a class="nav-link link-style @ManageNavPages.EmailNavClass(ViewContext)" asp-route-culture="@CultureInfo.CurrentCulture.Name" id="_ManageNavEmail" asp-page="./Email" onclick="gtag('event','click',{'event_category':'Click','event_label':'AccountManageNavSidebar-Link-Email'});" localize-content>Email</a></li>
+    <li class="nav-item"><a class="nav-link link-style @ManageNavPages.InfoNavClass(ViewContext)" asp-route-culture="@CultureInfo.CurrentCulture.Name" id="_ManageNavInfo" asp-page="./Info" onclick="gtag('event','click',{'event_category':'Click','event_label':'AccountManageNavSidebar-Link-Info'});" localize-content>Info</a></li>
+    <li class="nav-item"><a class="nav-link link-style @ManageNavPages.ChangePasswordNavClass(ViewContext)" asp-route-culture="@CultureInfo.CurrentCulture.Name" id="_ManageNavChangePassword" asp-page="./ChangePassword" onclick="gtag('event','click',{'event_category':'Click','event_label':'AccountManageNavSidebar-Link-ChangePswd'});" localize-content>Password</a></li>
+    <li class="nav-item"><a class="nav-link link-style @ManageNavPages.MyArticlesNavClass(ViewContext)" asp-route-culture="@CultureInfo.CurrentCulture.Name" id="_ManageNavMyArticles" asp-page="./MyArticles" onclick="gtag('event','click',{'event_category':'Click','event_label':'AccountManageNavSidebar-Link-MyArticles'});" localize-content>My Articles</a></li>
+    <!--
+    @if (hasExternalLogins)
+    {
+        <li id="_ManageNavExternalLoginsListItem" class="nav-item"><a id="_ManageNavExternalLoginAnchor" class="nav-link normal-item @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins" asp-route-culture="@CultureInfo.CurrentCulture.Name" localize-content>External logins</a></li>
+    }
+    <li class="nav-item"><a class="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" asp-route-culture="@CultureInfo.CurrentCulture.Name" id="_ManageNavTwoFactor" asp-page="./TwoFactorAuthentication" localize-content>Two-factor Authentication</a></li>
+    -->
+    <li class="nav-item"><a class="nav-link link-style @ManageNavPages.PersonalDataNavClass(ViewContext)" asp-route-culture="@CultureInfo.CurrentCulture.Name" id="_ManageNavPersonalData" asp-page="./PersonalData" onclick="gtag('event','click',{'event_category':'Click','event_label':'AccountManageNavSidebar-Link-PersonalData'});" localize-content>Personal Data</a></li>
+</ul>

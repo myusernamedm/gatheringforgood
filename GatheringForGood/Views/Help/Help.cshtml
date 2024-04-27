@@ -1,0 +1,179 @@
+﻿@model HelpViewModel
+@using Microsoft.AspNetCore.Identity
+@using GatheringForGood.Data
+@using System.Globalization
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = _loc[Model.PageTabTitle];
+}
+@section meta_head_tags{
+    <meta name='description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:locale' content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property='og:title' content="GatheringForGood - The place where ideas and expertise come together to solve the world's problems." />
+    <meta property='og:description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:url' content="https://gatheringforgood.com" />
+    <meta property='og:site_name' content="gatheringforgood" />
+    <meta property='og:image' content="http://www.gatheringforgood.com/images/shareimage.jpg" />
+    <meta property='og:image:width' content="1200" />
+    <meta property='og:image:height' content="600" />
+    <meta property='og:image:alt' content="gatheringforgood sharing image" />
+    <meta property="og:author" content="gatheringforgood">
+    <link rel="preload" as="image" href="@Model.GetEarthHandsReducedImageUrl" imagesrcset="@Model.GetEarthHandsReduced400ImageUrl 2.5x, @Model.GetEarthHandsReduced800ImageUrl 2x, @Model.GetEarthHandsReduced1200ImageUrl 1x, @Model.GetEarthHandsReduced1600ImageUrl 0.5x" sizes="100vw">
+}
+@section header_image{
+    <div class="bg-img-non-home" id="HelpPageBanner">
+        <nav class="navbar navbar-expand-lg navbar-light" id="main-navbar-help-page">
+            <div class="container">
+                <a class="navbar-brand mt-20" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/circle_logo.webp" id="_HelpPageLogoImg" width="40" height="40" style="margin:0px 20px;" alt="Logo Image" onclick="gtag('event','click',{'event_category':'Click','event_label':'HelpPage-GoToHomeLogo'});">
+                </a>
+                <button class="navbar-toggler" type="button" id="_HelpPageNavBarToggler" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" id="_HelpPageHomeNavLink" asp-area="" asp-controller="Home" asp-action="Index" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'HelpPage-NavLink-Home'});">@_loc[Model.NavBarHome]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="_HelpPageArticlesNavLink" asp-area="" asp-controller="Articles" asp-action="Articles" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'HelpPage-NavLink-Articles'});"><p id="HelpPage-Articles-NavLink-Para" onclick="DisableEnableLinks('HelpPage-Articles-NavLink-Para', true, 'Help');">@_loc[Model.Articles]</p></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="_HelpPageAboutNavLink" asp-area="" asp-controller="About" asp-action="About" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'HelpPage-NavLink-About'});">@_loc[Model.NavBarAbout]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="_HelpPageHelpNavLink" asp-area="" asp-controller="Help" asp-action="Help" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'HelpPage-NavLink-Help'});">@_loc[Model.NavBarHelpCenter]</a>
+                        </li>
+                        <partial name="_LoginPartial" />
+                    </ul>
+                </div>
+            </div>
+        </nav>
+}
+@section header_content{
+    <div class="container-title">
+        <div class="block-title">
+            <br>
+            <h1 class="block-subtitle-text" id="HelpPageSubtitle">@_loc[Model.Subtitle]</h1>
+            <h2 class="block-title-text-non-home" id="HelpPageTitle">@_loc[Model.Title]</h2>
+        </div>
+    </div>
+}
+</div>
+
+<body class="body-bg-img">
+    <div class="modal fade" id="helpPageComingSoonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content comingsoon-bg-img">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="ComingSoonModalTitle">Modal Error!1</h3>
+                    <button type="button" id="ComingSoonModalHeaderCloseButton" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="col justify-content-center align-items-center">
+                    <h4 class="modal-body" id="helpPageLearnMoreModalPara">Modal Error!2</h4>
+                </div>
+                <br />
+                <div class="form-group thumb-block">
+                    <form action="@Url.Action("SaveUserEntry","Help")" method="post">
+                        <label class="modal-body1 col-form-label" id="helpPageComingSoonModalFormLabel">Modal Error!3</label>
+                        <br />
+                        <textarea class="form-control" name="newsfeedUserEntry" id="newsfeedUserEntry" type="text"></textarea>
+                        <div class="modal-footer">
+                            <button type="submit" id="ComingSoonModalFooterSubmitButton" class="btn btn-success" data-dismiss="helpPageComingSoonModal" onclick="gtag('event','click',{'event_category':'Click','event_label':'HelpPage-Button-ComingSoonModalSubmit'});">@_loc[Model.Submit]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col">
+                <h2 class="font-style-supersize-head toLowercase" id="HelloTitle">@_loc[Model.Hello]</h2>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col thumb-block" id="ContactUsIcon">
+                <div class="col justify-content-center align-items-center">
+                    <a href="javascript:void(0)" onclick="helpPageScrollToElement('ContactUsForm')"><img src="@Model.ContactIconImage" id="HelpPageContactIconImage" width="100" height="100" style=" margin: 0px 0px 40px 0px;" alt="Contact Us Icon" onclick="gtag('event','click',{'event_category':'Click','event_label':'HelpPage-Button-ContactUsIcon'});"></a>
+                </div>
+                <div class="col justify-content-center align-items-center font-heading">
+                    <a href="javascript:void(0)" onclick="helpPageScrollToElement('ContactUsForm')"><p class="link-style" id="HelpPageContactIconText" width="100" style=" margin: 0px 0px 40px 0px;" onclick="gtag('event','click',{'event_category':'Click','event_label':'HelpPage-Button-ContactUsIconText'});">@_loc[Model.ContactIconText]</p></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <hr />
+    <br />
+    <div class="col">
+        <div class="container-body">
+            <div class="row justify-content-center align-items-center">
+                <div class="col justify-content-center align-items-center">
+                    <h2 class="font-style-content-head" id="HelpPageLetUsKnowTitle">@_loc[Model.LetUsKnow]</h2>
+                </div>
+            </div>
+        </div>
+        <div class="container-body">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-lg-8 justify-content-center align-items-center">
+                    <h2 class="font-style-content" id="HelpPageIdeasOrSayHi">@_loc[Model.IdeasOrSayHi]</h2>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-sm-10 col-md-6 col-lg-6 col-xl-6">
+                <form asp-action="SendMail" method="post" id="ContactUsForm">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="font-heading" id="ContactUsNameHeading">@_loc[Model.NameHeading]</label>
+                        <input asp-for="Name" class="form-control" id="ContactUsNameField" />
+                        <span asp-validation-for="Name" class="font-danger" id="ContactUsNameValidation"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="font-heading" id="ContactUsEmailHeading">@_loc[Model.EmailHeading]</label>
+                        <input asp-for="Email" class="form-control" id="ContactUsEmailField" />
+                        <span asp-validation-for="Email" class="font-danger" id="ContactUsEmailValidation"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Subject" class="font-heading" id="ContactUsSubjectHeading">@_loc[Model.SubjectHeading]</label>
+                        <input asp-for="Subject" class="form-control" id="ContactUsSubjectField" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Thoughts" class="font-heading" id="ContactUsMessageHeading">@_loc[Model.ThoughtsHeading]</label>
+                        <textarea asp-for="Thoughts" class="form-control" id="ContactUsMessageField"></textarea>
+                        <span asp-validation-for="Thoughts" class="font-danger" id="ContactUsMessageHeadingValidation"></span>
+                    </div>
+                    <div class="form-group">
+                        <a asp-for="TandC" class="link-style" id="ContactUsTandCHeading" asp-controller="TermsAndConditions" asp-action="TermsAndConditions" asp-route-culture="@CultureInfo.CurrentCulture.Name">@_loc[Model.TandCHeading]</a>
+                        <br />
+                        <input asp-for="TandC" type="checkbox" id="ContactUsTandCCheckbox" />
+                        <span asp-validation-for="TandC" class="font-danger" id="ContactUsTandCHeadingValidation"></span>
+                    </div>
+                    <br />
+                    <button type="submit" id="ContactUsSubmitButton" class="btn btn-success" onclick="DisableLinks('ContactUsSubmitButton', true, 'Help'); gtag('event','click',{'event_category':'Click','event_label':'HelpPage-Button-ContactUsSubmit'});">@_loc[Model.Submit]</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br />
+</body>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/helpPageComingSoonModal.js"></script>
+    <script src="~/js/helpPageScrollToElement.js"></script>
+    <script src="~/js/helpactive.js"></script>
+    <script src="~/js/HomeDisableEnableLinks.js"></script>
+    <script src="~/js/DisableEnableLinks.js"></script>
+    <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+}
+

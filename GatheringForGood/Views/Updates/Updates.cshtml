@@ -1,0 +1,699 @@
+﻿@model UpdatesViewModel
+@using System.Globalization
+@{
+    ViewData["Title"] = _loc[Model.PageTabTitle];
+}
+@section meta_head_tags{
+    <meta name='description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:locale' content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property='og:title' content="GatheringForGood - The place where ideas and expertise come together to solve the world's problems." />
+    <meta property='og:description' content="GatheringForGood - Bringing people together to help save the environment and reduce the impact of climate change." />
+    <meta property='og:url' content="https://gatheringforgood.com/en/Updates/Updates" />
+    <meta property='og:site_name' content="gatheringforgood" />
+    <meta property='og:image' content="http://www.gatheringforgood.com/images/shareimage.jpg" />
+    <meta property='og:image:width' content="1200" />
+    <meta property='og:image:height' content="600" />
+    <meta property='og:image:alt' content="gatheringforgood sharing image" />
+    <meta property="og:author" content="gatheringforgood">
+    <link rel="preload" as="image" href="@Model.GetEarthHandsReducedImageUrl" imagesrcset="@Model.GetEarthHandsReduced400ImageUrl 2.5x, @Model.GetEarthHandsReduced800ImageUrl 2x, @Model.GetEarthHandsReduced1200ImageUrl 1x, @Model.GetEarthHandsReduced1600ImageUrl 0.5x" sizes="100vw">
+}
+@section header_image{
+    <div class="bg-img-non-home" id="UpdatesPageBanner">
+        <nav class="navbar navbar-expand-lg navbar-light" id="main-navbar-updates-page">
+            <div class="container">
+                <a class="navbar-brand mt-20" onclick="changeactive('Home')" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/circle_logo.webp" id="_UpdatesPageLogoImg" width="40" height="40" style="margin:0px 20px;" alt="Logo Image" onclick="gtag('event','click',{'event_category':'Click','event_label':'UpdatesPage-GoToHomeLogo'});">
+                </a>
+                <button class="navbar-toggler" type="button" id="_UpdatesPageNavBarToggler" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item" onclick="changeactive('Home')">
+                            <a class="nav-link normal-item" id="_UpdatesPageHomeNavLink" asp-area="" asp-controller="Home" asp-action="Index" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'UpdatesPage-NavLink-Home'});">@_loc[Model.NavBarHome]</a>
+                        </li>
+                        <li class="nav-item" onclick="changeactive('Articles')">
+                            <a class="nav-link normal-item" id="_UpdatesPageArticlesNavLink" asp-area="" asp-controller="Articles" asp-action="Articles" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'UpdatesPage-NavLink-Articles'});"><p id="Updates-Articles-NavLink-Para" onclick="DisableLinks('Updates-Articles-NavLink-Para', true, 'Updates');">@_loc[Model.Articles]</p></a>
+                        </li>
+                        <li class="nav-item" onclick="changeactive('About')">
+                            <a class="nav-link normal-item" id="_UpdatesPageAboutNavLink" asp-area="" asp-controller="About" asp-action="About" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'UpdatesPage-NavLink-About'});">@_loc[Model.NavBarAbout]</a>
+                        </li>
+                        <li class="nav-item" onclick="changeactive('Help')">
+                            <a class="nav-link normal-item" id="_UpdatesPageHelpNavLink" asp-area="" asp-controller="Help" asp-action="Help" asp-route-culture="@CultureInfo.CurrentCulture.Name" onclick="gtag('event','click',{'event_category':'Click','event_label':'UpdatesPage-NavLink-Help'});">@_loc[Model.NavBarHelpCenter]</a>
+                        </li>
+                        <partial name="_LoginPartial" />
+                    </ul>
+                </div>
+            </div>
+        </nav>
+}
+@section header_content{
+    <div class="container-title">
+        <div class="block-title">
+            <br>
+            <h1 class="block-subtitle-text" id="UpdatesPageSubtitle" localize-content>@_loc[Model.Subtitle]</h1>
+            <h2 class="block-title-text-non-home" id="UpdatesPageTitle" localize-content>@_loc[Model.Title]</h2>
+        </div>
+    </div>
+}
+</div>
+<body class="body-bg-img">
+    <div class="modal fade" id="updatesPageComingSoonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content comingsoon-bg-img">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="ComingSoonModalTitle">Modal Error!1</h3>
+                    <button type="button" id="ComingSoonModalHeaderCloseButton" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="col justify-content-center align-items-center">
+                    <h4 class="modal-body" id="updatesPageLearnMoreModalPara">Modal Error!2</h4>
+                </div>
+                <br />
+                <div class="form-group thumb-block">
+                    <form action="@Url.Action("SaveUserEntry","Updates")" method="post">
+                        <label class="modal-body1 col-form-label" id="updatesPageComingSoonModalFormLabel">Modal Error!3</label>
+                        <br />
+                        <textarea class="form-control" name="newsfeedUserEntry" id="newsfeedUserEntry" type="text"></textarea>
+                        <div class="modal-footer">
+                            <button type="submit" id="ComingSoonModalFooterSubmitButton" class="btn btn-success" data-dismiss="updatesPageComingSoonModal" onclick="gtag('event','click',{'event_category':'Click','event_label':'UpdatesPage-Button-ComingSoonModalSubmit'});">@_loc[Model.Submit]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col">
+                <br />
+                <h2 class="font-style-content-head" id="UpdatesHeading">@_loc[Model.UpdatesHeading]</h2>
+            </div>
+        </div>
+        <br />
+    </div>
+    <div class="container-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6">
+                <h2 class="font-style-content" id="UpdatesPageHeadingPara">@_loc[Model.UpdatesHeadingPara]</h2>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <hr />
+    <br />
+    <div class="container-body">
+        <div class="col-lg-9 justify-content-center align-items-center">
+            <table class="table" id="UpdatesPageTable">
+                <thead>
+                    <tr>
+                        <th scope="col" class="font-style-content-small" id="UpdatesPageTableCheckMarkColumn"></th>
+                        <th scope="col" class="font-style-content-small" id="UpdatesPageTableDateColumn">@_loc[Model.Date]</th>
+                        <th scope="col" class="font-style-content-small" id="UpdatesPageTableDetailsColumn">@_loc[Model.Details]</th>
+                        <th scope="col" class="font-style-content-small" id="UpdatesPageTableFeedbackItemColumn">@_loc[Model.UserFeedback]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                                        <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow94Date">04 Sept 2022 22.18</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow94Details">@_loc[Model.Row94]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow9P4ill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow93Date">23 Jun 2022 20.10</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow93Details">@_loc[Model.Row38]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow93Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow92Date">19 Jun 2022 13.50</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow92Details">@_loc[Model.Row38]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow92Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow91Date">05 Jun 2022 10:48</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow91Details">@_loc[Model.Row91]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow91Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow90Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow90Date">01 Jun 2022 22:15</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow90Details">@_loc[Model.Row90]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow90Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow90Date">22 May 2022 20:10</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow90Details">@_loc[Model.Row28]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow90Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow89Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow89Date">21 May 2022 14:56</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow89Details">@_loc[Model.Row89]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow89Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow88Date">21 May 2022 13:37</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow88Details">@_loc[Model.Row88]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow88Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow87Date">21 May 2022 12:28</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow87Details">@_loc[Model.Row87]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow87Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow86Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow86Date">21 May 2022 12:28</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow86Details">@_loc[Model.Row86]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow86Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow85Date">20 May 2022 19:39</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow85Details">@_loc[Model.Row85]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow85Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow84Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow84Date">19 May 2022 21:53</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow84Details">@_loc[Model.Row84]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow84Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow83Date">18 May 2022 16:42</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow83Details">@_loc[Model.Row83]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow83Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow82Date">08 May 2022 20:11</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow82Details">@_loc[Model.Row82]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow82Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow81Date">25 Apr 2022 19:22</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow81Details">@_loc[Model.Row81]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow81Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow80Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow80Date">22 Apr 2022 18:11</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow80Details">@_loc[Model.Row80]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow80Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow79Date">21 Apr 2022 20:39</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow79Details">@_loc[Model.Row79]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow79Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow78Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow78Date">19 Apr 2022 18:17</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow78Details">@_loc[Model.Row78]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow78Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow77Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow77Date">17 Apr 2022 21:23</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow77Details">@_loc[Model.Row77]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow77Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow76Date">17 Apr 2022 17:56</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow76Details">@_loc[Model.Row76]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow76Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow75Date">17 Apr 2022 16:23</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow75Details">@_loc[Model.Row75]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow75Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow74Date">17 Apr 2022 16:03</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow74Details">@_loc[Model.Row74]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow74Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow73Date">17 Apr 2022 15:36</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow73Details">@_loc[Model.Row73]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow73Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow72Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow72Date">17 Apr 2022 15:20</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow72Details">@_loc[Model.Row72]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow72Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow71Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow71Date">17 Apr 2022 14:51</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow71Details">@_loc[Model.Row71]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow71Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow70Date">17 Apr 2022 14:38</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow70Details">@_loc[Model.Row70]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow70Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow69Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow69Date">17 Apr 2022 12:01</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow69Details">@_loc[Model.Row69]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow69Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow68Date">17 Apr 2022 11:30</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow68Details">@_loc[Model.Row68]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow68Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow67Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow67Date">17 Apr 2022 11:20</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow67Details">@_loc[Model.Row67]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow67Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow66Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow66Date">16 Apr 2022 19:08</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow66Details">@_loc[Model.Row66]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow66Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow65Date">16 Apr 2022 14:47</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow65Details">@_loc[Model.Row65]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow65Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow64Date">15 Apr 2022 21:14</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow64Details">@_loc[Model.Row64]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow64Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow63Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow63Date">11 Apr 2022 18:57</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow63Details">@_loc[Model.Row63]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow63Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow62Date">10 Apr 2022 23:34</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow62Details">@_loc[Model.Row62]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow62Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow61Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow61Date">10 Apr 2022 23:17</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow61Details">@_loc[Model.Row61]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow61Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow60Date">10 Apr 2022 21:20</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow60Details">@_loc[Model.Row60]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow60Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow59Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow59Date">10 Apr 2022 14:09</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow59Details">@_loc[Model.Row59]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow59Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow58Date">10 Apr 2022 10:56</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow58Details">@_loc[Model.Row58]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow58Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow57Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow57Date">09 Apr 2022 17:54</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow57Details">@_loc[Model.Row57]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow57Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow56Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow56Date">09 Apr 2022 14:13</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow56Details">@_loc[Model.Row56]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow56Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow55Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow55Date">04 Apr 2022 22:27</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow55Details">@_loc[Model.Row55]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow55Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow54Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow54Date">03 Apr 2022 16:14</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow54Details">@_loc[Model.Row54]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow54Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow53Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow53Date">02 Apr 2022 19:16</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow53Details">@_loc[Model.Row53]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow53Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow52Date">02 Apr 2022 18:27</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow52Details">@_loc[Model.Row52]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow52Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow51Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow51Date">02 Apr 2022 18:06</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow51Details">@_loc[Model.Row51]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow51Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow50Date">27 Mar 2022 19.08</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow50Details">@_loc[Model.Row50]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow50Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow49Date">27 Mar 2022 15.12</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow49Details">@_loc[Model.Row49]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow49Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow48Date">27 Mar 2022 14.56</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow48Details">@_loc[Model.Row48]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow48Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow47Date">27 Mar 2022 14.47</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow47Details">@_loc[Model.Row47]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow47Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow46Date">27 Mar 2022 14.35</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow46Details">@_loc[Model.Row46]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow46Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow45Date">27 Mar 2022 14.10</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow45Details">@_loc[Model.Row45]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow45Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow44Date">27 Mar 2022 14.01</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow44Details">@_loc[Model.Row44]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow44Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow43Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow43Date">26 Mar 2022 18.53</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow43Details">@_loc[Model.Row43]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow43Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow42Date">20 Mar 2022 13.11</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow42Details">@_loc[Model.Row42]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow42Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow41Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow41Date">20 Mar 2022 12.55</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow41Details">@_loc[Model.Row41]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow41Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow40Date">20 Mar 2022 11.51</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow40Details">@_loc[Model.Row40]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow40Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow39Date">18 Mar 2022 14.24</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow39Details">@_loc[Model.Row39]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow39Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow38Date">17 Mar 2022 22.10</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow38Details">@_loc[Model.Row38]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow38Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow37Date">17 Mar 2022 13.17</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow37Details">@_loc[Model.Row37]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow37Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow36Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow36Date">17 Mar 2022 12.42</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow36Details">@_loc[Model.Row36]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow36Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow35Date">04 Mar 2022 11.51</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow35Details">@_loc[Model.Row35]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow35Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow34Date">13 Jan 2022 00.31</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow34Details">@_loc[Model.Row34]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow34Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow33Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow33Date">11 Jan 2022 21.07</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow33Details">@_loc[Model.Row33]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow33Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow32Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow32Date">10 Jan 2022 23.36</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow32Details">@_loc[Model.Row32]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow32Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow31Date">10 Jan 2022 23.36</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow31Details">@_loc[Model.Row31]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow31Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow30Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow30Date">09 Jan 2022 17.57</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow30Details">@_loc[Model.Row30]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow30Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow29Date">09 Jan 2022 16.05</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow29Details">@_loc[Model.Row29]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow29Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow28Date">09 Jan 2022 14.30</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow28Details">@_loc[Model.Row28]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow28Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow27Date">01 Jan 2022 19.59</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow27Details">@_loc[Model.Row27]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow27Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow26Date">01 Jan 2022 12.34</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow26Details">@_loc[Model.Row26]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow26Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow25Date">31 Dec 2021 16.04</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow25Details">@_loc[Model.Row25]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow25Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow24Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow24Date">30 Dec 2021 19.54</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow24Details">@_loc[Model.Row24]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow24Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow23Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow23Date">29 Dec 2021 01.48</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow23Details">@_loc[Model.Row23]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow23Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow22Date">18 Dec 2021 13.53</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow22Details">@_loc[Model.Row22]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow22Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow21Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow21Date">18 Dec 2021 13.21</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow21Details">@_loc[Model.Row21]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow21Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow20Date">12 Dec 2021 20.21</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow20Details">@_loc[Model.Row20]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow20Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow19Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow19Date">12 Dec 2021 13.16</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow19Details">@_loc[Model.Row19]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow19Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow18Date">10 Dec 2021 23.37</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow18Details">@_loc[Model.Row18]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow18Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow17Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow17Date">10 Dec 2021 23.08</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow17Details">@_loc[Model.Row17]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow17Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow16Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow16Date">10 Dec 2021 21.02</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow16Details">@_loc[Model.Row16]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow16Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow15Date">10 Dec 2021 14.56</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow15Details">@_loc[Model.Row15]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow15Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow14Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow14Date">06 Dec 2021 22.58</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow14Details">@_loc[Model.Row14]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow14Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow13Date">27 Nov 2021 17.59</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow13Details">@_loc[Model.Row13]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow13Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow12Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow12Date">27 Nov 2021 17.34</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow12Details">@_loc[Model.Row12]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow12Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow11Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow11Date">21 Nov 2021 18.18</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow11Details">@_loc[Model.Row11]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow11Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow10Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow10Date">21 Nov 2021 18.05</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow10Details">@_loc[Model.Row10]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow10Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow9Date">21 Nov 2021 15.13</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow9Details">@_loc[Model.Row9]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow9Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow8Date">21 Nov 2021 15.05</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow8Details">@_loc[Model.Row8]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow8Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow7Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow7Date">14 Nov 2021 21.41</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow7Details">@_loc[Model.Row7]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow7Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow6Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow6Date">14 Nov 2021 20.12</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow6Details">@_loc[Model.Row6]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow6Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow5Date">14 Nov 2021 18.07</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow5Details">@_loc[Model.Row5]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow5Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow4Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow4Date">14 Nov 2021 17.35</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow4Details">@_loc[Model.Row4]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow4Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow3Date">14 Nov 2021 17.18</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow3Details">@_loc[Model.Row3]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow3Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow2Date">13 Nov 2021 22.15</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow2Details">@_loc[Model.Row2]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-secondary" id="UpdatesPageTableRow2Pill">@_loc[Model.No]</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="justify-content-center align-items-center"><img src="@Model.CheckGreen" style="width: 10px; height: 10px" id="UpdatesPageTableRow1Checkmark" /></th>
+                        <th class="font-style-content-small-black" id="UpdatesPageTableRow1Date">13 Nov 2021 21.00</th>
+                        <td class="font-style-content-small-black" id="UpdatesPageTableRow1Details">@_loc[Model.Row1]</td>
+                        <td class="font-style-content-small-black"><span class="badge badge-pill badge-success" id="UpdatesPageTableRow1Pill">@_loc[Model.Yes]</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+@section Scripts{
+    <script src="~/js/updatesPageComingSoonModal.js"></script>
+    <script src="~/js/DisableEnableLinks.js"></script>
+    <script src="~/js/HomeDisableEnableLinks.js"></script>
+}
