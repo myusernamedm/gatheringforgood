@@ -1,5 +1,5 @@
 **NOTE: PROJECT NO LONGER IN PRODUCTION**\
-**NOTE: DB's NO LONGER LIVE**\
+**NOTE: DB's NO LONGER LIVE**
 
 # GatheringForGood Readme
 
