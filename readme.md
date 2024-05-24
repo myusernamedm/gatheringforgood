@@ -1,7 +1,5 @@
-# NOTE: PROJECT NO LONGER IN PRODUCTION
-# NOTE: DB's NO LONGER LIVE
-# NOTE: ACCESS KEYS AND PASSWORDS NO LONGER VALID
-
+**NOTE: PROJECT NO LONGER IN PRODUCTION**
+**NOTE: DB's NO LONGER LIVE**
 
 # GatheringForGood Readme
 
@@ -16,58 +14,58 @@ There are a number of nuget and npm packages used in the app.
 <u>**Ensure that your ip address is added to gfg-initial DB Firewall rules in Azure before running UI test suite or interacting with database data.**</u>
 
 ## Test Accounts
-**Username:** test@email.com\
-**Password:** 6pHAELTn4sB*SN%\
+**Username:** \
+**Password:** \
 **Email Confirmed:** Yes\
 **2FA:** No\
 **Lockout Enabled:** No\
 **Ok in Prod:** Yes
 
-**Username:** test1@email.com\
-**Password:** VBWNY55G-6.~7iZ\
+**Username:** \
+**Password:** \
 **Email Confirmed:** No\
 **2FA:** No\
 **Lockout Enabled:** No\
 **Ok in Prod:** Invalid Login Email Not Confirmed
 
-**Username:** test2@email.com\
-**Password:** Test1234#\
+**Username:** \
+**Password:** \
 **Email Confirmed:** Yes\
 **2FA:** No\
 **Lockout Enabled:** Yes\
 **Ok in Prod:** Yes
 
-**Username:** test3@email.com\
-**Password:** Test1234#\
+**Username:** \
+**Password:** \
 **Email Confirmed:** Yes\
 **2FA:** No\
 **Lockout Enabled:** No\
 **Ok in Prod:** Yes
 
-**Username:** test4@email.com\
-**Password:** Test1234\
+**Username:** \
+**Password:** \
 **Email Confirmed:** No\
 **2FA:** No\
 **Lockout Enabled:** No\
 **Ok in Prod:** Invalid Login Email Not Confirmed
 
-**Username:** test5@email.com\
-**Password:** Test1234\
+**Username:** \
+**Password:** \
 **Email Confirmed:** Yes\
 **2FA:** No\
 **Lockout Enabled:** Yes\
 **Ok in Prod:** Yes
 
-**Username:** test6@email.com\
-**Password:** Test1234\
+**Username:** \
+**Password:** \
 **Note:** Do not confirm accout - Used for testing registration lockout page\
 **Email Confirmed:** No\
 **2FA:** No\
 **Lockout Enabled:** Yes\
 **Ok in Prod:** Yes
 
-**Username:** test7@email.com\
-**Password:** Test1234###\
+**Username:** \
+**Password:** \
 **Note:** Do not use for manual testing - Used to confirm GetUserActionClicks for DB\
 **Email Confirmed:** Yes\
 **2FA:** No\
